@@ -10,14 +10,16 @@ export default function App() {
     return (
         <BrowserRouter>
             <ProSidebarProvider>
-                <main>
-                    <Navbar></Navbar>
-                    <Routes>
-                        <Route path={'/'} element={<Dashboard/>}></Route>
-                        <Route path={'/portfolio'} element={<Portfolio/>}></Route>
-                        <Route path={'/resume'} element={<Resume/>}></Route>
-                    </Routes>
-                </main>
+                <ProfileProvider>
+                    <main>
+                        <Navbar></Navbar>
+                        <Routes>
+                            <Route path={'/'} element={<Dashboard/>}></Route>
+                            <Route path={'/portfolio'} element={<Portfolio/>}></Route>
+                            <Route path={'/resume'} element={<Resume/>}></Route>
+                        </Routes>
+                    </main>
+                </ProfileProvider>
             </ProSidebarProvider>
         </BrowserRouter>
     )

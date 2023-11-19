@@ -1,15 +1,23 @@
 import {Menu, MenuItem, Sidebar, useProSidebar} from "react-pro-sidebar";
-import React from "react";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import {Link, useNavigate, useNavigation} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {HomeRounded, AssignmentRounded} from "@mui/icons-material";
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 import FormatPaintRoundedIcon from '@mui/icons-material/FormatPaintRounded';
 import ExtensionRoundedIcon from '@mui/icons-material/ExtensionRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-export default function MySidebar(props) {
+import {useAuth} from "../context/AuthContext.jsx";
+export default function MySidebar() {
+    const {setCurrentJwt} = useAuth();
+    const navigate = useNavigate();
     const {collapseSidebar} = useProSidebar();
+
+    const handleLogOut = (event) => {
+        event.preventDefault();
+        setCurrentJwt("")
+        navigate("/register");
+    }
 
     return <Sidebar style={{height: "100vh"}}>
         <Menu>
@@ -38,8 +46,8 @@ export default function MySidebar(props) {
             >Settings</MenuItem>
 
             <MenuItem component={<Link to={""}/>} icon={<LogoutRoundedIcon/>}
+                      onClick={(event) => handleLogOut(event)}
             >Log out</MenuItem>
-
 
         </Menu>
     </Sidebar>

@@ -7,18 +7,55 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup"
-import {registerSchema} from "../../config/yup/schema.js";
+import axios from "axios";
+import Cookies from "js-cookie";
+import {useAuth} from "../../context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
+
 
 export default function Register() {
 
+    const {setCurrentJwt} = useAuth()
+    const navigate = useNavigate();
+    //const {handleSubmit} = useForm({
+      //  resolver: yupResolver(registerSchema)
+    //});
 
-    const {handleSubmit} = useForm({
-        resolver: yupResolver(registerSchema)
-    });
 
-    const submitForm = () => {
+    const submitForm = async (ev) => {
+        ev.preventDefault();
+        let formData = new FormData(ev.target);
+        //Data comes here
+        const data = {
+            email: formData.get("email"),
+            pwd:formData.get("password"),
+            firstName:formData.get("firstName"),
+            lastName:formData.get("lastName"),
+        }
+
+        const fetch = await axios({
+            url: "http://localhost:8080/signup/",
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data : data
+        });
+
+        if(fetch.status === 200) {
+            const token = Cookies.get("token");
+            if(token !== "" || token !== undefined) {
+                setCurrentJwt(token);
+                navigate("/");
+            }
+        } else {
+            //Erorr
+            //Add a erorr message with react hook form
+        }
+        const res = fetch.data;
+
+        //Debug
+        console.log(res);
     }
 
 
@@ -40,7 +77,7 @@ export default function Register() {
             <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit(submitForm)}
+                onSubmit={(ev) => submitForm(ev)}
                 sx={{mt: 3}}
             >
                 <Grid container spacing={2}>

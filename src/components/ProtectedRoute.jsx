@@ -17,6 +17,7 @@ export default function ProtectedRoute({routeType}) {
     const path = () => {
         return routeType === "admin" ? "/register" : "/";
     }
+
     return (
         evaluatePass() ? <Outlet></Outlet> : <Navigate to={path()}></Navigate>
     )

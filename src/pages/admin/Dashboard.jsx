@@ -1,11 +1,72 @@
-import MySidebar from "../../components/MySidebar.jsx";
 import React from "react";
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
+import Toolbar from "@mui/material/Toolbar";
+import {Paper} from "@mui/material";
+import Box from "@mui/material/Box";
+import Title from "../../components/Title.jsx";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../context/AuthContext.jsx";
+
 
 export default function Dashboard(props) {
 
-    return <>
-        <MySidebar ></MySidebar>
 
-        <h1>Dashboard</h1>
-    </>
+    return <Box gridAutoFlow='row'
+        component="main"
+        sx={{
+            backgroundColor: (theme) =>
+                theme.palette.mode === 'light'
+                    ? theme.palette.grey[100]
+                    : theme.palette.grey[900],
+            flexGrow: 1,
+            height: '100vh',
+            overflow: 'auto',
+        }}
+    >
+        <Toolbar />
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Grid container spacing={3}>
+                <Grid item xs={12} md={8} lg={9} >
+                    <Paper
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: 240,
+                        }}
+                    >
+                        <Title>Views this week</Title>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12} md={4} lg={3} height={"100%"}>
+                    <Paper
+                        sx={{
+                            p: 2,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height:240
+                        }}
+                    >
+                        <Title>Messages</Title>
+                    </Paper>
+                </Grid>
+
+                    <Grid item xs={12} >
+                        <Paper
+                            sx={{
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: 240,
+                            }}
+                        >
+                            <Title>Last modified</Title>
+                        </Paper>
+                </Grid>
+            </Grid>
+        </Container>
+    </Box>
 }
+Dashboard.componentName="Dashboard";

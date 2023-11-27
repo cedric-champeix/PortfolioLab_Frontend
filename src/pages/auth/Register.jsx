@@ -31,6 +31,7 @@ export default function Register() {
             pwd:formData.get("password"),
             firstName:formData.get("firstName"),
             lastName:formData.get("lastName"),
+            username:formData.get("username")
         }
 
         const fetch = await axios({
@@ -41,21 +42,25 @@ export default function Register() {
             },
             data : data
         });
-
-        if(fetch.status === 200) {
-            const token = Cookies.get("token");
-            if(token !== "" || token !== undefined) {
-                setCurrentJwt(token);
-                navigate("/");
-            }
-        } else {
-            //Erorr
-            //Add a erorr message with react hook form
-        }
         const res = fetch.data;
+        console.log(res);
+
+        switch (fetch.status) {
+            case 200:
+                const token = Cookies.get("token");
+                if(token !== "" || token !== undefined) {
+                    setCurrentJwt(token);
+                    navigate("/");
+                }
+                break;
+            case 409:
+                //error catch
+                //TODO : Print error badge
+                break;
+        }
+
 
         //Debug
-        console.log(res);
     }
 
 
@@ -121,6 +126,20 @@ export default function Register() {
                         <TextField
                             required
                             fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="email"
+                            // {...register('email')}
+
+                        />
+                    </Grid>
+
+
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            fullWidth
                             name="password"
                             label="Password"
                             type="password"
@@ -130,7 +149,7 @@ export default function Register() {
 
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sm={6}>
                         <TextField
                             required
                             fullWidth
@@ -155,8 +174,8 @@ export default function Register() {
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link href="#" variant="body2">
-                            Already have an account? Sign in
+                        <Link href="/login" variant="body2">
+                            Already have an account? Sign up
                         </Link>
                     </Grid>
                 </Grid>

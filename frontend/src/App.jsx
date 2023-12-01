@@ -1,8 +1,8 @@
 import {Route, Routes, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import Dashboard from "./pages/admin/Dashboard.jsx";
+import Dashboard from "./pages/admin/Dashboard/Dashboard.jsx";
 import Portfolio from "./pages/admin/Portfolio.jsx";
-import Resume from "./pages/admin/Resume.jsx";
+import Resume from "./pages/admin/Resume/Resume.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
 import {theme} from "./config/theme.js";
 import {ThemeProvider} from "@mui/material/styles";

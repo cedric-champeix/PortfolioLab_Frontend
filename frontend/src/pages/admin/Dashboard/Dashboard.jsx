@@ -4,9 +4,9 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import {Paper} from "@mui/material";
 import Box from "@mui/material/Box";
-import Title from "../../components/Title.jsx";
+import Title from "../../../components/Title.jsx";
 import {useNavigate} from "react-router-dom";
-import {useAuth} from "../../context/AuthContext.jsx";
+import {useAuth} from "../../../context/AuthContext.jsx";
 
 
 export default function Dashboard(props) {
@@ -36,7 +36,7 @@ export default function Dashboard(props) {
                             height: 240,
                         }}
                     >
-                        <Title>Views this week</Title>
+                        <Title>My projects</Title>
                     </Paper>
                 </Grid>
 
@@ -62,7 +62,7 @@ export default function Dashboard(props) {
                                 height: 240,
                             }}
                         >
-                            <Title>Last modified</Title>
+                            <Title>Popular users</Title>
                         </Paper>
                 </Grid>
             </Grid>

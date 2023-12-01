@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from "react";
-import Dashboard from "./Dashboard.jsx";
+import Dashboard from "../Dashboard/Dashboard.jsx";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import {Paper} from "@mui/material";
-import Title from "../../components/Title.jsx";
+import {FormControl, MenuItem, Paper, Select} from "@mui/material";
+import Title from "../../../components/Title.jsx";
 import axios from "axios";
-import {useAuth} from "../../context/AuthContext.jsx";
+import {useAuth} from "../../../context/AuthContext.jsx";
 import Cookies from "js-cookie";
-
-
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import SkillForm from "./SkillForm.jsx";
 export default function Resume() {
 
     const [skillsData, setSkillsData] = useState([]);
@@ -29,7 +31,9 @@ export default function Resume() {
             console.log(res)});
 
     }, []);
-    return  <Box gridAutoFlow='row'
+
+
+    return  <Box gridAutoFlow='row' className={"Element-"}
                  component="main"
                  sx={{
                      backgroundColor: (theme) =>
@@ -39,32 +43,25 @@ export default function Resume() {
                      flexGrow: 1,
                      height: '100vh',
                      overflow: 'auto',
+
                  }}
     >
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-                <Grid item xs={5} lg={6} height={600}>
-                    <Paper sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 600,
-                    }}>
-
-                        <Title>My resume</Title>
-                    </Paper>
+                <Grid item xs={6} lg={6} height={600} backgroundColor={"#FFF"}>
+                    <Title>My resume</Title>
+                    <Grid item>
+                        <Box component={"img"} width={128} src={"src/assets/data/Photo_profil_256.png"}></Box>
+                    </Grid>
+                   <Grid ></Grid>
                 </Grid>
-                <Grid item xs={5} height={600} lg={6}>
-                    <Paper sx={{
-                        p: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: 600,
-                    }}>
+
+                <Grid item xs={6} height={600} lg={6} backgroundColor={"#FFF"}>
+
 
                         <Title>Preview</Title>
-                    </Paper>
+
                 </Grid>
             </Grid>
         </Container>

@@ -17,15 +17,17 @@ import {skillData} from "../../../data/skillData.js";
 
 
 export default function Resume() {
-
-    //const [skillsData, setSkillsData] = useState([]);
+    //Using skills data
     const {skillsData, addSkill, removeSkill} = useSkills(skillData);
+    //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
     const {currentJwt} = useAuth();
     console.log(
         currentJwt + " from Reusme"
     )
+
+    //Data retrival
     useEffect( () => {
           axios({
             url: "http://localhost:8080/editor/skills",
@@ -38,6 +40,10 @@ export default function Resume() {
 
     }, []);
 
+    /**
+     * Triggers the safegard dialog, then handles the action to do
+     * @param skillName
+     */
     const removeSkillSafeguard = (skillName) => {
         confirm({
             catchOnCancel: true,
@@ -48,7 +54,6 @@ export default function Resume() {
         }).catch(() => {
                 console.log("Catching safeguard")});
     }
-
 
     return  <Box gridAutoFlow='row' className={"Element-"}
                  component="main"

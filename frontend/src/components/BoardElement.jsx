@@ -25,6 +25,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.jsx";
+import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -160,7 +161,9 @@ export default function Dashboard({element, elementName}) {
                         </ListItemButton>
                     </List>
                 </Drawer>
-                {element}
+                <ConfirmationServiceContextProvider>
+                    {element}
+                </ConfirmationServiceContextProvider>
             </Box>
     );
 }

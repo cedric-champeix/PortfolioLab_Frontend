@@ -11,16 +11,20 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {useAuth} from "../../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {registerSchema} from "../../config/yup/schema.js";
+
 
 
 export default function Register() {
 
     const {setCurrentJwt} = useAuth()
     const navigate = useNavigate();
-    //const {handleSubmit} = useForm({
-      //  resolver: yupResolver(registerSchema)
-    //});
 
+    const {register, watch, handleSubmit, formState} = useForm({
+        resolver: yupResolver(registerSchema)
+    });
 
     const submitForm = async (ev) => {
         ev.preventDefault();
@@ -58,8 +62,6 @@ export default function Register() {
                 //TODO : Print error badge
                 break;
         }
-
-
         //Debug
     }
 
@@ -95,7 +97,7 @@ export default function Register() {
                             id="firstName"
                             label="First Name"
                             autoFocus
-                            // {...register('firstName')}
+                            {...register('firstName')}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -106,7 +108,7 @@ export default function Register() {
                             label="Last Name"
                             name="lastName"
                             autoComplete="family-name"
-                            //{...register('lastName')}
+                            {...register('lastName')}
 
                         />
                     </Grid>

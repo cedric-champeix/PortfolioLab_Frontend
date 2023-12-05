@@ -18,12 +18,14 @@ export default function SkillForm() {
         ev.preventDefault();
         const data = new FormData(ev.currentTarget);
 
-        const body =JSON.stringify({
+        const body ={
             name: data.get("skillName").toString(),
             description: data.get("description").toString(),
             mastery: data.get("mastery").toString(),
             isSoft: false
-        });
+        };
+
+        console.log(body);
 
         const fetch = await axios({
             url: "http://localhost:8080/editor/skill",

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
@@ -12,20 +12,16 @@ import {Card, CardContent} from "@mui/material";
 import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {useConfirmation} from "../../../context/ConfirmationService.jsx";
+import EditAddSkill from "./EditAddSkill.jsx";
 import {skillData} from "../../../data/skillData.js";
-
-
 
 export default function Resume() {
     //Using skills data
-    const {skillsData, addSkill, removeSkill} = useSkills(skillData);
+    const {skillsData, setSkillsData, removeSkill, addSkill} = useSkills(skillData);
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
     const {currentJwt} = useAuth();
-    console.log(
-        currentJwt + " from Reusme"
-    )
 
     //Data retrival
     useEffect( () => {
@@ -40,6 +36,14 @@ export default function Resume() {
 
     }, []);
 
+    useEffect(() => {
+        return () => {
+            console.log("Change on skills data");
+        };
+    }, [skillsData]);
+
+
+
     /**
      * Triggers the safegard dialog, then handles the action to do
      * @param skillName
@@ -49,7 +53,7 @@ export default function Resume() {
             catchOnCancel: true,
             skillName: skillName
         }).then(() => {
-            removeSkill(skillName)
+            removeSkill(skillName);
             console.log("Removing skill")
         }).catch(() => {
                 console.log("Catching safeguard")});
@@ -85,9 +89,12 @@ export default function Resume() {
                 <Grid item xs={12}>
                     <Title>My skills</Title>
                 </Grid>
+                <Grid item xs={12} textAlign={"right"}>
+                    <EditAddSkill type={"add"} skillName={""} description={""} mastery={""} isSoft={""} skillsData={skillsData} setSkillsData={setSkillsData} removeSkill={removeSkill} addSkill={addSkill}>Add a skill</EditAddSkill>
+                </Grid>
                 {
                     skillsData.map((item, i) => (
-                        <Grid xs={4} >
+                        <Grid item xs={4} key={item.name + i}>
                             <Card style={{height:200, margin:"8px"}}>
                                 <CardContent>
                                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -105,13 +112,14 @@ export default function Resume() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small">Edit</Button>
+                                    <EditAddSkill type={"edit"} skillName={item.name} description={item.description} mastery={item.mastery} isSoft={item.isSoft} skillsData={skillsData} setSkillsData={setSkillsData} removeSkill={removeSkill} addSkill={addSkill}></EditAddSkill>
                                     <Button onClick={() => removeSkillSafeguard(item.name)} size="small" color={"error"}>Remove</Button>
                                 </CardActions>
                             </Card>
                         </Grid>
                     ))
                 }
+                <br/>
             </Grid>
         </Container>
     </Box>

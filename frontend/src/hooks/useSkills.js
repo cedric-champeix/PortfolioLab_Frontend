@@ -1,8 +1,10 @@
 import {useState} from "react";
+import {skillData} from "../data/skillData.js";
 
-export const useSkills = (initialState) => {
+export const useSkills = () => {
 
-    const [skillsData, setSkillsData] = useState(initialState);
+
+    const [skillsData, setSkillsData] = useState(skillData);
 
     const addSkill = (name, description, mastery, isSoft) => {
         setSkillsData(
@@ -18,14 +20,19 @@ export const useSkills = (initialState) => {
     }
 
     const removeSkill = (name) => {
-        let newData = skillsData.filter(item => item.name!==name);
-        console.log(newData)
-        setSkillsData(newData);
+        let countBef = skillsData.length;
+        setSkillsData(skillsData.filter(item => {
+            return item.name !== name
+        }))
+
+        let countAft = skillsData.length;
+        if(countAft-countBef === 0) console.log("No skill removed")
+
     }
 
     const clear = () => {
         setSkillsData([]);
     }
 
-    return {skillsData, addSkill, removeSkill, clear}
+    return {skillsData, addSkill, removeSkill, clear, setSkillsData}
 }

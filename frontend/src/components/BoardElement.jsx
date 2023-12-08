@@ -26,6 +26,8 @@ import ListItemText from "@mui/material/ListItemText";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.jsx";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
+import {SkillsProvider} from "../context/SkillsContext.jsx";
+import {skillData} from "../data/skillData.js";
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -162,7 +164,9 @@ export default function Dashboard({element, elementName}) {
                     </List>
                 </Drawer>
                 <ConfirmationServiceContextProvider>
-                    {element}
+                    <SkillsProvider data={skillData}>
+                        {element}
+                    </SkillsProvider>
                 </ConfirmationServiceContextProvider>
             </Box>
     );

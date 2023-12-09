@@ -1,6 +1,6 @@
 import {createContext, useContext, useRef, useState} from "react";
 import {Dialog} from "@mui/material";
-import {RemoveSkillSafeguard} from "../pages/admin/Resume/RemoveSkillSafeguard.jsx";
+import {RemoveSafeguard} from "../pages/admin/Resume/RemoveSafeguard.jsx";
 
 
 //Implementation : https://dev.to/dmtrkovalenko/the-neatest-way-to-handle-alert-dialogs-in-react-1aoe
@@ -23,11 +23,11 @@ export const ConfirmationServiceContextProvider = ({children}) => {
 
     /*
     * These are the options to pass to the dialog.
-    * As of now it is only designed as a safeguard for skills removal, but
+    * As of now it is only designed as a safeguard for skills and experiences removal, but
     * it can be easily adapted
     * Options :
     * - CatchOnCancel : specifies if we need to throw something in case of cacel
-    * - skillName : skill to display
+    * - name : name to display
     */
     const [confirmationState, setConfirmationState] = useState(null);
 
@@ -71,7 +71,7 @@ export const ConfirmationServiceContextProvider = ({children}) => {
 
     return <>
         <ConfirmationServiceContext.Provider value={openConfirmation} children={children}/>
-        <RemoveSkillSafeguard open={Boolean(confirmationState)} onSubmit={handleSubmit} onClose={handleClose} {...confirmationState}></RemoveSkillSafeguard>
+        <RemoveSafeguard open={Boolean(confirmationState)} onSubmit={handleSubmit} onClose={handleClose} {...confirmationState}></RemoveSafeguard>
     </>
 }
 

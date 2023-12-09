@@ -6,9 +6,9 @@ import Button from "@mui/material/Button";
 * - open : boolean -> is dialog opened
 * - on submit
 * - on close
-* - skillName -> skillName
+* - name -> name
 */
-export const RemoveSkillSafeguard = ({open, onSubmit, onClose, skillName}) => {
+export const RemoveSafeguard = ({open, onSubmit, onClose, name}) => {
     return  <Dialog
         open={open}
         onClose={onClose}
@@ -16,7 +16,7 @@ export const RemoveSkillSafeguard = ({open, onSubmit, onClose, skillName}) => {
         aria-describedby="alert-dialog-description"
     >
         <DialogTitle id="alert-dialog-title">
-            Do you want to remove the skill {skillName} ?
+            Do you want to remove {name} ?
         </DialogTitle>
         <DialogContent>
             <DialogContentText id="alert-dialog-description">

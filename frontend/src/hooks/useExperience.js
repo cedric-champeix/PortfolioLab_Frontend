@@ -4,12 +4,12 @@ import {skillData} from "../data/skillData.js";
 export const useExperience = () => {
 
 
-    const [experienceData, setExperienceData] = useState([]);
+    const [experiencesData, setExperiencesData] = useState([]);
 
     const addExperience = (name) => {
-        setExperienceData(
+        setExperiencesData(
             [
-                ...experienceData,
+                ...experiencesData,
                 {
                     name: name,
 
@@ -18,14 +18,14 @@ export const useExperience = () => {
     }
 
     const removeExperience = (name) => {
-        setExperienceData(experienceData.filter(item => {
+        setExperiencesData(experiencesData.filter(item => {
             return item.name !== name
         }))
     }
 
     const clear = () => {
-        setExperienceData([]);
+        setExperiencesData([]);
     }
 
-    return {experienceData, addExperience, removeExperience, clear, setExperienceData}
+    return {experiencesData, addExperience, removeExperience, clear, setExperiencesData}
 }

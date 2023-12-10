@@ -4,12 +4,21 @@ import {Dialog,Box, DialogActions, DialogContent, DialogContentText, DialogTitle
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
-export default function EditAddSkill(props) {
+const level = {
+    BEGINNER: "beginner",
+    INTERMEDIATE: "intermediate",
+    ADVANCED: "advanced"
+}
+
+export default function SkillAction(props) {
 
     const [open, setOpen] = useState(false);
-    const {skillName, description, mastery, isSoft, setSkillsData, skillsData, removeSkill, type, addSkill} = props
-    const [data, setData] = useState({name: skillName, description: description, mastery: mastery,isSoft: isSoft});
+    const {type, skillId, skillName, description, mastery, isSoft, createSkill, updateSkill, resumeData} = props
+
+    const [data, setData] = useState({name: skillName, description: description, mastery: mastery, isSoft: isSoft});
+
     const toggle = () => {
+        setData({name: skillName, description: description, mastery: mastery, isSoft: isSoft})
         setOpen(!open);
     }
 
@@ -17,15 +26,11 @@ export default function EditAddSkill(props) {
     const handleSubmit = () => {
         switch (type) {
             case "edit":
-                const temp = skillsData;
-                temp.push(data);
-                setSkillsData(temp);
-                removeSkill(skillName);
-                console.log(skillsData);
-                console.log("Skill edited : " + skillsData);
+                updateSkill(skillId, data.name, data.description, data.mastery, data.isSoft)
                 break;
             case "add":
-                addSkill(data.name, data.description, data.mastery, data.isSoft);
+                createSkill(data.name, data.description, data.mastery, data.isSoft, resumeData.resumeId);
+                break;
         }
         toggle();
     }
@@ -33,13 +38,9 @@ export default function EditAddSkill(props) {
     return <>
         <Paper>
             <Dialog open={open}>
-                <DialogTitle>{type === "edit" ? `Edit skill ${skillName}` : "Add a skill"}</DialogTitle>
+                <DialogTitle>{type === "edit" ? `Edit skill ${skillName}` : "Create a skill"}</DialogTitle>
                     <Box component="form">
-                <DialogContent>
-                    <DialogContentText>
-                        Edit your skill
-                    </DialogContentText>
-
+                        <DialogContent>
                             <TextField
                                 autoFocus
                                 value={data.name}
@@ -77,11 +78,24 @@ export default function EditAddSkill(props) {
                             <br/>
                             <br/>
 
-                            <Select value={data.mastery.toLowerCase() || "beginner"} onChange={(e) => setData({...data, mastery: e.target.value})} name={"mastery"} id={"mastery"} placeholder={"Select level of mastery"} >
-                                <MenuItem value={"beginner"}>Beginner</MenuItem>
-                                <MenuItem value={"intermediate"}>Intermediate</MenuItem>
-                                <MenuItem value={"advanced"}>Advanced</MenuItem>
-                            </Select>
+                            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: "center"}}>
+                                <Select value={data.mastery ? data.mastery.toLowerCase() : level.BEGINNER}
+                                        onChange={(e) => setData({...data, mastery: e.target.value})} name={"mastery"}
+                                        id={"mastery"} placeholder={"Select level of mastery"}>
+                                    <MenuItem value={level.BEGINNER}>Beginner</MenuItem>
+                                    <MenuItem value={level.INTERMEDIATE}>Intermediate</MenuItem>
+                                    <MenuItem value={level.ADVANCED}>Advanced</MenuItem>
+                                </Select>
+
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        checked={data.isSoft}
+                                        onChange={(e) => setData({...data, isSoft: !data.isSoft})}
+                                    />
+                                    Soft Skill
+                                </label>
+                            </div>
                             <br/><br/>
                         </DialogContent>
 
@@ -97,7 +111,7 @@ export default function EditAddSkill(props) {
             color="primary"
             onClick={toggle}
         >
-            {type === "edit" ? "Edit" : "Add a skill"}
+            {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
 }

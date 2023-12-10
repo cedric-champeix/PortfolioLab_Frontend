@@ -7,21 +7,33 @@ import Title from "../../../components/Title.jsx";
 import axios from "axios";
 import {useAuth} from "../../../context/AuthContext.jsx";
 import Typography from "@mui/material/Typography";
-import {useSkills} from "../../../hooks/useSkills.js";
 import {Card, CardContent} from "@mui/material";
 import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {useConfirmation} from "../../../context/ConfirmationService.jsx";
-import EditAddSkill from "./EditAddSkill.jsx";
-import {skillData} from "../../../data/skillData.js";
+import SkillAction from "./SkillAction.jsx";
+import ExperienceAction from "./ExperienceAction.jsx";
+import FormationAction from "./FormationAction.jsx";
+import {useResume} from "../../../hooks/useResume.js";
+import {useSkills} from "../../../hooks/useSkills.js";
 import {useExperience} from "../../../hooks/useExperience.js";
-import {experienceData} from "../../../data/experienceData.js";
+import {useFormation} from "../../../hooks/useFormation.js";
 
 
 export default function Resume() {
     //Using skills data
-    const {skillsData, setSkillsData, removeSkill, addSkill} = useSkills(skillData);
-    const {experiencesData, setExperiencesData, addExperience, removeExperience} = useExperience(experienceData);
+    const {resumeData, setResumeData} = useResume()
+    const {skillsData, setSkillsData, getSkillsIds, createSkill, updateSkill, removeSkill} = useSkills();
+    const {
+        experiencesData,
+        setExperiencesData,
+        createExperience,
+        updateExperience,
+        removeExperience
+    } = useExperience();
+    const {formationsData, setFormationsData, createFormation, updateFormation, removeFormation} = useFormation();
+
+
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
@@ -29,15 +41,20 @@ export default function Resume() {
 
     //Data retrival
     useEffect(() => {
+        console.log("Fetching resume data")
+
         axios({
-            url: "http://localhost:8080/editor/skills",
+            url: "http://localhost:8080/editor/resume",
             method: 'GET',
-            headers: {
-                "Authorization": `Bearer ${currentJwt}`
-            },
-        }).then((res) => {
-            console.log(res)
-        });
+            withCredentials: true
+        }).then((response) => {
+            const data = response.data
+
+            setResumeData({resumeId: data.id})
+            setSkillsData(data.skills)
+        }).catch((e) => {
+            console.error(e)
+        })
 
     }, []);
 
@@ -50,28 +67,43 @@ export default function Resume() {
 
     /**
      * Triggers the safegard dialog, then handles the action to do
-     * @param skillName
+     * @param skillId
      */
-    const removeSkillSafeguard = (skillName) => {
+    const removeSkillSafeguard = (skillId, skillName) => {
         confirm({
             catchOnCancel: true,
             name: skillName
         }).then(() => {
-            removeSkill(skillName);
+            removeSkill(skillId);
             console.log("Removing skill")
         })
     }
 
     const removeExperienceSafeguard = (experienceName) => {
-        console.log(experienceName);
         confirm({
-            catchOnCancel:true,
+            catchOnCancel: true,
             name: experienceName
         }).then(() => {
             removeExperience(experienceName);
             console.log("Removing experience")
         })
     }
+
+    const removeFormationSafeguard = (formationName) => {
+        confirm({
+            catchOnCancel: true,
+            name: formationName
+        }).then(() => {
+            removeFormation(formationName);
+            console.log("Removing formation")
+        })
+    }
+
+    const truncate = (str, n) => {
+        return (str.length > n) ? str.slice(0, n - 1) + '...' : str;
+    };
+
+    let data = {}
 
     return <Box gridAutoFlow='row' className={"Element-"}
                 component="main"
@@ -108,36 +140,44 @@ export default function Resume() {
                     <Title>My skills</Title>
                 </Grid>
                 <Grid item xs={12} textAlign={"right"}>
-                    <EditAddSkill type={"add"} skillName={""} description={""} mastery={""} isSoft={""}
-                                  skillsData={skillsData} setSkillsData={setSkillsData} removeSkill={removeSkill}
-                                  addSkill={addSkill}>Add a skill</EditAddSkill>
+                    <SkillAction type={"add"} skillName={""} description={""} mastery={""} isSoft={false}
+                                 createSkill={createSkill}
+                                 resumeData={resumeData}>Add a skill</SkillAction>
                 </Grid>
                 {
-                    skillsData.map((item, i) => (
-                        <Grid item xs={4} key={item.name + i}>
-                            <Card style={{height: 200, margin: "8px"}}>
-                                <CardContent>
+                    skillsData.map((skill, i) => (
+                        <Grid item xs={4} key={skill.name + i}>
+                            <Card style={{
+                                height: "200px",
+                                margin: "8px",
+                                padding: "16px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between"
+                            }}>
+                                <CardContent style={{padding: "0 0 10px 0"}}>
                                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                                        {item.isSoft === "true" ? "Soft skill" : "Technical skill"}
+                                        {skill.isSoft ? "Soft skill" : "Technical skill"}
                                     </Typography>
                                     <Typography variant="h5" component="div">
-                                        {item.name}
+                                        {skill.name}
                                     </Typography>
-                                    <Typography sx={{mb: 1.5}} color="text.secondary">
-                                        {item.mastery}
-                                    </Typography>
+                                    {skill.isSoft ? null : <Typography color="text.secondary">
+                                        {skill.mastery}
+                                    </Typography>}
                                     <Typography variant="body2">
-                                        {item.description}
-                                        <br/>
+                                        {truncate(skill.description, 60)}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <EditAddSkill type={"edit"} skillName={item.name} description={item.description}
-                                                  mastery={item.mastery} isSoft={item.isSoft} skillsData={skillsData}
-                                                  setSkillsData={setSkillsData} removeSkill={removeSkill}
-                                                  addSkill={addSkill}></EditAddSkill>
-                                    <Button onClick={() => removeSkillSafeguard(item.name)} size="small"
-                                            color={"error"}>Remove</Button>
+                                    <SkillAction type={"edit"} skillId={skill.id} skillName={skill.name}
+                                                 description={skill.description}
+                                                 mastery={skill.mastery} isSoft={skill.isSoft} skillsData={skillsData}
+                                                 createSkill={createSkill} updateSkill={updateSkill}
+                                                 resumeData={resumeData}></SkillAction>
+                                    <Button onClick={() => removeSkillSafeguard(skill.id, skill.name)} size="small"
+                                            color={"error"}><img src={"/src/assets/icons/rubbish_bin.svg"}
+                                                                 alt={"Delete skill"}/></Button>
                                 </CardActions>
                             </Card>
                         </Grid>
@@ -149,39 +189,109 @@ export default function Resume() {
                     <Title>My experiences</Title>
                 </Grid>
                 <Grid item xs={12} textAlign={"right"}>
-
-
-                        </Grid>
-                    {
-                        experiencesData.map((item, i) => (
-                        <Grid item xs={4} key={item.name + i}>
-                    <Card style={{height: 200, margin: "8px"}}>
-                        <CardContent>
-                            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                                {item.company}
-                            </Typography>
-                            <Typography variant="h5" component="div">
-                                {item.name}
-                            </Typography>
-                            <Typography sx={{mb: 1.5}} color="text.secondary">
-                                {item.startDate} - {item.endDate}
-                            </Typography>
-                            <Typography variant="body2">
-                                {item.description}
-                                <br/>
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-
-                            <Button onClick={() => removeExperienceSafeguard(item.name)} size="small"
-                                    color={"error"}>Remove</Button>
-                        </CardActions>
-                    </Card>
+                    <ExperienceAction type={"add"}
+                                      expTitle={""}
+                                      expCompany={""}
+                                      expDescription={""}
+                                      expStartDate={""}
+                                      expEndDate={""}
+                                      createExperience={createExperience}>
+                        Add a formation
+                    </ExperienceAction>
                 </Grid>
-                ))}
+                {
+                    experiencesData.map((experience, i) => (
+                        <Grid item xs={4} key={experience.title + i}>
+                            <Card style={{
+                                height: "200px",
+                                margin: "8px",
+                                padding: "16px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between"
+                            }}>
+                                <CardContent style={{padding: "0 0 10px 0"}}>
+                                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                                        {experience.company}
+                                    </Typography>
+                                    <Typography variant="h5" component="div">
+                                        {experience.title}
+                                    </Typography>
+                                    <Typography color="text.secondary">
+                                        {experience.startDate} - {experience.endDate}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        {truncate(experience.description, 60)}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <ExperienceAction type={"edit"}
+                                                      expTitle={experience.title}
+                                                      expCompany={experience.company}
+                                                      expDescription={experience.description}
+                                                      expStartDate={experience.startDate}
+                                                      expEndDate={experience.endDate}
+                                                      updateExperience={updateExperience}></ExperienceAction>
+                                    <Button onClick={() => removeExperienceSafeguard(experience.title)} size="small"
+                                            color={"error"}><img src={"/src/assets/icons/rubbish_bin.svg"}
+                                                                 alt={"Delete skill"}/></Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
                 <br/>
 
-
+                <Grid item xs={12}>
+                    <Title>My formations</Title>
+                </Grid>
+                <Grid item xs={12} textAlign={"right"}>
+                    <FormationAction type={"add"}
+                                      fFormationName={""}
+                                      fUniversityName={""}
+                                      fStartDate={""}
+                                      fEndDate={""}
+                                      createFormation={createFormation}>
+                        Add a formation
+                    </FormationAction>
+                </Grid>
+                {
+                    formationsData.map((formation, i) => (
+                        <Grid item xs={4} key={formation.formationName + i}>
+                            <Card style={{
+                                height: "200px",
+                                margin: "8px",
+                                padding: "16px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between"
+                            }}>
+                                <CardContent style={{padding: "0 0 10px 0"}}>
+                                    <Typography variant="h5" component="div">
+                                        {formation.formationName}
+                                    </Typography>
+                                    <Typography color="text.secondary" gutterBottom>
+                                        {formation.universityName}
+                                    </Typography>
+                                    <Typography color="text.secondary">
+                                        {formation.startDate} - {formation.endDate}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <FormationAction type={"edit"}
+                                                      fFormationName={formation.formationName}
+                                                      fUniversityName={formation.universityName}
+                                                      fStartDate={formation.startDate}
+                                                      fEndDate={formation.endDate}
+                                                      updateFormation={updateFormation}></FormationAction>
+                                    <Button onClick={() => removeFormationSafeguard(formation.formationName)}
+                                            size="small"
+                                            color={"error"}><img src={"/src/assets/icons/rubbish_bin.svg"}
+                                                                 alt={"Delete skill"}/></Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
+                <br/>
             </Grid>
         </Container>
     </Box>

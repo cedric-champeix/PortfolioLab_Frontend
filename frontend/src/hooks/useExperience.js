@@ -1,25 +1,41 @@
 import {useState} from "react";
-import {skillData} from "../data/skillData.js";
 
 export const useExperience = () => {
 
 
     const [experiencesData, setExperiencesData] = useState([]);
 
-    const addExperience = (name) => {
+    const createExperience = (title, company, description, startDate, endDate) => {
         setExperiencesData(
             [
                 ...experiencesData,
                 {
-                    name: name,
-
+                    title: title,
+                    company: company,
+                    description: description,
+                    startDate: startDate,
+                    endDate: endDate,
                 }]
         )
     }
 
-    const removeExperience = (name) => {
-        setExperiencesData(experiencesData.filter(item => {
-            return item.name !== name
+    const updateExperience = (oldTitle, title, company, description, startDate, endDate) => {
+        setExperiencesData(
+            experiencesData.map(formation =>
+                formation.title === oldTitle ? {
+                    title: title,
+                    company: company,
+                    description: description,
+                    startDate: startDate,
+                    endDate: endDate
+                } : formation
+            )
+        )
+    }
+
+    const removeExperience = (title) => {
+        setExperiencesData(experiencesData.filter(experience => {
+            return experience.title !== title
         }))
     }
 
@@ -27,5 +43,5 @@ export const useExperience = () => {
         setExperiencesData([]);
     }
 
-    return {experiencesData, addExperience, removeExperience, clear, setExperiencesData}
+    return {experiencesData, setExperiencesData, createExperience, updateExperience, removeExperience, clear}
 }

@@ -51,7 +51,7 @@ export default function Register() {
 
         switch (fetch.status) {
             case 200:
-                const token = Cookies.get("token");
+                const token = Cookies.get("jwt_token");
                 if(token !== "" || token !== undefined) {
                     setCurrentJwt(token);
                     navigate("/");
@@ -172,12 +172,12 @@ export default function Register() {
                     variant="contained"
                     sx={{mt: 3, mb: 2}}
                 >
-                    Sign Up
+                    Register
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Link href="/login" variant="body2">
-                            Already have an account? Sign up
+                            Already have an account? Sign in
                         </Link>
                     </Grid>
                 </Grid>

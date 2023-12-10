@@ -12,6 +12,7 @@ import Login from "./pages/auth/Login.jsx";
 import BoardElement from "./components/BoardElement.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 
+
 export default function App() {
 
     const {currentJwt} = useAuth();
@@ -21,7 +22,6 @@ export default function App() {
     useEffect(() => {
         return () => {
             setIsLoggedIn(currentJwt !== "");
-            console.log(currentJwt);
         };
     }, [isLoggedIn]);
 

@@ -17,9 +17,11 @@
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-buddy/palette-mui": "^5.0.1",
     "@uiw/react-md-editor": "^4.0.1",
+    "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
+    "react-datepicker": "^4.24.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
     "react-pro-sidebar": "^1.1.0-alpha.1",
@@ -41,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "prop-types": "^15.8.1",
     "react-axios": "^2.0.6",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }

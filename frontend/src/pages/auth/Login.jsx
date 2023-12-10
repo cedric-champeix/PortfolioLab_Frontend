@@ -38,12 +38,14 @@ export default function Login() {
             headers: {
                 "Content-Type": "application/json",
             },
+            withCredentials: true,
             data : data
         });
 
         if(fetch.status === 200) {
             const token = Cookies.get("jwt_token");
             console.log(Cookies.get('jwt_token'))
+            console.log(Cookies)
             if(token !== "" || token !== undefined) {
                 setCurrentJwt(token);
                 navigate("/");
@@ -72,7 +74,7 @@ export default function Login() {
             <img alt={"Portfolio Lab logo"} width={64} style={{borderRadius: "8px"}}
                  src={'/src/assets/logos/logo.png'}></img>
             <Typography component="h1" variant="h5">
-                Sign up to PortfolioLab
+                Sign in to PortfolioLab
             </Typography>
             <Box
                 component="form"
@@ -114,12 +116,12 @@ export default function Login() {
                     variant="contained"
                     sx={{mt: 3, mb: 2}}
                 >
-                    Sign Up
+                    Sign in
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Link href="/register" variant="body2">
-                            Already have an account? Sign in
+                            You don't have an account? Register
                         </Link>
                     </Grid>
                 </Grid>

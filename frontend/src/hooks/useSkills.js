@@ -17,7 +17,7 @@ export const useSkills = () => {
             mastery: mastery,
             isSoft: isSoft,
             resumeId: resumeId,
-            Projects: project ? project : []
+            Projects: project ? [project] : []
         }
 
         const fetch = await axios({

@@ -24,10 +24,12 @@ export default function FormationAction(props) {
     const [open, setOpen] = useState(false);
     const {
         type,
+        fId,
         fFormationName,
         fUniversityName,
         fStartDate,
         fEndDate,
+        resumeData,
         createFormation,
         updateFormation
     } = props
@@ -53,10 +55,10 @@ export default function FormationAction(props) {
     const handleSubmit = () => {
         switch (type) {
             case "edit":
-                updateFormation(fFormationName, data.formationName, data.universityName, data.startDate, data.endDate || onGoing)
+                updateFormation(fId, data.formationName, data.universityName, data.startDate, data.endDate || onGoing)
                 break;
             case "add":
-                createFormation(data.formationName, data.universityName, data.startDate, data.endDate || onGoing);
+                createFormation(data.formationName, data.universityName, data.startDate, data.endDate || onGoing, resumeData.resumeId);
                 break;
         }
         toggle();

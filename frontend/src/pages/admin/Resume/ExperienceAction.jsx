@@ -24,11 +24,13 @@ export default function ExperienceAction(props) {
     const [open, setOpen] = useState(false);
     const {
         type,
+        expId,
         expTitle,
         expCompany,
         expDescription,
         expStartDate,
         expEndDate,
+        resumeData,
         createExperience,
         updateExperience
     } = props
@@ -56,10 +58,10 @@ export default function ExperienceAction(props) {
     const handleSubmit = () => {
         switch (type) {
             case "edit":
-                updateExperience(expTitle, data.title, data.company, data.description, data.startDate, data.endDate || onGoing)
+                updateExperience(expId, data.title, data.company, data.description, data.startDate, data.endDate || onGoing)
                 break;
             case "add":
-                createExperience(data.title, data.company, data.description, data.startDate, data.endDate || onGoing);
+                createExperience(data.title, data.company, data.description, data.startDate, data.endDate || onGoing, resumeData.resumeId);
                 break;
         }
         toggle();

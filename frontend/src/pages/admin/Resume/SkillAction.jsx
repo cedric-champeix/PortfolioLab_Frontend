@@ -3,12 +3,7 @@ import Button from "@mui/material/Button";
 import {Dialog,Box, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-
-const level = {
-    BEGINNER: "beginner",
-    INTERMEDIATE: "intermediate",
-    ADVANCED: "advanced"
-}
+import {level} from "../../../types/level.js"
 
 export default function SkillAction(props) {
 

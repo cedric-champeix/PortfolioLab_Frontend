@@ -23,7 +23,7 @@ export const RemoveSafeguard = ({open, onSubmit, onClose, name}) => {
             </DialogContentText>
         </DialogContent>
         <DialogActions>
-            <Button color="primary" onClick={onSubmit}>
+            <Button color="error" onClick={onSubmit}>
                 Delete
             </Button>
             <Button onClick={onClose} autoFocus>

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Button from "@mui/material/Button";
-import {Dialog,Box, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select} from "@mui/material";
+import {Dialog,Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {contactTypes} from "../../../types/contact.js"
@@ -21,10 +21,10 @@ export default function ContactAction(props) {
     const handleSubmit = () => {
         switch (type) {
             case "edit":
-                updateContact(contactId, data.title, data.text)
+                updateContact(contactId, data.title ? data.title : contactTypes.EMAIL, data.text)
                 break;
             case "add":
-                createContact(data.title, data.text, resumeData.resumeId);
+                createContact(data.title ? data.title : contactTypes.EMAIL, data.text, resumeData.resumeId);
                 break;
         }
         toggle();
@@ -37,8 +37,9 @@ export default function ContactAction(props) {
                 <Box component="form">
                     <DialogContent>
                         <Select value={data.title ? data.title : contactTypes.EMAIL}
-                                onChange={(e) => setData({...data, title: e.target.value})} name={"title"}
-                                id={"title"} placeholder={"Select level of mastery"}>
+                                onChange={(e) => setData({...data, title: e.target.value})}
+                                name={"title"}
+                                id={"title"}>
                             {
                                 Object.values(contactTypes).map((value, i) => (
                                     <MenuItem key={value+i} value={value}>{value}</MenuItem>
@@ -55,7 +56,7 @@ export default function ContactAction(props) {
                                 })
                             }}
                             margin="dense"
-                            id="description"
+                            id="text"
                             label="Contact text"
                             type="name"
                             fullWidth

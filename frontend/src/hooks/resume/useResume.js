@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useResume = () => {
 
-    const defaultResume = {resumeId: null, description: "", languages: "", hobbies: ""}
+    const defaultResume = {resumeId: null, description: "", languages: [], hobbies: []}
 
     const [resumeData, setResumeData] = useState(defaultResume);
 
@@ -21,12 +21,13 @@ export const useResume = () => {
         }
     }
 
-    const updateResume = async (id, description, languages, hobbies) => {
+    const updateResume = async (description, languages, hobbies) => {
         const data = {
             description: description,
             languages: languages,
             hobbies: hobbies,
         }
+        console.log("Update resume")
 
         const fetch = await axios({
             url: `http://localhost:8080/editor/resume`,
@@ -36,7 +37,7 @@ export const useResume = () => {
         });
 
         if (fetch.status === 200) {
-            setResumeData(fetch.data)
+            return fetch.data
         } else {
             console.error(fetch.status, fetch.data.message)
         }

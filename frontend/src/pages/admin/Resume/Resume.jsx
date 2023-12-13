@@ -9,6 +9,7 @@ import {Card, CardContent} from "@mui/material";
 import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {useConfirmation} from "../../../context/ConfirmationService.jsx";
+import ImageAction from "./ImageAction.jsx";
 import ContactAction from "./ContactAction.jsx";
 import SkillAction from "./SkillAction.jsx";
 import ExperienceAction from "./ExperienceAction.jsx";
@@ -16,6 +17,7 @@ import FormationAction from "./FormationAction.jsx";
 import LanguageAction from "./LanguageAction.jsx";
 import HobbyAction from "./HobbyAction.jsx";
 import {useResume} from "../../../hooks/resume/useResume.js";
+import {useImage} from "../../../hooks/resume/useImage.js";
 import {useContact} from "../../../hooks/resume/useContact.js";
 import {useSkills} from "../../../hooks/resume/useSkills.js";
 import {useExperience} from "../../../hooks/resume/useExperience.js";
@@ -50,6 +52,7 @@ export default function Resume() {
             setResumeData({
                 resumeId: data.id,
                 description: data.description,
+                image: data.image,
                 hobbies: data.hobbies,
                 languages: data.languages
             })
@@ -224,11 +227,11 @@ export default function Resume() {
                 }}
     >
         <Toolbar/>
-        <Container maxWidth="lg" sx={{mt: 4, mb: 4}} >
+        <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
             <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", borderRadius: "8px", padding: "20px"}}>
                 <Grid container marginY="10px">
-                    <Grid item xs={3} padding="5px">
-                        <Box component={"img"} width={200} src={"src/assets/data/Photo_profil_256.png"}></Box>
+                    <Grid item xs={3}>
+                        <ImageAction resumeData={resumeData}/>
                     </Grid>
                     <Grid item xs={9} padding="5px">
                         <Title>Description</Title>

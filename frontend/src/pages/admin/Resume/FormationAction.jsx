@@ -186,7 +186,7 @@ export default function FormationAction(props) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle}>Close</Button>
+                        <Button onClick={toggle} color={"error"}>Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>

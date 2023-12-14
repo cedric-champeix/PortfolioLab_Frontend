@@ -9,9 +9,9 @@ export default function ProtectedRoute({routeType}) {
     const evaluatePass = () => {
         switch (routeType) {
             case "admin":
-                return currentJwt !== "" && currentJwt !== undefined;
-            case "auth":
-                return currentJwt === "" || currentJwt === undefined;
+                return currentJwt && true
+            default:
+                return !currentJwt && true
         }
     }
     const path = () => {

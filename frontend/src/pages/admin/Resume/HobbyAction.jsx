@@ -39,7 +39,8 @@ export default function HobbyAction(props) {
                         resumeId: data.id,
                         description: data.description,
                         hobbies: data.hobbies,
-                        languages: data.languages
+                        languages: data.languages,
+                        image: data.image
                     })
                 })
                 break;
@@ -55,7 +56,8 @@ export default function HobbyAction(props) {
                         resumeId: data.id,
                         description: data.description,
                         hobbies: data.hobbies,
-                        languages: data.languages
+                        languages: data.languages,
+                        image: data.image
                     })
                 })
                 break;

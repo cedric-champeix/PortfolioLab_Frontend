@@ -46,7 +46,8 @@ export default function LanguageAction(props) {
                         resumeId: data.id,
                         description: data.description,
                         hobbies: data.hobbies,
-                        languages: data.languages
+                        languages: data.languages,
+                        image: data.image
                     })
                 })
                 break;
@@ -62,7 +63,8 @@ export default function LanguageAction(props) {
                         resumeId: data.id,
                         description: data.description,
                         hobbies: data.hobbies,
-                        languages: data.languages
+                        languages: data.languages,
+                        image: data.image
                     })
                 })
                 break;

@@ -133,7 +133,8 @@ export default function Resume() {
                     resumeId: data.id,
                     description: data.description,
                     hobbies: data.hobbies,
-                    languages: data.languages
+                    languages: data.languages,
+                    image: data.image
                 })
             })
             console.log("Removing language")
@@ -156,7 +157,8 @@ export default function Resume() {
                     resumeId: data.id,
                     description: data.description,
                     hobbies: data.hobbies,
-                    languages: data.languages
+                    languages: data.languages,
+                    image: data.image
                 })
             })
             console.log("Removing hobby")
@@ -198,7 +200,8 @@ export default function Resume() {
                 resumeId: data.id,
                 description: data.description,
                 hobbies: data.hobbies,
-                languages: data.languages
+                languages: data.languages,
+                image: data.image
             })
         })
     };

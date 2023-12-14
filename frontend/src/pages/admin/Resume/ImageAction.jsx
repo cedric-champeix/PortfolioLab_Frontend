@@ -44,6 +44,10 @@ export default function ContactAction(props) {
         toggle();
     }
 
+    const fallbackImage = () => {
+        setImageLink(baseImage)
+    }
+
     return <>
         <Paper>
             <Dialog open={open}>
@@ -67,6 +71,7 @@ export default function ContactAction(props) {
                                      width={200}
                                      height={200}
                                      src={tempImageUrl}
+                                     onError={fallbackImage}
                                      alt={"Profile picture preview"}/>
                             </label>
                         </Button>
@@ -88,6 +93,7 @@ export default function ContactAction(props) {
                  width={200}
                  height={200}
                  src={imageLink}
+                 onError={fallbackImage}
                  alt={"Profile picture"}></Box>
         </Button>
     </>

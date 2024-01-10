@@ -1,4 +1,3 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,22 +8,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {useAuth} from "../../context/AuthContext.jsx";
+import {useAuth} from "../../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {registerSchema} from "../../config/yup/schema.js";
-
-
 
 export default function Register() {
 
     const {setCurrentJwt} = useAuth()
     const navigate = useNavigate();
 
-    const {register, watch, handleSubmit, formState} = useForm({
-        resolver: yupResolver(registerSchema)
-    });
+    // const {} = useForm({
+    //     resolver: yupResolver(registerSchema)
+    // });
 
     const submitForm = async (ev) => {
         ev.preventDefault();
@@ -32,10 +26,10 @@ export default function Register() {
         //Data comes here
         const data = {
             email: formData.get("email"),
-            pwd:formData.get("password"),
-            firstName:formData.get("firstName"),
-            lastName:formData.get("lastName"),
-            username:formData.get("username")
+            pwd: formData.get("password"),
+            firstName: formData.get("firstName"),
+            lastName: formData.get("lastName"),
+            username: formData.get("username")
         }
 
         const fetch = await axios({
@@ -44,22 +38,21 @@ export default function Register() {
             headers: {
                 "Content-Type": "application/json",
             },
-            data : data
+            data: data
         });
         const res = fetch.data;
         console.log(res);
 
+        const token = Cookies.get("jwt_token");
         switch (fetch.status) {
             case 200:
-                const token = Cookies.get("jwt_token");
-                if(token !== "" || token !== undefined) {
+                if (token !== "" || token !== undefined) {
                     setCurrentJwt(token);
                     navigate("/");
                 }
                 break;
             case 409:
                 //error catch
-                //TODO : Print error badge
                 break;
         }
         //Debug
@@ -97,7 +90,6 @@ export default function Register() {
                             id="firstName"
                             label="First Name"
                             autoFocus
-                            {...register('firstName')}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -108,7 +100,7 @@ export default function Register() {
                             label="Last Name"
                             name="lastName"
                             autoComplete="family-name"
-                            {...register('lastName')}
+                            //{...register('lastName')}
 
                         />
                     </Grid>

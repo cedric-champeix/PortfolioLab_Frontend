@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import {
     Dialog,
@@ -10,11 +10,9 @@ import {
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
-export default function HobbyAction(props) {
+export default function HobbyAction(type, hobbyName, resumeData, setResumeData, updateResume) {
 
     const [open, setOpen] = useState(false);
-    const {type, hobbyName, resumeData, setResumeData, updateResume} = props
-
     const [data, setData] = useState({name: hobbyName});
 
     const toggle = () => {
@@ -23,11 +21,11 @@ export default function HobbyAction(props) {
     }
 
 
+    const arr = resumeData.hobbies
+    const index = arr.findIndex(hobby => hobby.name === data.name)
     const handleSubmit = () => {
         switch (type) {
             case "add":
-                const arr = resumeData.hobbies
-                const index = arr.findIndex(hobby => hobby.name === data.name)
                 index === -1 ? arr.push(data) : arr[index] = data
 
                 updateResume(

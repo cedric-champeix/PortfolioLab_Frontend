@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from "react";
+import  {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
-import {Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
+import {Dialog, Box, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
 import {useImage} from "../../../hooks/resume/useImage.js";
 
-export default function ContactAction(props) {
+export default function ContactAction(resumeData) {
 
     const baseImage = "src/assets/icons/blank-profile-picture.png"
 
     const [open, setOpen] = useState(false);
-    const {resumeData} = props
-
     const {imageLink, setImageLink, uploadImage} = useImage()
 
     const [selectedImage, setSelectedImage] = useState(null);
@@ -20,7 +17,7 @@ export default function ContactAction(props) {
 
     useEffect(() => {
         setImageLink(resumeData.image ? "http://localhost:8080/" + resumeData.image : baseImage)
-    }, [resumeData])
+    })
 
     useEffect(() => {
         if (selectedImage) {
@@ -35,7 +32,7 @@ export default function ContactAction(props) {
         setOpen(!open);
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async () => {
         if (selectedImage) {
             uploadImage(selectedImage).then((link) => {
                 setImageLink("http://localhost:8080/" + link)
@@ -78,7 +75,7 @@ export default function ContactAction(props) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle} color={"error"}>Close</Button>
+                        <Button onClick={toggle} color="error">Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>

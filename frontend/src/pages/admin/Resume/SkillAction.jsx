@@ -1,15 +1,13 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
-import {Dialog,Box, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select} from "@mui/material";
+import {Dialog,Box, DialogActions, DialogContent,DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {level} from "../../../types/level.js"
 
-export default function SkillAction(props) {
+export default function SkillAction(type, skillId, skillName, description, mastery, isSoft, createSkill, updateSkill, resumeData) {
 
     const [open, setOpen] = useState(false);
-    const {type, skillId, skillName, description, mastery, isSoft, createSkill, updateSkill, resumeData} = props
-
     const [data, setData] = useState({name: skillName, description: description, mastery: mastery, isSoft: isSoft});
 
     const toggle = () => {
@@ -86,7 +84,7 @@ export default function SkillAction(props) {
                                     <input
                                         type="checkbox"
                                         checked={data.isSoft}
-                                        onChange={(e) => setData({...data, isSoft: !data.isSoft})}
+                                        onChange={() => setData({...data, isSoft: !data.isSoft})}
                                     />
                                     Soft Skill
                                 </label>
@@ -95,7 +93,7 @@ export default function SkillAction(props) {
                         </DialogContent>
 
                         <DialogActions>
-                            <Button onClick={toggle} color={"error"}>Close</Button>
+                            <Button onClick={toggle} color="error">Close</Button>
                             <Button onClick={handleSubmit}>Submit</Button>
                         </DialogActions>
                     </Box>

@@ -1,11 +1,9 @@
-import React, {useState} from "react";
-import Dashboard from "./Dashboard/Dashboard.jsx";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import MDEditor from '@uiw/react-md-editor';
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-
+import {useState} from "react";
 
 
 export default function Portfolio() {
@@ -25,14 +23,14 @@ export default function Portfolio() {
 
                 }}
     >
-        <Toolbar />
-            <MDEditor style={{marginBottom: 12}} height={460} value={mdValue} onChange={setMdValue}></MDEditor>
+        <Toolbar/>
+        <MDEditor style={{marginBottom: 12}} height={460} value={mdValue} onChange={setMdValue}></MDEditor>
 
         <Container justifyContent={"flex-end"} spacing={3}>
 
-        <Button variant={"contained"}>Submit</Button>
-        <Button variant={"outlined"} onClick={() => setMdValue("")}>Clear</Button>
+            <Button variant="contained">Submit</Button>
+            <Button variant="outlined" onClick={() => setMdValue("")}>Clear</Button>
         </Container>
     </Box>
 }
-Portfolio.componentName="Portfolio"
+Portfolio.componentName = "Portfolio"

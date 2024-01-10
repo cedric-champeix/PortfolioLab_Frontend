@@ -1,5 +1,4 @@
-import {createContext, useContext, useState} from 'react';
-import {skillData} from "../data/skillData.js";
+import React, {createContext, useState} from 'react';
 
 export const SkillsContext = createContext(null);
 
@@ -36,4 +35,7 @@ export const SkillsProvider = ({children, data}) => {
     </SkillsContext.Provider>
 }
 
-export const useSkills = () => useContext(SkillsContext);
+SkillsProvider.propTypes = {
+    children : React.FC,
+    data : {}
+}

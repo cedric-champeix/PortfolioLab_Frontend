@@ -1,4 +1,4 @@
-import {useAuth} from "../../context/AuthContext.jsx";
+import {useAuth} from "../../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -10,7 +10,6 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
-import * as React from "react";
 
 export default function Login() {
 
@@ -51,10 +50,10 @@ export default function Login() {
                 navigate("/");
             }
         } else {
-            //Erorr
-            //Add a erorr message with react hook form
+            //Error
+            //Add an error message with react hook form
         }
-        const res = fetch.data;
+        //const res = fetch.data;
 
         //Debug
         console.log(fetch);
@@ -121,7 +120,7 @@ export default function Login() {
                 <Grid container justifyContent="flex-end">
                     <Grid item>
                         <Link href="/register" variant="body2">
-                            You don't have an account? Register
+                            You do not have an account? Register
                         </Link>
                     </Grid>
                 </Grid>

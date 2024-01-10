@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -24,6 +24,7 @@ import {useAuth} from "../context/AuthContext.jsx";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 import {SkillsProvider} from "../context/SkillsContext.jsx";
 import {skillData} from "../data/skillData.js";
+import {string} from "prop-types";
 
 
 // function Copyright(props) {
@@ -85,7 +86,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function Dashboard({element, elementName}) {
+export default function BoardElement({element, elementName}) {
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -168,4 +169,9 @@ export default function Dashboard({element, elementName}) {
                 </ConfirmationServiceContextProvider>
             </Box>
     );
+}
+
+BoardElement.propTypes = {
+    element : React.FC,
+    elementName: string
 }

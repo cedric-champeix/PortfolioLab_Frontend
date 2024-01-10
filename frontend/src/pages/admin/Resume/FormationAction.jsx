@@ -1,14 +1,11 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import {
     Dialog,
     Box,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle,
-    MenuItem,
-    Select
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
@@ -19,20 +16,17 @@ import {parse, format} from "date-fns";
 
 const onGoing = "ongoing"
 
-export default function FormationAction(props) {
+export default function FormationAction(type,
+                                        fId,
+                                        fFormationName,
+                                        fUniversityName,
+                                        fStartDate,
+                                        fEndDate,
+                                        resumeData,
+                                        createFormation,
+                                        updateFormation) {
 
     const [open, setOpen] = useState(false);
-    const {
-        type,
-        fId,
-        fFormationName,
-        fUniversityName,
-        fStartDate,
-        fEndDate,
-        resumeData,
-        createFormation,
-        updateFormation
-    } = props
 
     const [data, setData] = useState({
         formationName: fFormationName,
@@ -186,7 +180,7 @@ export default function FormationAction(props) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle} color={"error"}>Close</Button>
+                        <Button onClick={toggle} color="error">Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>

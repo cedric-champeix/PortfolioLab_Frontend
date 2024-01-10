@@ -1,14 +1,13 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog,Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {contactTypes} from "../../../types/contact.js"
 
-export default function ContactAction(props) {
+export default function ContactAction(type, contactId, contactTitle, contactText, resumeData, createContact, updateContact) {
 
     const [open, setOpen] = useState(false);
-    const {type, contactId, contactTitle, contactText, resumeData, createContact, updateContact} = props
 
     const [data, setData] = useState({title: contactTitle, text: contactText});
 
@@ -68,7 +67,7 @@ export default function ContactAction(props) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle} color={"error"}>Close</Button>
+                        <Button onClick={toggle} color="error">Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>

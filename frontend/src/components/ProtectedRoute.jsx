@@ -1,8 +1,8 @@
 import {useAuth} from "../context/AuthContext.jsx";
 import {Navigate, Outlet} from "react-router-dom";
+import {string} from "prop-types";
 
 export default function ProtectedRoute({routeType}) {
-
     const {currentJwt} = useAuth();
 
 
@@ -21,4 +21,8 @@ export default function ProtectedRoute({routeType}) {
     return (
         evaluatePass() ? <Outlet></Outlet> : <Navigate to={path()}></Navigate>
     )
+}
+
+ProtectedRoute.propTypes = {
+    routeType: string
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import {Card, CardContent} from "@mui/material";
 import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
-import {useConfirmation} from "../../../context/ConfirmationService.jsx";
+import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import ImageAction from "./ImageAction.jsx";
 import ContactAction from "./ContactAction.jsx";
 import SkillAction from "./SkillAction.jsx";
@@ -17,7 +17,6 @@ import FormationAction from "./FormationAction.jsx";
 import LanguageAction from "./LanguageAction.jsx";
 import HobbyAction from "./HobbyAction.jsx";
 import {useResume} from "../../../hooks/resume/useResume.js";
-import {useImage} from "../../../hooks/resume/useImage.js";
 import {useContact} from "../../../hooks/resume/useContact.js";
 import {useSkills} from "../../../hooks/resume/useSkills.js";
 import {useExperience} from "../../../hooks/resume/useExperience.js";
@@ -63,7 +62,7 @@ export default function Resume() {
             setFormationsData(data.formations)
         })
 
-    }, []);
+    });
 
     useEffect(() => {
         return () => {
@@ -326,7 +325,7 @@ export default function Resume() {
                                                        resumeData={resumeData}></ContactAction>
                                         <Button onClick={() => removeContactSafeguard(contact.id, contact.title)}
                                                 size="small"
-                                                color={"error"}>
+                                                color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}
                                                  alt={"Delete contact"}/>
                                         </Button>
@@ -343,7 +342,7 @@ export default function Resume() {
                         <Grid item xs={6}>
                             <Title>Skills</Title>
                         </Grid>
-                        <Grid item xs={6} textAlign={"right"}>
+                        <Grid item xs={6} textAlign="right">
                             <SkillAction type={"add"}
                                          skillName={""}
                                          description={""}
@@ -390,7 +389,7 @@ export default function Resume() {
                                                      resumeData={resumeData}></SkillAction>
                                         <Button onClick={() => removeSkillSafeguard(skill.id, skill.name)}
                                                 size="small"
-                                                color={"error"}>
+                                                color="error">
                                             <img
                                                 src={"/src/assets/icons/rubbish_bin.svg"}
                                                 alt={"Delete skill"}/>
@@ -407,7 +406,7 @@ export default function Resume() {
                         <Grid item xs={6}>
                             <Title>Experiences</Title>
                         </Grid>
-                        <Grid item xs={6} textAlign={"right"}>
+                        <Grid item xs={6} textAlign="right">
                             <ExperienceAction type={"add"}
                                               expTitle={""}
                                               expCompany={""}
@@ -475,7 +474,7 @@ export default function Resume() {
                         <Grid item xs={6}>
                             <Title>Formations</Title>
                         </Grid>
-                        <Grid item xs={6} textAlign={"right"}>
+                        <Grid item xs={6} textAlign="right">
                             <FormationAction type={"add"}
                                              fFormationName={""}
                                              fUniversityName={""}
@@ -535,7 +534,7 @@ export default function Resume() {
                         <Grid item xs={6}>
                             <Title>Languages</Title>
                         </Grid>
-                        <Grid item xs={6} textAlign={"right"}>
+                        <Grid item xs={6} textAlign="right">
                             <LanguageAction type={"add"}
                                             languageName={""}
                                             languageLevel={""}
@@ -590,7 +589,7 @@ export default function Resume() {
                         <Grid item xs={6}>
                             <Title>Hobbies</Title>
                         </Grid>
-                        <Grid item xs={6} textAlign={"right"}>
+                        <Grid item xs={6} textAlign="right">
                             <HobbyAction type={"add"}
                                          hobbyName={""}
                                          resumeData={resumeData}
@@ -636,7 +635,7 @@ export default function Resume() {
 
                 <Grid item
                       xs={12}
-                      textAlign={"right"}
+                      textAlign="right"
                       marginY="10px">
                     <Button onClick={() => resetResumeSafeguard()}
                             size="large"

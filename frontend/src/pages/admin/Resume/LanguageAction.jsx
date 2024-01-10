@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import {
     Dialog,
@@ -13,10 +13,9 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {languageLevelTypes} from "../../../types/languageLevel.js"
 
-export default function LanguageAction(props) {
+export default function LanguageAction(type, languageName, languageLevel, resumeData, setResumeData, updateResume) {
 
     const [open, setOpen] = useState(false);
-    const {type, languageName, languageLevel, resumeData, setResumeData, updateResume} = props
 
     const [data, setData] = useState({name: languageName, level: languageLevel});
 
@@ -31,10 +30,10 @@ export default function LanguageAction(props) {
             data.level = languageLevelTypes.B1
         }
 
+        const arr = resumeData.languages
+        const index = arr.findIndex(language => language.name === data.name)
         switch (type) {
             case "add":
-                const arr = resumeData.languages
-                const index = arr.findIndex(language => language.name === data.name)
                 index === -1 ? arr.push(data) : arr[index] = data
 
                 updateResume(
@@ -110,7 +109,7 @@ export default function LanguageAction(props) {
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle} color={"error"}>Close</Button>
+                        <Button onClick={toggle} color="error">Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>

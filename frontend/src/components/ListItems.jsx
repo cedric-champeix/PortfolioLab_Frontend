@@ -2,7 +2,6 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
@@ -13,27 +12,27 @@ export const mainListItems = (
         <Link to="/">
             <ListItemButton>
                 <ListItemIcon>
-                    <DashboardIcon />
+                    <DashboardIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText primary="Dashboard"/>
             </ListItemButton>
         </Link>
 
         <Link to="/resume">
             <ListItemButton>
                 <ListItemIcon>
-                    <BookmarkRoundedIcon />
+                    <BookmarkRoundedIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Resume" />
+                <ListItemText primary="Resume"/>
             </ListItemButton>
         </Link>
 
         <Link to="/portfolio">
             <ListItemButton>
                 <ListItemIcon>
-                    <LibraryBooksRoundedIcon />
+                    <LibraryBooksRoundedIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Portfolio" />
+                <ListItemText primary="Portfolio"/>
             </ListItemButton>
         </Link>
 

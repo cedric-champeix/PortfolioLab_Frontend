@@ -1,5 +1,4 @@
-import {createContext, useContext, useRef, useState} from "react";
-import {Dialog} from "@mui/material";
+import {createContext, useRef, useState} from "react";
 import {RemoveSafeguard} from "../pages/admin/Resume/RemoveSafeguard.jsx";
 
 
@@ -11,15 +10,14 @@ import {RemoveSafeguard} from "../pages/admin/Resume/RemoveSafeguard.jsx";
  * First we create a confirmation context. It will store a ptomise (wrong initially)
  * @type {React.Context<Promise<never>>}
  */
-const ConfirmationServiceContext = createContext(Promise.reject());
+export const ConfirmationServiceContext = createContext(Promise.reject());
 
 /**
  * This is our provider for the context
- * @param children
  * @returns {JSX.Element}
  * @constructor
  */
-export const ConfirmationServiceContextProvider = ({children}) => {
+export const ConfirmationServiceContextProvider = () => {
 
     /*
     * These are the options to pass to the dialog.
@@ -70,9 +68,8 @@ export const ConfirmationServiceContextProvider = ({children}) => {
     }
 
     return <>
-        <ConfirmationServiceContext.Provider value={openConfirmation} children={children}/>
+        <ConfirmationServiceContext.Provider value={openConfirmation}></ConfirmationServiceContext.Provider>
         <RemoveSafeguard open={Boolean(confirmationState)} onSubmit={handleSubmit} onClose={handleClose} {...confirmationState}></RemoveSafeguard>
     </>
 }
 
-export const useConfirmation = () => useContext(ConfirmationServiceContext);

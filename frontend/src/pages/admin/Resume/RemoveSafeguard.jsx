@@ -1,5 +1,7 @@
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import Button from "@mui/material/Button";
+import {boolean} from "yup";
+import {string} from "prop-types";
 
 /*
 * Props :
@@ -31,4 +33,11 @@ export const RemoveSafeguard = ({open, onSubmit, onClose, name}) => {
             </Button>
         </DialogActions>
     </Dialog>
+}
+
+RemoveSafeguard.propTypes = {
+    open: boolean,
+    onSubmit: () => {},
+    onClose: () => {},
+    name: string
 }

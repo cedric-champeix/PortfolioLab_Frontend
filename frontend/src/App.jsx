@@ -1,14 +1,14 @@
 import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
-import Dashboard from "./pages/admin/Dashboard.jsx";
-import Portfolio from "./pages/admin/Portfolio.jsx";
-import Resume from "./pages/admin/Resume/Resume.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Portfolio from "./pages/Portfolio.jsx";
+import Resume from "./pages/Resume.jsx";
 import {useAuth} from "./hooks/useAuth.js";
 import {theme} from "./config/theme.js";
 import {ThemeProvider} from "@mui/material/styles";
-import Register from "./pages/auth/Register.jsx";
+import Register from "./pages/Register.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Login from "./pages/auth/Login.jsx";
+import Login from "./pages/Login.jsx";
 import BoardElement from "./components/BoardElement.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 

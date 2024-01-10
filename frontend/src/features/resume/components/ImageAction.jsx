@@ -2,7 +2,7 @@ import  {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Paper from "@mui/material/Paper";
-import {useImage} from "../../../hooks/resume/useImage.js";
+import {useImage} from "../hooks/useImage.js";
 
 export default function ContactAction(resumeData) {
 

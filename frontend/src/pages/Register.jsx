@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {useAuth} from "../../hooks/useAuth.js";
+import {useAuth} from "../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
 
 export default function Register() {
@@ -168,7 +168,7 @@ export default function Register() {
                 </Button>
                 <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link href="/login" variant="body2">
+                        <Link href="/frontend/src/pages/Login" variant="body2">
                             Already have an account? Sign in
                         </Link>
                     </Grid>

@@ -1,5 +1,5 @@
 import {createContext, useRef, useState} from "react";
-import {RemoveSafeguard} from "../pages/admin/Resume/RemoveSafeguard.jsx";
+import {RemoveSafeguard} from "../components/RemoveSafeguard.jsx";
 
 
 //Implementation : https://dev.to/dmtrkovalenko/the-neatest-way-to-handle-alert-dialogs-in-react-1aoe

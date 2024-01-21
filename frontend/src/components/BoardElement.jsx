@@ -20,12 +20,10 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {useNavigate} from "react-router-dom";
-import {useAuth} from "../context/AuthContext.jsx";
-import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
+import {useAuth} from "../hooks/useAuth.js";
 import {SkillsProvider} from "../context/SkillsContext.jsx";
 import {skillData} from "../data/skillData.js";
 import {string} from "prop-types";
-
 
 // function Copyright(props) {
 //     return (
@@ -162,16 +160,19 @@ export default function BoardElement({element, elementName}) {
                         </ListItemButton>
                     </List>
                 </Drawer>
-                <ConfirmationServiceContextProvider>
+                <>
                     <SkillsProvider data={skillData}>
                         {element}
                     </SkillsProvider>
-                </ConfirmationServiceContextProvider>
+                </>
             </Box>
     );
 }
 
 BoardElement.propTypes = {
-    element : React.FC,
+    element : () => {},
     elementName: string
 }
+BoardElement.defaultProps = {
+    element: () => {},
+};

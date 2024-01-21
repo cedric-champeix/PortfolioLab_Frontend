@@ -1,5 +1,5 @@
-import React, {createContext, useState} from 'react';
-
+import {createContext, useState} from 'react';
+import {array} from "prop-types";
 export const SkillsContext = createContext(null);
 
 export const SkillsProvider = ({children, data}) => {
@@ -36,6 +36,6 @@ export const SkillsProvider = ({children, data}) => {
 }
 
 SkillsProvider.propTypes = {
-    children : React.FC,
-    data : {}
+    children : () => {},
+    data : array
 }

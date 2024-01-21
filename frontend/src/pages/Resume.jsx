@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import {Card, CardContent} from "@mui/material";
 import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
+import {truncate} from "../features/resume/utils/truncate.js"
 import {useConfirmation} from "../hooks/useConfirmation.js";
 import ImageAction from "../features/resume/components/ImageAction.jsx";
 import ContactAction from "../features/resume/components/ContactAction.jsx";
@@ -45,8 +46,11 @@ export default function Resume() {
 
     //Data retrival
     useEffect(() => {
-        console.log("Fetching resume data")
+        //console.log("Fetching resume data")
 
+        //Useless ?
+        //No need to put all the data into the resume
+        /*
         getResume().then((data) => {
             setResumeData({
                 resumeId: data.id,
@@ -60,22 +64,37 @@ export default function Resume() {
             setSkillsData(data.skills)
             setExperiencesData(data.experiences)
             setFormationsData(data.formations)
-        })
+        })*/
 
     });
 
-    useEffect(() => {
-        return () => {
-            console.log("Change on skills data");
-        };
-    }, [skillsData]);
-
+    //Generic remove safeguard to test and implement
+  /*  const removeSafeguard = (resourceId, resourceName, resourceType) => {
+        confirm({
+            catchOnCancel: true,
+            name: resourceName
+        }).then(() => {
+            switch (resourceType) {
+                case "contact":
+                    removeContact(resourceId).then(() => {
+                        console.log("Contact removed : " + resourceName)
+                    })
+                    break
+                case "skill":
+                    removeSkill(resourceId).then(() => {
+                        console.log("Skill removed : " + resourceName)
+                    })
+                    break
+            }
+        })
+    }*/
 
     const removeContactSafeguard = (contactId, contactTitle) => {
         confirm({
             catchOnCancel: true,
             name: contactTitle
         }).then(() => {
+
             removeContact(contactId);
             console.log("Removing contact")
         })
@@ -164,6 +183,7 @@ export default function Resume() {
         })
     }
 
+    //Just clear all the other hook's data
     const resetResumeSafeguard = () => {
         confirm({
             catchOnCancel: true,
@@ -180,10 +200,6 @@ export default function Resume() {
         })
     }
 
-    const truncate = (str, n) => {
-        return (str.length > n) ? str.slice(0, n - 1) + '...' : str;
-    };
-
 
     const [isEditing, setIsEditing] = useState(false);
     const [descriptionValue, setDescriptionValue] = useState(resumeData.description);
@@ -192,6 +208,7 @@ export default function Resume() {
         setIsEditing(true);
     };
 
+    //Just update the data hooks
     const handleSaveClick = () => {
         setIsEditing(false);
         updateResume(descriptionValue, resumeData.languages, resumeData.hobbies).then((data) => {

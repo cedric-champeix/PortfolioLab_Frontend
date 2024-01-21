@@ -7,7 +7,7 @@ import {RemoveSafeguard} from "../components/RemoveSafeguard.jsx";
  * Confirmation service context
  * Quite complex so I will try to explain everything.
  * This service was originally created with Typescript, so there can be some warnings
- * First we create a confirmation context. It will store a ptomise (wrong initially)
+ * First we create a confirmation context. It will store a promise (wrong initially)
  * @type {React.Context<Promise<never>>}
  */
 export const ConfirmationServiceContext = createContext(Promise.reject());
@@ -24,7 +24,7 @@ export const ConfirmationServiceContextProvider = () => {
     * As of now it is only designed as a safeguard for skills and experiences removal, but
     * it can be easily adapted
     * Options :
-    * - CatchOnCancel : specifies if we need to throw something in case of cacel
+    * - CatchOnCancel : specifies if we need to throw something in case of cancel
     * - name : name to display
     */
     const [confirmationState, setConfirmationState] = useState(null);

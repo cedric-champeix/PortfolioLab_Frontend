@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useResume = () => {
 
-    const defaultResume = {resumeId: null, description: "", image: "", languages: [], hobbies: []}
+    const defaultResume = {resumeId: null, description: "", image: "", languages: []}
 
     const [resumeData, setResumeData] = useState(defaultResume);
 

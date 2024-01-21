@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import {createContext, useState} from 'react';
 import Cookies from "js-cookie";
 import {string} from "prop-types";
 
@@ -20,5 +20,5 @@ export const AuthProvider = ({token, children}) => {
 
 AuthProvider.propTypes = {
     token: string,
-    children : React.FC
+    children : () => {}
 }

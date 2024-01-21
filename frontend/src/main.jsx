@@ -14,7 +14,7 @@ import {AuthProvider} from "./context/AuthContext.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <AuthProvider token={"dev"}>
+        <AuthProvider token="dev">
             <BrowserRouter>
                 <App className="app"/>
             </BrowserRouter>

@@ -17,7 +17,7 @@ export const ConfirmationServiceContext = createContext(Promise.reject());
  * @returns {JSX.Element}
  * @constructor
  */
-export const ConfirmationServiceContextProvider = () => {
+export const ConfirmationServiceContextProvider = ({children}) => {
 
     /*
     * These are the options to pass to the dialog.
@@ -68,8 +68,14 @@ export const ConfirmationServiceContextProvider = () => {
     }
 
     return <>
-        <ConfirmationServiceContext.Provider value={openConfirmation}></ConfirmationServiceContext.Provider>
+        <ConfirmationServiceContext.Provider value={openConfirmation}>
+            {children}
+        </ConfirmationServiceContext.Provider>
         <RemoveSafeguard open={Boolean(confirmationState)} onSubmit={handleSubmit} onClose={handleClose} {...confirmationState}></RemoveSafeguard>
     </>
+}
+
+ConfirmationServiceContextProvider.propTypes = {
+    children: () => {}
 }
 

@@ -4,25 +4,37 @@ import {Dialog,Box, DialogActions, DialogContent,DialogTitle, MenuItem, Select} 
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {level} from "../../../types/level.js"
+import {bool, string} from "prop-types";
 
-export default function SkillAction(type, skillId, skillName, description, mastery, isSoft, createSkill, updateSkill, resumeData) {
+export default function SkillAction({
+                                        type,
+                                        skillId,
+                                        skillName,
+                                        description,
+                                        mastery,
+                                        isSoft,
+                                        createSkill,
+                                        updateSkill,
+                                        resumeId
+                                    }) {
 
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({name: skillName, description: description, mastery: mastery, isSoft: isSoft});
+    const [data, setData] = useState({name:  "", description: "", mastery: "", isSoft:  false});
 
     const toggle = () => {
         setData({name: skillName, description: description, mastery: mastery, isSoft: isSoft})
         setOpen(!open);
     }
 
-    
     const handleSubmit = () => {
+        console.log("type")
+                console.log(type)
         switch (type) {
             case "edit":
                 updateSkill(skillId, data.name, data.description, data.mastery, data.isSoft)
                 break;
             case "add":
-                createSkill(data.name, data.description, data.mastery, data.isSoft, resumeData.resumeId);
+                createSkill(data.name, data.description, data.mastery, data.isSoft,resumeId);
                 break;
         }
         toggle();
@@ -107,4 +119,18 @@ export default function SkillAction(type, skillId, skillName, description, maste
             {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
+}
+
+SkillAction.propTypes = {
+    type: string,
+    skillId: string,
+    skillName: string,
+    description: string,
+    mastery: string,
+    isSoft: bool,
+    createSkill: () => {},
+    updateSkill: () => {},
+    resumeId: string
+
+
 }

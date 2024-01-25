@@ -17,25 +17,27 @@ import {parse, format} from "date-fns";
 
 const onGoing = "ongoing"
 
-export default function ExperienceAction(type,
-                                         expId,
-                                         expTitle,
-                                         expCompany,
-                                         expDescription,
-                                         expStartDate,
-                                         expEndDate,
-                                         resumeData,
-                                         createExperience,
-                                         updateExperience) {
+export default function ExperienceAction({
+                                             type,
+                                             expId,
+                                             expTitle,
+                                             expCompany,
+                                             expDescription,
+                                             expStartDate,
+                                             expEndDate,
+                                             resumeId,
+                                             create,
+                                             update
+                                         }) {
 
     const [open, setOpen] = useState(false);
 
     const [data, setData] = useState({
-        title: expTitle,
-        company: expCompany,
-        description: expDescription,
-        startDate: expStartDate,
-        endDate: expEndDate
+        title: "",
+        company: "",
+        description: "",
+        startDate: "",
+        endDate: ""
     });
 
     const toggle = () => {
@@ -51,12 +53,22 @@ export default function ExperienceAction(type,
 
 
     const handleSubmit = () => {
+
+        const body = {
+            "title": data.title,
+            "company": data.company,
+            "description": data.description,
+            "startDate": data.startDate,
+            "endDate": data.endDate || onGoing,
+            "resumeId": resumeId
+        }
         switch (type) {
             case "edit":
-                updateExperience(expId, data.title, data.company, data.description, data.startDate, data.endDate || onGoing)
+                update(expId, body)
                 break;
             case "add":
-                createExperience(data.title, data.company, data.description, data.startDate, data.endDate || onGoing, resumeData.resumeId);
+                console.log(body)
+                create(body);
                 break;
         }
         toggle();

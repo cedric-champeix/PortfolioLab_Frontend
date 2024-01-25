@@ -10,7 +10,7 @@ import {
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
-export default function HobbyAction(type, hobbyName, resumeData, setResumeData, updateResume) {
+export default function HobbyAction(type, hobbyName, hobbyId ,resumeId, createHobbie, updateHobbie) {
 
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({name: hobbyName});
@@ -20,44 +20,13 @@ export default function HobbyAction(type, hobbyName, resumeData, setResumeData, 
         setOpen(!open);
     }
 
-
-    const arr = resumeData.hobbies
-    const index = arr.findIndex(hobby => hobby.name === data.name)
     const handleSubmit = () => {
         switch (type) {
             case "add":
-                index === -1 ? arr.push(data) : arr[index] = data
-
-                updateResume(
-                    resumeData.description,
-                    resumeData.languages,
-                    arr,
-                ).then((data) => {
-                    setResumeData({
-                        resumeId: data.id,
-                        description: data.description,
-                        hobbies: data.hobbies,
-                        languages: data.languages,
-                        image: data.image
-                    })
-                })
+                createHobbie(hobbyName)
                 break;
             case "edit":
-                updateResume(
-                    resumeData.description,
-                    resumeData.languages,
-                    resumeData.hobbies.map(hobby =>
-                        hobby.name === hobbyName ? data : hobby
-                    ),
-                ).then((data) => {
-                    setResumeData({
-                        resumeId: data.id,
-                        description: data.description,
-                        hobbies: data.hobbies,
-                        languages: data.languages,
-                        image: data.image
-                    })
-                })
+                updateHobbie(hobbyName, hobbyId)
                 break;
         }
         toggle();

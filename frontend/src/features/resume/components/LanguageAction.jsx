@@ -13,7 +13,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {languageLevelTypes} from "../../../types/languageLevel.js"
 
-export default function LanguageAction(type, languageName, languageLevel, resumeData, setResumeData, updateResume) {
+export default function LanguageAction(type, languageName, languageId ,languageLevel, resumeId,createLanguage, updateLanguage) {
 
     const [open, setOpen] = useState(false);
 
@@ -26,46 +26,17 @@ export default function LanguageAction(type, languageName, languageLevel, resume
 
 
     const handleSubmit = () => {
+        //Set default level to B1
         if (!data.level) {
             data.level = languageLevelTypes.B1
         }
 
-        const arr = resumeData.languages
-        const index = arr.findIndex(language => language.name === data.name)
         switch (type) {
             case "add":
-                index === -1 ? arr.push(data) : arr[index] = data
-
-                updateResume(
-                    resumeData.description,
-                    arr,
-                    resumeData.hobbies,
-                ).then((data) => {
-                    setResumeData({
-                        resumeId: data.id,
-                        description: data.description,
-                        hobbies: data.hobbies,
-                        languages: data.languages,
-                        image: data.image
-                    })
-                })
+                createLanguage(languageName,languageLevel)
                 break;
             case "edit":
-                updateResume(
-                    resumeData.description,
-                    resumeData.languages.map(language =>
-                        language.name === languageName ? data : language
-                    ),
-                    resumeData.hobbies,
-                ).then((data) => {
-                    setResumeData({
-                        resumeId: data.id,
-                        description: data.description,
-                        hobbies: data.hobbies,
-                        languages: data.languages,
-                        image: data.image
-                    })
-                })
+                updateLanguage(languageName, languageId, languageLevel)
                 break;
         }
         toggle();

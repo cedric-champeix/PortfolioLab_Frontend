@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 export const useSkills = () => {
@@ -6,11 +6,31 @@ export const useSkills = () => {
 
     const [skillsData, setSkillsData] = useState([]);
 
+    const url = "http://localhost:8080/editor/skills"
+
+    //Fetch skills
+    useEffect(() => {
+        const fetchData =   () => {
+            return axios({
+                url: url,
+                method: 'GET',
+                withCredentials: true
+            }).then(response => {
+                return response
+            })
+        }
+       fetchData().then(response => {
+            setSkillsData(response.data)
+        })
+
+    }, [url]);
+
     const getSkillsIds = () => {
         return skillsData.map(item => item.id)
     }
 
     const createSkill = async (name, description, mastery, isSoft, resumeId, project) => {
+        console.log("create skill")
         const data = {
             name: name,
             description: description,
@@ -19,6 +39,9 @@ export const useSkills = () => {
             resumeId: resumeId,
             Projects: project ? [project] : []
         }
+
+        console.log("Skill in creation bef fetch")
+        console.log(data)
 
         const fetch = await axios({
             url: "http://localhost:8080/editor/skill",

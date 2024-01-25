@@ -23,53 +23,26 @@ import {useSkills} from "../features/resume/hooks/useSkills.js";
 import {useExperience} from "../features/resume/hooks/useExperience.js";
 import {useFormation} from "../features/resume/hooks/useFormation.js";
 import TextField from "@mui/material/TextField";
-
+import {useHobbies} from "../features/resume/hooks/useHobbies.js";
+import {useLanguage} from "../features/resume/hooks/useLanguage.js";
+import {useCRUD} from "../features/resume/hooks/useCRUD.js";
+import {endpoints} from "../data/endpoints.js"
 
 export default function Resume() {
     //Using skills data
-    const {resumeData, setResumeData, getResume, updateResume, resetResume} = useResume()
+    const {resumeData, setResumeData, updateResume, resetResume} = useResume()
     const {contactsData, setContactsData, createContact, updateContact, removeContact} = useContact()
     const {skillsData, setSkillsData, createSkill, updateSkill, removeSkill} = useSkills();
-    const {
-        experiencesData,
-        setExperiencesData,
-        createExperience,
-        updateExperience,
-        removeExperience
-    } = useExperience();
+    const {update, create,remove, data} = useCRUD(endpoints.experienceEndpoint)
     const {formationsData, setFormationsData, createFormation, updateFormation, removeFormation} = useFormation();
-
+    const {hobbiesData, setHobbiesData, createHobbie, updateHobbie, removeHobbie} = useHobbies();
+    const {languageData, setLanguageData, createLanguage, updateLanguage, removeLanguage} = useLanguage()
 
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
-
-    //Data retrival
-    useEffect(() => {
-        //console.log("Fetching resume data")
-
-        //Useless ?
-        //No need to put all the data into the resume
-        /*
-        getResume().then((data) => {
-            setResumeData({
-                resumeId: data.id,
-                description: data.description,
-                image: data.image,
-                hobbies: data.hobbies,
-                languages: data.languages
-            })
-            setDescriptionValue(data.description)
-            setContactsData(data.contacts)
-            setSkillsData(data.skills)
-            setExperiencesData(data.experiences)
-            setFormationsData(data.formations)
-        })*/
-
-    });
-
     //Generic remove safeguard to test and implement
-  /*  const removeSafeguard = (resourceId, resourceName, resourceType) => {
+    const removeSafeguard = (resourceId, resourceName, resourceType) => {
         confirm({
             catchOnCancel: true,
             name: resourceName
@@ -85,104 +58,28 @@ export default function Resume() {
                         console.log("Skill removed : " + resourceName)
                     })
                     break
+                case "experience":
+                    remove(resourceId).then(() => {
+                        console.log("Removed experience");
+                    })
+                    break
+                case "formation":
+                    removeFormation(resourceId).then(() => {
+                        console.log("Formation removed")
+                    })
+                    break
+                case "language":
+                    removeLanguage(resourceId).then(() => {
+                        console.log("Language removed")
+                    })
+                    break
+                case "hobby":
+                    removeHobbie(resourceId).then(() => {
+                        console.log("Hobby removed")
+                    })
             }
         })
-    }*/
-
-    const removeContactSafeguard = (contactId, contactTitle) => {
-        confirm({
-            catchOnCancel: true,
-            name: contactTitle
-        }).then(() => {
-
-            removeContact(contactId);
-            console.log("Removing contact")
-        })
     }
-
-    /**
-     * Triggers the safegard dialog, then handles the action to do
-     * @param skillId
-     * @param skillName
-     */
-    const removeSkillSafeguard = (skillId, skillName) => {
-        confirm({
-            catchOnCancel: true,
-            name: skillName
-        }).then(() => {
-            removeSkill(skillId);
-            console.log("Removing skill")
-        })
-    }
-
-    const removeExperienceSafeguard = (experienceId, experienceName) => {
-        confirm({
-            catchOnCancel: true,
-            name: experienceName
-        }).then(() => {
-            removeExperience(experienceId);
-            console.log("Removing experience")
-        })
-    }
-
-    const removeFormationSafeguard = (formationId, formationName) => {
-        confirm({
-            catchOnCancel: true,
-            name: formationName
-        }).then(() => {
-            removeFormation(formationId);
-            console.log("Removing formation")
-        })
-    }
-
-    const removeLanguageSafeguard = (languageName) => {
-        confirm({
-            catchOnCancel: true,
-            name: languageName
-        }).then(() => {
-            updateResume(
-                resumeData.description,
-                resumeData.languages.filter(item => {
-                    return item.name !== languageName
-                }),
-                resumeData.hobbies,
-            ).then((data) => {
-                setResumeData({
-                    resumeId: data.id,
-                    description: data.description,
-                    hobbies: data.hobbies,
-                    languages: data.languages,
-                    image: data.image
-                })
-            })
-            console.log("Removing language")
-        })
-    }
-
-    const removeHobbySafeguard = (hobbyName) => {
-        confirm({
-            catchOnCancel: true,
-            name: hobbyName
-        }).then(() => {
-            updateResume(
-                resumeData.description,
-                resumeData.languages,
-                resumeData.hobbies.filter(item => {
-                    return item.name !== hobbyName
-                }),
-            ).then((data) => {
-                setResumeData({
-                    resumeId: data.id,
-                    description: data.description,
-                    hobbies: data.hobbies,
-                    languages: data.languages,
-                    image: data.image
-                })
-            })
-            console.log("Removing hobby")
-        })
-    }
-
     //Just clear all the other hook's data
     const resetResumeSafeguard = () => {
         confirm({
@@ -195,40 +92,41 @@ export default function Resume() {
                 setSkillsData([])
                 setExperiencesData([])
                 setFormationsData([])
+                setLanguageData([])
+                setHobbiesData([])
             })
             console.log("Reset resume")
         })
     }
 
-
     const [isEditing, setIsEditing] = useState(false);
-    const [descriptionValue, setDescriptionValue] = useState(resumeData.description);
+    const [descriptionValue, setDescriptionValue] = useState("");
+
+    //Description updates when resume data updates
+    useEffect(() => {
+        setDescriptionValue(resumeData.description)
+    }, [resumeData]);
+
 
     const handleEditClick = () => {
         setIsEditing(true);
     };
 
-    //Just update the data hooks
     const handleSaveClick = () => {
         setIsEditing(false);
-        updateResume(descriptionValue, resumeData.languages, resumeData.hobbies).then((data) => {
+        updateResume(descriptionValue).then((data) => {
             setResumeData({
                 resumeId: data.id,
                 description: data.description,
-                hobbies: data.hobbies,
-                languages: data.languages,
                 image: data.image
             })
+            console.log(data)
         })
     };
 
-    const handleCancelClick = () => {
+    const handleCancelClick = (e) => {
         setIsEditing(false);
-        setDescriptionValue(resumeData.description)
-    };
-
-    const handleTextChange = (event) => {
-        setDescriptionValue(event.target.value);
+        setDescriptionValue(e.target.value)
     };
 
 
@@ -260,7 +158,7 @@ export default function Resume() {
                                     <TextField
                                         autoFocus
                                         value={descriptionValue ? descriptionValue : ""}
-                                        onChange={handleTextChange}
+                                        onChange={(e) => setDescriptionValue(e.target.value)}
                                         margin="dense"
                                         label="Description"
                                         type="name"
@@ -277,7 +175,7 @@ export default function Resume() {
                                         <Button variant="outlined"
                                                 style={{margin: "10px"}}
                                                 color="error"
-                                                onClick={handleCancelClick}>
+                                                onClick={(e) => handleCancelClick(e)}>
                                             Cancel
                                         </Button>
                                     </Grid>
@@ -285,7 +183,7 @@ export default function Resume() {
                                 :
                                 <>
                                     <Typography>
-                                        {resumeData.description}
+                                        {descriptionValue}
                                     </Typography>
                                     <Grid item xs={12} textAlign={"right"}>
                                         <Button variant="outlined"
@@ -310,7 +208,7 @@ export default function Resume() {
                                            contactTitle={""}
                                            contactText={""}
                                            createContact={createContact}
-                                           resumeData={resumeData}></ContactAction>
+                                           resumeId={resumeData.resumeId}></ContactAction>
                         </Grid>
                     </Grid>
 
@@ -339,8 +237,8 @@ export default function Resume() {
                                                        contactTitle={contact.title}
                                                        contactText={contact.text}
                                                        updateContact={updateContact}
-                                                       resumeData={resumeData}></ContactAction>
-                                        <Button onClick={() => removeContactSafeguard(contact.id, contact.title)}
+                                                       resumeId={resumeData.resumeId}></ContactAction>
+                                        <Button onClick={() => removeSafeguard(contact.id, contact.title, "contact")}
                                                 size="small"
                                                 color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}
@@ -366,7 +264,7 @@ export default function Resume() {
                                          mastery={""}
                                          isSoft={false}
                                          createSkill={createSkill}
-                                         resumeData={resumeData}>Add a skill</SkillAction>
+                                         resumeId={resumeData.resumeId}>Add a skill</SkillAction>
                         </Grid>
                     </Grid>
                     {
@@ -403,8 +301,8 @@ export default function Resume() {
                                                      isSoft={skill.isSoft}
                                                      createSkill={createSkill}
                                                      updateSkill={updateSkill}
-                                                     resumeData={resumeData}></SkillAction>
-                                        <Button onClick={() => removeSkillSafeguard(skill.id, skill.name)}
+                                                     resumeId={resumeData.resumeId}></SkillAction>
+                                        <Button onClick={() => removeSafeguard(skill.id, skill.name, "skill")}
                                                 size="small"
                                                 color="error">
                                             <img
@@ -430,15 +328,15 @@ export default function Resume() {
                                               expDescription={""}
                                               expStartDate={""}
                                               expEndDate={""}
-                                              resumeData={resumeData}
-                                              createExperience={createExperience}>
+                                              resumeId={resumeData.id}
+                                              create={create}>
                                 Add a formation
                             </ExperienceAction>
                         </Grid>
                     </Grid>
 
                     {
-                        experiencesData.map((experience, i) => (
+                        data.map((experience, i) => (
                             <Grid item xs={4} key={experience.id + i}>
                                 <Card style={{
                                     height: "200px",
@@ -470,10 +368,10 @@ export default function Resume() {
                                                           expDescription={experience.description}
                                                           expStartDate={experience.startDate}
                                                           expEndDate={experience.endDate}
-                                                          resumeData={resumeData}
-                                                          updateExperience={updateExperience}></ExperienceAction>
+                                                          resumeId={resumeData.resumeId}
+                                                          update={update}></ExperienceAction>
                                         <Button
-                                            onClick={() => removeExperienceSafeguard(experience.id, experience.title)}
+                                            onClick={() => removeSafeguard(experience.id, experience.title, "experience")}
                                             size="small"
                                             color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}
@@ -497,7 +395,7 @@ export default function Resume() {
                                              fUniversityName={""}
                                              fStartDate={""}
                                              fEndDate={""}
-                                             resumeData={resumeData}
+                                             resumeId={resumeData.resumeId}
                                              createFormation={createFormation}>
                                 Add a formation
                             </FormationAction>
@@ -532,9 +430,10 @@ export default function Resume() {
                                                          fUniversityName={formation.universityName}
                                                          fStartDate={formation.startDate}
                                                          fEndDate={formation.endDate}
+                                                         resumeId={resumeData.resumeId}
                                                          updateFormation={updateFormation}></FormationAction>
                                         <Button
-                                            onClick={() => removeFormationSafeguard(formation.id, formation.formationName)}
+                                            onClick={() => removeSafeguard(formation.id, formation.formationName, "formation")}
                                             size="small"
                                             color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}
@@ -555,15 +454,15 @@ export default function Resume() {
                             <LanguageAction type={"add"}
                                             languageName={""}
                                             languageLevel={""}
-                                            resumeData={resumeData}
-                                            setResumeData={setResumeData}
-                                            updateResume={updateResume}>
+                                            resumeId={resumeData.resumeId}
+                                            createLanguage={createLanguage}
+                                            updateLanguage={updateLanguage}>
                                 Add a language
                             </LanguageAction>
                         </Grid>
                     </Grid>
                     {
-                        resumeData.languages.map((language, i) => (
+                        languageData.map((language, i) => (
                             <Grid item xs={3} key={language.name + i}>
                                 <Card style={{
                                     height: "140px",
@@ -583,13 +482,14 @@ export default function Resume() {
                                     </CardContent>
                                     <CardActions>
                                         <LanguageAction type={"edit"}
+                                                        languageId={language.id}
                                                         languageName={language.name}
                                                         languageLevel={language.level}
-                                                        resumeData={resumeData}
-                                                        setResumeData={setResumeData}
-                                                        updateResume={updateResume}></LanguageAction>
+                                                        resumeId={resumeData.resumeId}
+                                                        createLanguage={createLanguage}
+                                                        updateLanguage={updateLanguage()}></LanguageAction>
                                         <Button
-                                            onClick={() => removeLanguageSafeguard(language.name)}
+                                            onClick={() => removeSafeguard(language.id, language.name, "language")}
                                             size="small"
                                             color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}
@@ -609,15 +509,15 @@ export default function Resume() {
                         <Grid item xs={6} textAlign="right">
                             <HobbyAction type={"add"}
                                          hobbyName={""}
-                                         resumeData={resumeData}
-                                         setResumeData={setResumeData}
-                                         updateResume={updateResume}>
+                                         resumeId={resumeData.resumeId}
+                                         hobbieData={hobbiesData}
+                                         createHobbie={createHobbie}>
                                 Add a hobby
                             </HobbyAction>
                         </Grid>
                     </Grid>
                     {
-                        resumeData.hobbies.map((hobby, i) => (
+                        hobbiesData.map((hobby, i) => (
                             <Grid item xs={3} key={hobby.name + i}>
                                 <Card style={{
                                     height: "100px",
@@ -635,10 +535,9 @@ export default function Resume() {
                                     <CardActions>
                                         <HobbyAction type={"edit"}
                                                      hobbyName={hobby.name}
-                                                     resumeData={resumeData}
-                                                     setResumeData={setResumeData}
-                                                     updateResume={updateResume}></HobbyAction>
-                                        <Button onClick={() => removeHobbySafeguard(hobby.name)}
+                                                     resumeId={resumeData.resumeId}
+                                                     updateHobbie={updateHobbie}></HobbyAction>
+                                        <Button onClick={() => removeSafeguard(hobby.id,hobby.name, "hobbby")}
                                                 size="small"
                                                 color="error">
                                             <img src={"/src/assets/icons/rubbish_bin.svg"}

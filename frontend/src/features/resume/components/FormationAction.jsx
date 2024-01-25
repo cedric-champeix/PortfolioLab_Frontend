@@ -22,7 +22,7 @@ export default function FormationAction(type,
                                         fUniversityName,
                                         fStartDate,
                                         fEndDate,
-                                        resumeData,
+                                        resumeId,
                                         createFormation,
                                         updateFormation) {
 
@@ -52,7 +52,7 @@ export default function FormationAction(type,
                 updateFormation(fId, data.formationName, data.universityName, data.startDate, data.endDate || onGoing)
                 break;
             case "add":
-                createFormation(data.formationName, data.universityName, data.startDate, data.endDate || onGoing, resumeData.resumeId);
+                createFormation(data.formationName, data.universityName, data.startDate, data.endDate || onGoing, resumeId);
                 break;
         }
         toggle();

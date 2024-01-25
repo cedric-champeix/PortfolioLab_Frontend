@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {contactTypes} from "../../../types/contact.js"
 
-export default function ContactAction(type, contactId, contactTitle, contactText, resumeData, createContact, updateContact) {
+export default function ContactAction(type, contactId, contactTitle, contactText, resumeId, createContact, updateContact) {
 
     const [open, setOpen] = useState(false);
 
@@ -23,7 +23,7 @@ export default function ContactAction(type, contactId, contactTitle, contactText
                 updateContact(contactId, data.title ? data.title : contactTypes.EMAIL, data.text)
                 break;
             case "add":
-                createContact(data.title ? data.title : contactTypes.EMAIL, data.text, resumeData.resumeId);
+                createContact(data.title ? data.title : contactTypes.EMAIL, data.text, resumeId);
                 break;
         }
         toggle();

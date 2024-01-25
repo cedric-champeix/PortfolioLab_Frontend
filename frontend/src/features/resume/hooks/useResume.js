@@ -1,33 +1,38 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 export const useResume = () => {
 
-    const defaultResume = {resumeId: null, description: "", image: "", languages: []}
+    const defaultResume = {resumeId: null, description: "", image: ""}
 
     const [resumeData, setResumeData] = useState(defaultResume);
 
-    const getResume = async () => {
-        const fetch = await axios({
-            url: "http://localhost:8080/editor/resume",
-            method: 'GET',
-            withCredentials: true
-        });
+    const url = "http://localhost:8080/editor/resume"
 
-        if (fetch.status === 200) {
-            return fetch.data
-        } else {
-            console.error(fetch.status, fetch.data.message)
+    useEffect(() => {
+        const fetchData =   () => {
+            return axios({
+                url: url,
+                method: 'GET',
+                withCredentials: true
+            }).then(response => {
+                return response
+            }).catch(error => {
+                console.error(error)
+            })
         }
-    }
+        fetchData().then(response => {
+            setResumeData(response.data)
+        })
 
-    const updateResume = async (description, languages, hobbies) => {
+        //console.log("Updated resume data : ")
+        //console.log(resumeData)
+    }, [url]);
+
+    const updateResume = async (description) => {
         const data = {
             description: description,
-            languages: languages,
-            hobbies: hobbies,
         }
-        console.log("Update resume")
 
         const fetch = await axios({
             url: `http://localhost:8080/editor/resume`,
@@ -37,13 +42,14 @@ export const useResume = () => {
         });
 
         if (fetch.status === 200) {
+            console.log("Update resume")
             return fetch.data
-        } else {
-            console.error(fetch.status, fetch.data.message)
         }
+        console.error(fetch.status, fetch.data.message)
+
     }
 
-    const resetResume = async (setSkillsData, setExperiencesData, setFormationsData, setContactsData) => {
+    const resetResume = async () => {
         const fetch = await axios({
             url: `http://localhost:8080/editor/resume`,
             method: 'DELETE',
@@ -51,16 +57,13 @@ export const useResume = () => {
         });
 
         if (fetch.status === 200) {
-            setResumeData(defaultResume)
-
-            setSkillsData([])
-            setExperiencesData([])
-            setFormationsData([])
-            setContactsData([])
+            setResumeData(fetch.data)
+            console.log(resumeData)
         } else {
             console.error(fetch.status, fetch.data.message)
         }
     }
 
-    return {resumeData, setResumeData, getResume, updateResume, resetResume}
+
+    return {resumeData, setResumeData, updateResume, resetResume}
 }

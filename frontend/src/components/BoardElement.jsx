@@ -24,6 +24,7 @@ import {useAuth} from "../hooks/useAuth.js";
 import {SkillsProvider} from "../context/SkillsContext.jsx";
 import {skillData} from "../data/skillData.js";
 import {string} from "prop-types";
+import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 
 // function Copyright(props) {
 //     return (
@@ -160,11 +161,11 @@ export default function BoardElement({element, elementName}) {
                         </ListItemButton>
                     </List>
                 </Drawer>
-                <>
+                <ConfirmationServiceContextProvider>
                     <SkillsProvider data={skillData}>
                         {element}
                     </SkillsProvider>
-                </>
+                </ConfirmationServiceContextProvider>
             </Box>
     );
 }

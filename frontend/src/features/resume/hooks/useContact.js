@@ -1,10 +1,33 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 export const useContact = () => {
 
 
     const [contactsData, setContactsData] = useState([]);
+
+
+    const url = "http://localhost:8080/editor/contacts"
+
+    useEffect(() => {
+        const fetchData =   () => {
+            return axios({
+                url: url,
+                method: 'GET',
+                withCredentials: true
+            }).then(response => {
+                return response
+            }).catch(error => {
+                console.error(error)
+            })
+        }
+        fetchData().then(response => {
+            setContactsData(response.data)
+        })
+
+        //console.log("Updated resume data : ")
+        //console.log(resumeData)
+    }, [url]);
 
     const createContact = async (title, text, resumeId, project) => {
 

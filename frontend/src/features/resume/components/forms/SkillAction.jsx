@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import {Dialog,Box, DialogActions, DialogContent,DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import {level} from "../../../types/level.js"
+import {level} from "../../../../types/level.js"
 import {bool, string} from "prop-types";
 
 export default function SkillAction({
@@ -27,14 +27,20 @@ export default function SkillAction({
     }
 
     const handleSubmit = () => {
-        console.log("type")
-                console.log(type)
+        const body = {
+            name: data.name,
+            description: data.description,
+            mastery: data.mastery,
+            isSoft: data.isSoft,
+            resumeId: resumeId
+        }
+        console.log(body)
         switch (type) {
             case "edit":
-                updateSkill(skillId, data.name, data.description, data.mastery, data.isSoft)
+                updateSkill(skillId, body)
                 break;
             case "add":
-                createSkill(data.name, data.description, data.mastery, data.isSoft,resumeId);
+                createSkill(body);
                 break;
         }
         toggle();

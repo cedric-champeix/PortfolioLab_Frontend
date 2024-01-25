@@ -16,15 +16,17 @@ import {parse, format} from "date-fns";
 
 const onGoing = "ongoing"
 
-export default function FormationAction(type,
-                                        fId,
-                                        fFormationName,
-                                        fUniversityName,
-                                        fStartDate,
-                                        fEndDate,
-                                        resumeId,
-                                        createFormation,
-                                        updateFormation) {
+export default function FormationAction({
+                                            type,
+                                            fId,
+                                            fFormationName,
+                                            fUniversityName,
+                                            fStartDate,
+                                            fEndDate,
+                                            resumeId,
+                                            createFormation,
+                                            updateFormation
+                                        }) {
 
     const [open, setOpen] = useState(false);
 
@@ -45,14 +47,21 @@ export default function FormationAction(type,
         setOpen(!open);
     }
 
-
     const handleSubmit = () => {
+        const body = {
+            formationName: data.formationName,
+            universityName: data.formationName,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            resumeId: resumeId
+        }
+        console.log(type)
         switch (type) {
             case "edit":
-                updateFormation(fId, data.formationName, data.universityName, data.startDate, data.endDate || onGoing)
+                updateFormation(fId, body)
                 break;
             case "add":
-                createFormation(data.formationName, data.universityName, data.startDate, data.endDate || onGoing, resumeId);
+                createFormation(body);
                 break;
         }
         toggle();

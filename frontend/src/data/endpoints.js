@@ -1,7 +1,7 @@
 
 const baseUrl = "http://localhost:8080"
 export const endpoints = {
-    contactsEndpoint : baseUrl + "/editor/contact/",
+    contactsEndpoint : baseUrl + "/editor/contact",
     resumeEndpoint:baseUrl + "/editor/resume",
     experienceEndpoint: baseUrl + "/editor/experience",
     formationEndpoint: baseUrl + "/editor/formation",

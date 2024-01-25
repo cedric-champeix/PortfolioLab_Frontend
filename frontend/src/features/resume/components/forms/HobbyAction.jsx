@@ -10,7 +10,7 @@ import {
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 
-export default function HobbyAction(type, hobbyName, hobbyId ,resumeId, createHobbie, updateHobbie) {
+export default function HobbyAction({type, hobbyName, hobbyId, resumeId, createHobbie, updateHobbie}) {
 
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({name: hobbyName});
@@ -21,12 +21,17 @@ export default function HobbyAction(type, hobbyName, hobbyId ,resumeId, createHo
     }
 
     const handleSubmit = () => {
+        const body = {
+            name: data.name,
+            description: "lorem ipsum",
+            resumeId: resumeId
+        }
         switch (type) {
             case "add":
-                createHobbie(hobbyName)
+                createHobbie(body)
                 break;
             case "edit":
-                updateHobbie(hobbyName, hobbyId)
+                updateHobbie(hobbyId, body)
                 break;
         }
         toggle();

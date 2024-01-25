@@ -3,9 +3,17 @@ import Button from "@mui/material/Button";
 import {Dialog,Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import {contactTypes} from "../../../types/contact.js"
+import {contactTypes} from "../../../../types/contact.js"
 
-export default function ContactAction(type, contactId, contactTitle, contactText, resumeId, createContact, updateContact) {
+export default function ContactAction({
+                                          type,
+                                          contactId,
+                                          contactTitle,
+                                          contactText,
+                                          resumeId,
+                                          createContact,
+                                          updateContact
+                                      }) {
 
     const [open, setOpen] = useState(false);
 
@@ -18,12 +26,19 @@ export default function ContactAction(type, contactId, contactTitle, contactText
 
 
     const handleSubmit = () => {
+        const body = {
+            title: data.title,
+            text: data.text,
+            resumeId: resumeId
+        }
+        console.log(type)
         switch (type) {
             case "edit":
-                updateContact(contactId, data.title ? data.title : contactTypes.EMAIL, data.text)
+                updateContact(contactId, body)
                 break;
             case "add":
-                createContact(data.title ? data.title : contactTypes.EMAIL, data.text, resumeId);
+                console.log("Add contact")
+                createContact(body);
                 break;
         }
         toggle();

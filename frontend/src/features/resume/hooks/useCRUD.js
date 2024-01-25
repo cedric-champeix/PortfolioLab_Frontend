@@ -28,6 +28,7 @@ export const useCRUD = url => {
         }
         //Execute
         fetchData().then()
+        console.log(data)
 
     }, [url]);
 

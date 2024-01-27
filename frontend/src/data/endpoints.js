@@ -6,6 +6,6 @@ export const endpoints = {
     experienceEndpoint: baseUrl + "/editor/experience",
     formationEndpoint: baseUrl + "/editor/formation",
     hobbiesEndpoint: baseUrl + "/editor/hobbies",
-    languageEndpoint: baseUrl + "/editor/language",
+    languageEndpoint: baseUrl + "/editor/languages",
     skillsEndpoints: baseUrl + "/editor/skill"
 }

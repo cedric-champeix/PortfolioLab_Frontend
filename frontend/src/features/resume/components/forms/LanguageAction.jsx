@@ -11,9 +11,18 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import {languageLevelTypes} from "../../../types/languageLevel.js"
+import {languageLevelTypes} from "../../../../types/languageLevel.js"
+import {string} from "prop-types";
 
-export default function LanguageAction(type, languageName, languageId ,languageLevel, resumeId,createLanguage, updateLanguage) {
+export default function LanguageAction({
+                                           type,
+                                           languageName,
+                                           languageId,
+                                           languageLevel,
+                                           resumeId,
+                                           createLanguage,
+                                           updateLanguage
+                                       }) {
 
     const [open, setOpen] = useState(false);
 
@@ -31,12 +40,18 @@ export default function LanguageAction(type, languageName, languageId ,languageL
             data.level = languageLevelTypes.B1
         }
 
+        const body = {
+            name: data.name,
+            level: data.level,
+            resumeId: resumeId
+        }
+
         switch (type) {
             case "add":
-                createLanguage(languageName,languageLevel)
+                createLanguage(body)
                 break;
             case "edit":
-                updateLanguage(languageName, languageId, languageLevel)
+                updateLanguage(languageId, body)
                 break;
         }
         toggle();
@@ -94,4 +109,15 @@ export default function LanguageAction(type, languageName, languageId ,languageL
             {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
+}
+
+LanguageAction.propTypes = {
+    type: string,
+    languageName: string,
+    languageId: string,
+    languageLevel: string,
+    resumeId: string,
+    createLanguage: () => {},
+    updateLanguage: () => {}
+
 }

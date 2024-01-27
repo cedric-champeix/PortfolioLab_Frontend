@@ -9,6 +9,7 @@ export const useImage = () => {
         const formData = new FormData()
         formData.append("profilePicture", file)
 
+        console.log(formData)
         const fetch = await axios({
             url: `http://localhost:8080/editor/resume/image`,
             method: 'POST',
@@ -20,6 +21,7 @@ export const useImage = () => {
         });
 
         if (fetch.status === 200) {
+            setImageLink(fetch.data.image)
             return fetch.data.image
         } else {
             console.error(fetch.status, fetch.data.message)

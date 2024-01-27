@@ -2,9 +2,9 @@ import  {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Paper from "@mui/material/Paper";
-import {useImage} from "../hooks/useImage.js";
+import {useImage} from "../../hooks/useImage.js";
 
-export default function ContactAction(resumeData) {
+export default function ContactAction({resumeData}) {
 
     const baseImage = "src/assets/icons/blank-profile-picture.png"
 
@@ -17,6 +17,7 @@ export default function ContactAction(resumeData) {
 
     useEffect(() => {
         setImageLink(resumeData.image ? "http://localhost:8080/" + resumeData.image : baseImage)
+        console.log(resumeData)
     })
 
     useEffect(() => {
@@ -94,4 +95,8 @@ export default function ContactAction(resumeData) {
                  alt={"Profile picture"}></Box>
         </Button>
     </>
+}
+
+ContactAction.propTypes = {
+    resumeData: {}
 }

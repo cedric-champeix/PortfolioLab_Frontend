@@ -1,36 +1,79 @@
-import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import MDEditor from '@uiw/react-md-editor';
-import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import ProjectAction from "../features/portfolio/ProjectAction.jsx";
+import {projectsData} from "../features/portfolio/data/projectsData.js";
+import Grid from "@mui/material/Grid";
+import {Card, CardContent, CardMedia} from "@mui/material";
+import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {useState} from "react";
 
-
 export default function Portfolio() {
 
-    const [mdValue, setMdValue] = useState("**Hello, world**");
+    //const {update, create, remove, data} = useCRUD(endpoints.projectsEndpoint)
+    const [data, setData] = useState(projectsData)
+    const createProject = (title, description, imgLink) => {
+        const body = {
+            title: title,
+            description: description,
+            imgLink: imgLink
+        }
+        setData([...data, body])
+    }
 
     return <Box gridAutoFlow='row' className={"Element-"}
                 component="main"
                 sx={{
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'light'
-                            ? theme.palette.grey[100]
-                            : theme.palette.grey[900],
-                    flexGrow: 1,
+                    backgroundColor: "#FFF",
                     height: '100vh',
                     overflow: 'auto',
 
                 }}
     >
+
         <Toolbar/>
-        <MDEditor style={{marginBottom: 12}} height={460} value={mdValue} onChange={setMdValue}></MDEditor>
 
-        <Container justifyContent={"flex-end"} spacing={3}>
+        <Grid container sx={{p: 3}} spacing={2}>
+            {data.map((item) =>
+                <Grid item key={item.title}>
+                    <Card  sx={{ width: 350 }}>
+                        <CardMedia
+                            sx={{ height: 180 }}
+                            image={item.image}
+                            title="green iguana"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                                {
+                                    item.title
+                                }
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {item.description}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Edit</Button>
+                            <Button size="small">Delete</Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+            )}
+        </Grid>
 
-            <Button variant="contained">Submit</Button>
-            <Button variant="outlined" onClick={() => setMdValue("")}>Clear</Button>
-        </Container>
+
+        <Box sx={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            p: 1,
+            borderRadius: "50%"
+        }}
+        >
+            <ProjectAction createProject={createProject}></ProjectAction>
+        </Box>
     </Box>
+
 }
 Portfolio.componentName = "Portfolio"

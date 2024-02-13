@@ -30,7 +30,6 @@ export default function ExperienceSection({resumeId}) {
                 console.log("Item " + resourceName + " removed")
             })
         })
-
     }
 
     return <Grid container marginY="10px">

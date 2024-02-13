@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import {useImage} from "../../hooks/useImage.js";
+import {constants} from "../../../../constants.js";
 
 export default function ContactAction({resumeData}) {
 
@@ -16,7 +17,7 @@ export default function ContactAction({resumeData}) {
 
 
     useEffect(() => {
-        setImageLink(resumeData.image ? "http://localhost:8080/" + resumeData.image : baseImage)
+        setImageLink(resumeData.image ? constants.BACKEND_URL + resumeData.image : baseImage)
         console.log(resumeData)
     })
 
@@ -36,7 +37,7 @@ export default function ContactAction({resumeData}) {
     const handleSubmit = async () => {
         if (selectedImage) {
             uploadImage(selectedImage).then((link) => {
-                setImageLink("http://localhost:8080/" + link)
+                setImageLink(constants.BACKEND_URL + link)
             })
         }
         toggle();
@@ -66,8 +67,6 @@ export default function ContactAction({resumeData}) {
                                      border="1px solid #1976d2"
                                      borderRadius="50%"
                                      margin="auto"
-                                     width={200}
-                                     height={200}
                                      src={tempImageUrl}
                                      onError={fallbackImage}
                                      alt={"Profile picture preview"}/>

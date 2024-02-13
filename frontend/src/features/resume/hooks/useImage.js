@@ -1,9 +1,9 @@
 import {useState} from "react";
 import axios from "axios";
 
-export const useImage = () => {
+export const useImage = (defaultImage) => {
 
-    const [imageLink, setImageLink] = useState("src/assets/icons/blank-profile-picture.png");
+    const [imageLink, setImageLink] = useState(defaultImage);
 
     const uploadImage = async (file) => {
         const formData = new FormData()

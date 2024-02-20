@@ -327,11 +327,6 @@
   resolved "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz"
   integrity sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==
 
-"@esbuild/win32-x64@0.18.20":
-  version "0.18.20"
-  resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
-  integrity sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==
-
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
   resolved "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz"
@@ -704,6 +699,14 @@
     "@svgr/babel-preset" "8.1.0"
     "@svgr/hast-util-to-babel-ast" "8.0.0"
     svg-parser "^2.0.4"
+
+"@tinymce/tinymce-react@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/@tinymce/tinymce-react/-/tinymce-react-4.3.2.tgz"
+  integrity sha512-wJHZhPf2Mk3yTtdVC/uIGh+kvDgKuTw/qV13uzdChTNo68JI1l7jYMrSQOpyimDyn5LHAw0E1zFByrm1WHAVeA==
+  dependencies:
+    prop-types "^15.6.2"
+    tinymce "^6.0.0 || ^5.5.1"
 
 "@types/babel__core@^7.20.2":
   version "7.20.3"
@@ -1723,9 +1726,9 @@ flatted@^3.2.9:
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
 
 follow-redirects@^1.14.9:
-  version "1.15.3"
-  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.3.tgz"
-  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
+  version "1.15.5"
+  resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.5.tgz"
+  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
 
 for-each@^0.3.3:
   version "0.3.3"
@@ -3283,7 +3286,7 @@ react-datepicker@^4.24.0:
     react-onclickoutside "^6.13.0"
     react-popper "^2.3.0"
 
-"react-dom@^15.5.x || ^16.x || ^17.x || ^18.x", "react-dom@^16.8.0 || ^17 || ^18", "react-dom@^16.9.0 || ^17 || ^18", "react-dom@^17.0.0 || ^18.0.0", react-dom@^18.2.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0:
+"react-dom@^15.5.x || ^16.x || ^17.x || ^18.x", "react-dom@^16.8.0 || ^17 || ^18", "react-dom@^16.9.0 || ^17 || ^18", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^18.0.0 || ^17.0.1 || ^16.7.0", react-dom@^18.2.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -3380,7 +3383,7 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^15.5.x || ^16.x || ^17.x || ^18.x", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.9.0 || ^17 || ^18", "react@^17.0.0 || ^18.0.0", react@^18.2.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=18:
+"react@^15.5.x || ^16.x || ^17.x || ^18.x", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.9.0 || ^17 || ^18", "react@^17.0.0 || ^18.0.0", "react@^18.0.0 || ^17.0.1 || ^16.7.0", react@^18.2.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=18:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -3844,6 +3847,11 @@ tiny-case@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/tiny-case/-/tiny-case-1.0.3.tgz"
   integrity sha512-Eet/eeMhkO6TX8mnUteS9zgPbUMQa4I6Kkp5ORiBD5476/m+PIRiumP5tmh5ioJpH7k51Kehawy2UDfsnxxY8Q==
+
+"tinymce@^6.0.0 || ^5.5.1", tinymce@^6.8.3:
+  version "6.8.3"
+  resolved "https://registry.npmjs.org/tinymce/-/tinymce-6.8.3.tgz"
+  integrity sha512-3fCHKAeqT+xNwBVESf6iDbDV0VNwZNmfrkx9c/6Gz5iB8piMfaO6s7FvoiTrj1hf1gVbfyLTnz1DooI6DhgINQ==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

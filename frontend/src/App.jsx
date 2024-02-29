@@ -8,9 +8,9 @@ import {theme} from "./config/theme.js";
 import {ThemeProvider} from "@mui/material/styles";
 import Register from "./pages/Register.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Login from "./pages/Login.jsx";
 import BoardElement from "./components/BoardElement.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
+import Authenticate from "./pages/Authenticate.jsx";
 
 
 export default function App() {
@@ -41,10 +41,10 @@ export default function App() {
                             </Route>
 
                             <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                <Route path={'/register'} element={<Register/>}></Route>
+                                <Route path={'/register'} element={<Authenticate/>}></Route>
                             </Route>
                             <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                <Route path={'/login'} element={<Login/>}></Route>
+                                <Route path={'/registerold'} element={<Register/>}></Route>
                             </Route>
                         </Routes>
                     </main>

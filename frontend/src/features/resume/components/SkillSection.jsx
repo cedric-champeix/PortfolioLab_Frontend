@@ -11,7 +11,7 @@ import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import SkillAction from "./forms/SkillAction.jsx";
 import EditIcon from '@mui/icons-material/Edit';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/styles";
 import Box from "@mui/material/Box";
 
 const useStyles = makeStyles({

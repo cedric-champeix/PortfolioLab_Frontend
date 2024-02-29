@@ -132,7 +132,7 @@ export default function Register() {
 
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            required
+
                             fullWidth
                             name="password"
                             label="Password"
@@ -145,7 +145,6 @@ export default function Register() {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
-                            required
                             fullWidth
                             name="confirmPassword"
                             label="Confirm password"

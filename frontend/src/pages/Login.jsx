@@ -1,16 +1,5 @@
-import {useAuth} from "../hooks/useAuth.js";
-import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import Cookies from "js-cookie";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 
+/*
 export default function Login() {
 
     const {setCurrentJwt} = useAuth()
@@ -127,4 +116,4 @@ export default function Login() {
             </Box>
         </Box>
     </Container>
-}
+}*/

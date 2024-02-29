@@ -19,6 +19,7 @@
     "@uiw/react-md-editor": "^4.0.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.4.1",
+    "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-datepicker": "^4.24.0",

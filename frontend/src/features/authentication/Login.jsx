@@ -13,7 +13,8 @@ import Cookies from "js-cookie";
 import {Form, Formik, Field, ErrorMessage} from 'formik'
 import {useState} from "react";
 import * as Yup from 'yup'
-import Notification from "./Notification.jsx";
+import Notification from "../../components/Notification.jsx";
+import {useNotification} from "../../hooks/useNotification.js";
 
 const Login = ({handleChange}) => {
 
@@ -26,6 +27,9 @@ const Login = ({handleChange}) => {
 
     //Triggers alert for incorrect user
     const [incorrectUserAlert, setIncorrectUser] = useState(false)
+
+    // Triggers notifications
+    const notify = useNotification();
 
     //FORMIK
     const initialValues = {
@@ -44,6 +48,8 @@ const Login = ({handleChange}) => {
     const navigate = useNavigate();
 
     const submitForm = async (values, props) => {
+
+        notify("Hello", "info")
 
         console.log(values)
         setTimeout(() => {
@@ -100,7 +106,6 @@ const Login = ({handleChange}) => {
 
     return (
         <Grid>
-            <Notification open={incorrectUserAlert} message={"Incorrect username or password"} severity={"error"}></Notification>
             <Paper style={paperStyle}>
                 <Grid align='center'>
                     <Avatar style={avatarStyle}><LockOpenOutlinedIcon/></Avatar>

@@ -1,10 +1,22 @@
 import {useState} from "react";
 import Button from "@mui/material/Button";
-import {Dialog,Box, DialogActions, DialogContent,DialogTitle, MenuItem, Select} from "@mui/material";
+import {
+    Dialog,
+    Box,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    MenuItem,
+    Select,
+    Checkbox,
+    FormControlLabel, Chip
+} from "@mui/material";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {level} from "../../../../types/level.js"
 import {bool, string} from "prop-types";
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function SkillAction({
                                         type,
@@ -51,7 +63,7 @@ export default function SkillAction({
             <Dialog open={open}>
                 <DialogTitle>{type === "edit" ? `Edit skill ${skillName}` : "Create a skill"}</DialogTitle>
                     <Box component="form">
-                        <DialogContent>
+                        <DialogContent style={{width: '400px'}}>
                             <TextField
                                 autoFocus
                                 value={data.name}
@@ -69,44 +81,11 @@ export default function SkillAction({
                                 fullWidth
                                 variant="standard"
                             />
-                            <TextField
-                                autoFocus
-                                value={data.description}
-                                onChange={(e) => {
-                                    setData({
-                                        ...data,
-                                        description: e.target.value
-                                    })
-                                }}
-                                margin="dense"
-                                id="description"
-                                label="Skill description"
-                                type="name"
-                                fullWidth
-                                multiline
-                                variant="standard"
-                            />
+
                             <br/>
                             <br/>
+                            <FormControlLabel control={<Checkbox onChange={() => setData({...data, isSoft: !data.isSoft})} checked={data.isSoft} defaultChecked />} label="Soft Skill" />
 
-                            <div style={{display: 'flex', justifyContent: 'space-around', alignItems: "center"}}>
-                                <Select value={data.mastery ? data.mastery.toLowerCase() : level.BEGINNER}
-                                        onChange={(e) => setData({...data, mastery: e.target.value})} name={"mastery"}
-                                        id={"mastery"} placeholder={"Select level of mastery"}>
-                                    <MenuItem value={level.BEGINNER}>Beginner</MenuItem>
-                                    <MenuItem value={level.INTERMEDIATE}>Intermediate</MenuItem>
-                                    <MenuItem value={level.ADVANCED}>Advanced</MenuItem>
-                                </Select>
-
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={data.isSoft}
-                                        onChange={() => setData({...data, isSoft: !data.isSoft})}
-                                    />
-                                    Soft Skill
-                                </label>
-                            </div>
                             <br/><br/>
                         </DialogContent>
 
@@ -117,13 +96,11 @@ export default function SkillAction({
                     </Box>
             </Dialog>
         </Paper>
-        <Button
-            variant="outlined"
-            color="primary"
-            onClick={toggle}
-        >
-            {type === "edit" ? "Edit" : "Create"}
-        </Button>
+        {type === "edit" ?
+
+            (<EditIcon style={{marginLeft:'10px'}} onClick={() => {toggle()}}></EditIcon>) :
+            <Chip label={"Add"} style={{marginTop: "10px"}} icon={<AddCircleOutlineIcon></AddCircleOutlineIcon>} variant={"outlined"} onClick={toggle}></Chip>
+        }
     </>
 }
 

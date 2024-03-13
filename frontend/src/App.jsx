@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import BoardElement from "./components/BoardElement.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 import Authenticate from "./pages/Authenticate.jsx";
+import {NotificationServiceProvider} from "./context/NotificationService.jsx";
 
 
 export default function App() {
@@ -27,28 +28,31 @@ export default function App() {
 
     return (
             <ThemeProvider theme={theme}>
-                <CssBaseline>
-                    <main>
-                        <Routes>
-                            <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                <Route path={'/'} element={<BoardElement elementName={"Dashboard"} element={<Dashboard/>}/>}></Route>
-                            </Route>
-                            <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                <Route path={'/resume'} element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}></Route>
-                            </Route>
-                            <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                <Route path={'/portfolio'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
-                            </Route>
+                <NotificationServiceProvider>
+                    <CssBaseline>
+                        <main>
+                            <Routes>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/'} element={<BoardElement elementName={"Dashboard"} element={<Dashboard/>}/>}></Route>
+                                </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/resume'} element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}></Route>
+                                </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/portfolio'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
+                                </Route>
 
-                            <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                <Route path={'/register'} element={<Authenticate/>}></Route>
-                            </Route>
-                            <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                <Route path={'/registerold'} element={<Register/>}></Route>
-                            </Route>
-                        </Routes>
-                    </main>
-                </CssBaseline>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
+                                    <Route path={'/register'} element={<Authenticate/>}></Route>
+                                </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
+                                    <Route path={'/registerold'} element={<Register/>}></Route>
+                                </Route>
+                            </Routes>
+                        </main>
+                    </CssBaseline>
+                </NotificationServiceProvider>
+
             </ThemeProvider>
     )
 }

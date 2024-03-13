@@ -19,9 +19,7 @@ function App() {
 
                 <img alt={"Portfolio Lab logo"} width={64} style={{borderRadius: "8px"}}
                      src={'/src/assets/logos/logo.png'}></img>
-                <NotificationServiceProvider>
                     <SignInUpContainer/>
-                </NotificationServiceProvider>
             </Box></Container>
 
 

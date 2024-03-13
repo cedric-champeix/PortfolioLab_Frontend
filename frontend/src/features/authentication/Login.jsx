@@ -49,7 +49,6 @@ const Login = ({handleChange}) => {
 
     const submitForm = async (values, props) => {
 
-        notify("Hello", "info")
 
         console.log(values)
         setTimeout(() => {
@@ -77,9 +76,8 @@ const Login = ({handleChange}) => {
 
             if (fetch.status === 200) {
                 const token = Cookies.get("jwt_token");
-                console.log(Cookies.get('jwt_token'))
-                console.log(Cookies)
                 if (token !== "" || token !== undefined) {
+                    localStorage.setItem("justAuthenticated", "true");
                     setCurrentJwt(token);
                     navigate("/");
                 }
@@ -88,6 +86,8 @@ const Login = ({handleChange}) => {
 
             if(e.response.status === 401) {
                 console.log("User incorrect email or password")
+                notify("User incorrect email or password", "error")
+
                 setIncorrectUser(true)
                 setTimeout(() => {
                     setIncorrectUser(false)

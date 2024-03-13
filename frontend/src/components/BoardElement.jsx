@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -25,6 +25,7 @@ import {SkillsProvider} from "../context/SkillsContext.jsx";
 import {skillData} from "../data/skillData.js";
 import {string} from "prop-types";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
+import {useNotification} from "../hooks/useNotification.js";
 
 // function Copyright(props) {
 //     return (
@@ -87,16 +88,25 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function BoardElement({element, elementName}) {
     const [open, setOpen] = React.useState(true);
+
+    const notify = useNotification();
     const toggleDrawer = () => {
         setOpen(!open);
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("justAuthenticated") === "true") {
+            notify("Just authenticated as ", "success")
+            localStorage.setItem("justAuthenticated", 'false')
+        }
+    }, []);
 
     const navigate =useNavigate()
     const {logOut} = useAuth();
     const handleLogOut = (event) => {
         event.preventDefault();
         logOut()
-        navigate("/login");
+        navigate("/register");
     }
 
     return (

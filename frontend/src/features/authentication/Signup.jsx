@@ -12,6 +12,7 @@ import {useAuth} from "../../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import {useNotification} from "../../hooks/useNotification.js";
 const Signup = () => {
     const paperStyle = { padding: 20, width: 400, margin: "0 auto" }
     const headerStyle = { margin: 0 }
@@ -22,6 +23,7 @@ const Signup = () => {
     const {setCurrentJwt} = useAuth()
     const navigate = useNavigate();
 
+    const notify = useNotification()
     //FORMIK INITIAL VALUES
     const initialValues = {
         firstName: "",
@@ -35,16 +37,46 @@ const Signup = () => {
 
     //YUP
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required(""),
-        lastName: Yup.string().required(""),
-        username: Yup.string().required(""),
+        firstName: Yup.string().required("required"),
+        lastName: Yup.string().required("required"),
+        username: Yup.string().required("required"),
         email: Yup.string().email('Please enter a valid email').required("Required"),
-        password: Yup.string().required(),
-        confirmPassword: Yup.string().required()
+        password: Yup.string().required("required"),
+        confirmPassword: Yup.string().required("required")
     })
     const submitForm = async (values, props) => {
 
         console.log(values)
+        const data = {
+            email: values.email,
+            pwd: values.password,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            username: values.username
+        }
+
+        try {
+            const signup = await axios({
+                url: "http://localhost:8080/signup/",
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                data: data
+            });
+
+            console.log(signup.status)
+            if(signup.status === 200) {
+                const token = Cookies.get("jwt_token");
+                localStorage.setItem("justAuthenticated", "true");
+                setCurrentJwt(token);
+                navigate("/");
+            }
+
+        } catch (e) {
+            notify("User already exists", "error")
+        }
+
         /*
         let formData = new FormData(values);
         //Data comes here
@@ -56,14 +88,7 @@ const Signup = () => {
             username: formData.get("username")
         }
 
-        const fetch = await axios({
-            url: "http://localhost:8080/signup/",
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            data: data
-        });
+
         const res = fetch.data;
         console.log(res);
 

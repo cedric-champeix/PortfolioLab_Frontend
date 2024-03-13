@@ -1,9 +1,10 @@
 import {useState} from "react";
 import Button from "@mui/material/Button";
-import {Dialog,Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
+import {Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Fab} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import {contactTypes} from "../../../../types/contact.js"
+import AddIcon from '@mui/icons-material/Add';
 
 export default function ContactAction({
                                           type,
@@ -88,12 +89,26 @@ export default function ContactAction({
                 </Box>
             </Dialog>
         </Paper>
-        <Button
-            variant="outlined"
-            color="primary"
-            onClick={toggle}
-        >
-            {type === "edit" ? "Edit" : "Create"}
-        </Button>
+
+
+
+
+        {
+            type === "edit" ?
+                <>
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={toggle}
+                    >
+                        {type === "edit" ? "Edit" : "Create"}
+                    </Button>
+                </> :
+                <>
+                    <Fab onClick={toggle} color="primary" aria-label="add">
+                        <AddIcon />
+                    </Fab>
+                </>
+        }
     </>
 }

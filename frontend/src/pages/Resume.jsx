@@ -139,7 +139,6 @@ export default function Resume() {
                 </Grid>
             </Grid>
 
-            <Divider style={{width:'100%'}}>Contact</Divider>
 
             <ContactSection resumeId={resumeData.id}></ContactSection>
             <Divider style={{width:'100%'}}>Skills</Divider>

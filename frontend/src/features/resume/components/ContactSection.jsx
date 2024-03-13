@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import ContactAction from "./forms/ContactAction.jsx";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 
 export default function ContactSection({resumeId}) {
 
@@ -33,56 +36,74 @@ export default function ContactSection({resumeId}) {
     }
 
     return <Grid container marginY="10px">
-        <Grid container marginY="10px">
-            <Grid item xs={6}>
-                <Title>Contacts</Title>
-            </Grid>
-            <Grid item xs={6} textAlign={"right"}>
-                <ContactAction type={"add"}
-                               contactTitle={""}
-                               contactText={""}
-                               createContact={create}
-                               resumeId={resumeId}></ContactAction>
-            </Grid>
-        </Grid>
 
-        {
-            data.map((contact, i) => (
-                <Grid item xs={4} key={contact.id + i}>
-                    <Card style={{
-                        height: "170px",
-                        margin: "8px",
-                        padding: "16px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-between"
-                    }}>
-                        <CardContent style={{padding: "0 0 10px 0"}}>
-                            <Typography variant="h5" component="div">
-                                {contact.title}
-                            </Typography>
-                            <Typography color="text.secondary">
-                                {contact.text}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <ContactAction type={"edit"}
-                                           contactId={contact.id}
-                                           contactTitle={contact.title}
-                                           contactText={contact.text}
-                                           updateContact={update}
-                                           resumeId={resumeId}></ContactAction>
-                            <Button onClick={() => removeSafeguard(contact.id, contact.title)}
-                                    size="small"
-                                    color="error">
-                                <img src={"/src/assets/icons/rubbish_bin.svg"}
-                                     alt={"Delete contact"}/>
-                            </Button>
-                        </CardActions>
-                    </Card>
+        {data.length === 0 ?
+            (
+                <>
+                    <Typography>No Contacts. Add one !</Typography>
+                    <Grid item>
+                        <ContactAction type={"add"}
+                                       contactTitle={""}
+                                       contactText={""}
+                                       createContact={create}
+                                       resumeId={resumeId}></ContactAction>
+                    </Grid>
+
+                </>
+
+            ) :
+
+            (<>
+                <Divider style={{width:'100%'}}>Contact</Divider>
+
+                <Grid container marginY="10px">
+                    <Grid item xs={6}>
+                        <Title>Contacts</Title>
+                    </Grid>
+
                 </Grid>
-            ))
+
+                {
+                    data.map((contact, i) => (
+                        <Grid item xs={4} key={contact.id + i}>
+                            <Card style={{
+                                height: "170px",
+                                margin: "8px",
+                                padding: "16px",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between"
+                            }}>
+                                <CardContent style={{padding: "0 0 10px 0"}}>
+                                    <Typography variant="h5" component="div">
+                                        {contact.title}
+                                    </Typography>
+                                    <Typography color="text.secondary">
+                                        {contact.text}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <ContactAction type={"edit"}
+                                                   contactId={contact.id}
+                                                   contactTitle={contact.title}
+                                                   contactText={contact.text}
+                                                   updateContact={update}
+                                                   resumeId={resumeId}></ContactAction>
+                                    <Button onClick={() => removeSafeguard(contact.id, contact.title)}
+                                            size="small"
+                                            color="error">
+                                        <img src={"/src/assets/icons/rubbish_bin.svg"}
+                                             alt={"Delete contact"}/>
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))
+                }
+                <Typography>contacts</Typography>
+            </>)
         }
+
     </Grid>
 
 }

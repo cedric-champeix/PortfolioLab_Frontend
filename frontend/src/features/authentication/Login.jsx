@@ -13,7 +13,6 @@ import Cookies from "js-cookie";
 import {Form, Formik, Field, ErrorMessage} from 'formik'
 import {useState} from "react";
 import * as Yup from 'yup'
-import Notification from "../../components/Notification.jsx";
 import {useNotification} from "../../hooks/useNotification.js";
 
 const Login = ({handleChange}) => {
@@ -22,11 +21,6 @@ const Login = ({handleChange}) => {
     const fieldStyle = {marginBottom: '8px'}
     const avatarStyle = {backgroundColor: '#1bbd7e'}
     const btnStyle = {margin: '8px 0'}
-
-    const [toggleLoginErrorFeedback, setToggleLoginErrorFeedback] = useState(false)
-
-    //Triggers alert for incorrect user
-    const [incorrectUserAlert, setIncorrectUser] = useState(false)
 
     // Triggers notifications
     const notify = useNotification();
@@ -44,7 +38,7 @@ const Login = ({handleChange}) => {
         password: Yup.string().required()
     })
 
-    const {setCurrentJwt} = useAuth()
+    const {setUsername} = useAuth()
     const navigate = useNavigate();
 
     const submitForm = async (values, props) => {
@@ -78,7 +72,7 @@ const Login = ({handleChange}) => {
                 const token = Cookies.get("jwt_token");
                 if (token !== "" || token !== undefined) {
                     localStorage.setItem("justAuthenticated", "true");
-                    setCurrentJwt(token);
+                    setUsername(fetch.data.result.user.username);
                     navigate("/");
                 }
             }

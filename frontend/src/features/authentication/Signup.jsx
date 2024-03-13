@@ -20,7 +20,7 @@ const Signup = () => {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginTop = { marginTop: 5 }
 
-    const {setCurrentJwt} = useAuth()
+    const {setUsername} = useAuth()
     const navigate = useNavigate();
 
     const notify = useNotification()
@@ -55,7 +55,6 @@ const Signup = () => {
             username: values.username
         }
 
-        try {
             const signup = await axios({
                 url: "http://localhost:8080/signup/",
                 method: 'POST',
@@ -66,16 +65,23 @@ const Signup = () => {
             });
 
             console.log(signup.status)
-            if(signup.status === 200) {
-                const token = Cookies.get("jwt_token");
-                localStorage.setItem("justAuthenticated", "true");
-                setCurrentJwt(token);
-                navigate("/");
-            }
 
-        } catch (e) {
-            notify("User already exists", "error")
-        }
+            switch (signup.status) {
+                case 200:
+                    const token = Cookies.get("jwt_token");
+                    localStorage.setItem("justAuthenticated", "true");
+                    setUsername(signup.data.result.user.username);
+                    console.log(signup.data.result.user.username);
+
+                    navigate("/");
+                    break;
+                case 500:
+                    notify("User already exists", "error")
+                    break
+                default:
+                    notify("Unknown error", "error")
+                    break
+            }
 
         /*
         let formData = new FormData(values);

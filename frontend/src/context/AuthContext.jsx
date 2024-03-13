@@ -4,16 +4,15 @@ import {string} from "prop-types";
 
 export const AuthContext = createContext(null);
 
-export const AuthProvider = ({token, children}) => {
+export const AuthProvider = ({children}) => {
 
-    const [currentJwt, setCurrentJwt] = useState(token);
+    const [username, setUsername] = useState("");
 
     const logOut = () => {
-        setCurrentJwt("")
         Cookies.remove("jwt_token")
     }
 
-    return <AuthContext.Provider value={{currentJwt, setCurrentJwt, logOut}}>
+    return <AuthContext.Provider value={{username, setUsername, logOut}}>
         {children}
     </AuthContext.Provider>
 }

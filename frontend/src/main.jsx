@@ -14,11 +14,9 @@ import Cookies from "js-cookie";
 const token = Cookies.get("jwt_token")
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
         <AuthProvider token={token}>
             <BrowserRouter>
                 <App className="app"/>
             </BrowserRouter>
         </AuthProvider>
-    </React.StrictMode>,
 )

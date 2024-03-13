@@ -1,17 +1,17 @@
 import {useAuth} from "../hooks/useAuth.js";
 import {Navigate, Outlet} from "react-router-dom";
 import {string} from "prop-types";
+import Cookies from "js-cookie";
 
 export default function ProtectedRoute({routeType}) {
-    const {currentJwt} = useAuth();
-
+    const jwt = Cookies.get("jwt_token")
 
     const evaluatePass = () => {
         switch (routeType) {
             case "admin":
-                return currentJwt && true
+                return jwt && true
             default:
-                return !currentJwt && true
+                return !jwt && true
         }
     }
     const path = () => {

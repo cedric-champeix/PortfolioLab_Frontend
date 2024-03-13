@@ -12,6 +12,7 @@ import ContactAction from "./forms/ContactAction.jsx";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Contact from "./Contact.jsx";
 
 export default function ContactSection({resumeId}) {
 
@@ -28,18 +29,21 @@ export default function ContactSection({resumeId}) {
             catchOnCancel: true,
             name: resourceName
         }).then(() => {
-            remove(resourceId).then(() => {
-                console.log("Item " + resourceName + " removed")
-            })
+            remove(resourceId).then()
         })
 
     }
+
+    console.log(data)
 
     return <Grid container marginY="10px">
 
         {data.length === 0 ?
             (
-                <>
+                <Grid container marginY="10px">
+                    <Grid item xs={11.5}>
+
+                    </Grid>
                     <Typography>No Contacts. Add one !</Typography>
                     <Grid item>
                         <ContactAction type={"add"}
@@ -49,7 +53,7 @@ export default function ContactSection({resumeId}) {
                                        resumeId={resumeId}></ContactAction>
                     </Grid>
 
-                </>
+                </Grid>
 
             ) :
 
@@ -57,31 +61,31 @@ export default function ContactSection({resumeId}) {
                 <Divider style={{width:'100%'}}>Contact</Divider>
 
                 <Grid container marginY="10px">
-                    <Grid item xs={6}>
+                    <Grid item xs={11.5}>
                         <Title>Contacts</Title>
+                    </Grid>
+                    <Grid item alignItems={"right"}>
+                        <ContactAction type={"add"}
+                                       contactTitle={""}
+                                       contactText={""}
+                                       createContact={create}
+                                       resumeId={resumeId}></ContactAction>
                     </Grid>
 
                 </Grid>
 
                 {
                     data.map((contact, i) => (
-                        <Grid item xs={4} key={contact.id + i}>
+                        <Grid item xs={12} key={contact.id + i}>
+                            <Contact remove={remove} id={contact.id} type={contact.title} text={contact.text}></Contact>
                             <Card style={{
-                                height: "170px",
+
                                 margin: "8px",
                                 padding: "16px",
                                 display: "flex",
                                 flexDirection: "column",
                                 justifyContent: "space-between"
                             }}>
-                                <CardContent style={{padding: "0 0 10px 0"}}>
-                                    <Typography variant="h5" component="div">
-                                        {contact.title}
-                                    </Typography>
-                                    <Typography color="text.secondary">
-                                        {contact.text}
-                                    </Typography>
-                                </CardContent>
                                 <CardActions>
                                     <ContactAction type={"edit"}
                                                    contactId={contact.id}
@@ -100,7 +104,6 @@ export default function ContactSection({resumeId}) {
                         </Grid>
                     ))
                 }
-                <Typography>contacts</Typography>
             </>)
         }
 

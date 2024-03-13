@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, DialogTitle, MenuItem, Select, Fab} from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -20,6 +20,9 @@ export default function ContactAction({
 
     const [data, setData] = useState({title: contactTitle, text: contactText});
 
+    useEffect(() => {
+        console.log(data)
+    }, [data]);
     const toggle = () => {
         setData({title: contactTitle, text: contactText})
         setOpen(!open);
@@ -27,6 +30,7 @@ export default function ContactAction({
 
 
     const handleSubmit = () => {
+        console.log(data)
         const body = {
             title: data.title,
             text: data.text,
@@ -52,7 +56,9 @@ export default function ContactAction({
                 <Box component="form">
                     <DialogContent>
                         <Select value={data.title ? data.title : contactTypes.EMAIL}
-                                onChange={(e) => setData({...data, title: e.target.value})}
+                                onChange={(e) => {
+                                    setData({...data, title: e.target.value})
+                                }}
                                 name={"title"}
                                 id={"title"}>
                             {
@@ -105,7 +111,7 @@ export default function ContactAction({
                     </Button>
                 </> :
                 <>
-                    <Fab onClick={toggle} color="primary" aria-label="add">
+                    <Fab size={"small"} onClick={toggle} color="primary" aria-label="add">
                         <AddIcon />
                     </Fab>
                 </>

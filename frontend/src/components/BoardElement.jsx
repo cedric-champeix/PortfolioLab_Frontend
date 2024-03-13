@@ -94,15 +94,17 @@ export default function BoardElement({element, elementName}) {
         setOpen(!open);
     };
 
+    const {username, logOut} = useAuth();
+
+
     useEffect(() => {
         if (localStorage.getItem("justAuthenticated") === "true") {
-            notify("Just authenticated as ", "success")
+            notify("Just authenticated as " + username, "success")
             localStorage.setItem("justAuthenticated", 'false')
         }
     }, []);
 
     const navigate =useNavigate()
-    const {logOut} = useAuth();
     const handleLogOut = (event) => {
         event.preventDefault();
         logOut()
@@ -139,11 +141,7 @@ export default function BoardElement({element, elementName}) {
                         >
                             {elementName}
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <Typography>{username}</Typography>
                     </Toolbar>
                 </AppBar>
                 <Drawer variant="permanent" open={open}>

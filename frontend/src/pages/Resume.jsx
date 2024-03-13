@@ -139,14 +139,22 @@ export default function Resume() {
                 </Grid>
             </Grid>
 
+            <Divider style={{width:'100%'}}>Contact</Divider>
+
             <ContactSection resumeId={resumeData.id}></ContactSection>
+            <Divider style={{width:'100%'}}>Skills</Divider>
             <SkillSection resumeId={resumeData.id}></SkillSection>
+            <Divider style={{width:'100%'}}>Experiences</Divider>
+
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>
-            <Divider></Divider>
+            <Divider style={{width:'100%'}}>Academic</Divider>
+
             <FormationSection resumeId={resumeData.id}></FormationSection>
-            <Divider></Divider>
+            <Divider style={{width:'100%'}}>Hobbies</Divider>
+
             <HobbySection resumeId={resumeData.id}></HobbySection>
-            <Divider></Divider>
+            <Divider style={{width:'100%'}}>Languages</Divider>
+
             <LanguageSection resumeId={resumeData.id}></LanguageSection>
 
 

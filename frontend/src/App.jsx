@@ -12,6 +12,7 @@ import BoardElement from "./components/BoardElement.jsx";
 import CssBaseline from "@mui/material/CssBaseline";
 import Authenticate from "./pages/Authenticate.jsx";
 import {NotificationServiceProvider} from "./context/NotificationService.jsx";
+import Project from "./pages/Project.jsx";
 
 
 export default function App() {
@@ -40,6 +41,9 @@ export default function App() {
                                 </Route>
                                 <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                     <Route path={'/portfolio'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
+                                </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/portfolio/:projectId'} element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
                                 </Route>
 
                                 <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>

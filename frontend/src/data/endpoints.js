@@ -8,7 +8,7 @@ export const endpoints = {
     hobbiesEndpoint: baseUrl + "/editor/hobbies",
     languageEndpoint: baseUrl + "/editor/languages",
     skillsEndpoints: baseUrl + "/editor/skills",
-    projectsEndpoint: baseUrl + "/portfolio/projects",
+    projectsEndpoint: baseUrl + "/editor/projects",
     componentsEndpoints: (projectId) => {
         return baseUrl + `/editor/projects/${projectId}/components`
     }

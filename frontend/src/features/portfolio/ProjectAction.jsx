@@ -1,53 +1,53 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import {useImage} from "../resume/hooks/useImage.js";
-import {constants} from "../../constants.js"
+import placeHolder from "../../assets/icons/placeholder.png"
+import {constants} from "../../constants.js";
+import PropTypes from "prop-types";
 
-export default function ProjectAction({createProject}) {
+export default function ProjectAction({project, create, update, isEditing}) {
 
-    //Form data (title & description)
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
+    const baseProject = {
+        name: "",
+        description: ""
+    }
+
+    const [projectData, setProjectData] = useState({
+        name: project.name ? project.name : baseProject.name,
+        description: project.description ? project.description : baseProject.description
+    })
+
+    const [image, setImage] = useState([project.MainImage?.path ? constants.BACKEND_URL + "" + project.MainImage.path : placeHolder]);
 
     //Triggers form toggle
-    const [open, setOpen] = useState(false);
-    //Image management
-    //Link to placeholder image
-    const baseImage = "src/assets/icons/placeholder.png"
-    //Image upload manager. Change imageLink before upload
-    const {imageLink, setImageLink} = useImage(baseImage)
+    const [open, setOpen] = useState(false)
 
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [tempImageUrl, setTempImageUrl] = useState(baseImage);
-
-    useEffect(() => {
-        if (selectedImage) {
-            //DAMIIIIII
-            console.log(constants.DAM)
-            setTempImageUrl(URL.createObjectURL(selectedImage));
+    const toggle = (e) => {
+        if (!isEditing) {
+            setImage([placeHolder])
+            setProjectData([baseProject])
         }
-    }, [selectedImage]);
-
-
-    const toggle = () => {
-        setSelectedImage(null)
-        setTempImageUrl(imageLink ? imageLink : baseImage)
         setOpen(!open);
     }
 
     const handleSubmit = async () => {
-        console.log("Handle Submit : selected image : " + selectedImage)
-        if (selectedImage) {
-            createProject(title, description, selectedImage)
+        const body = {
+            name: projectData.name,
+            description: projectData.description
+        }
+
+        if (isEditing) {
+            update(project.id, null, body)
+        } else {
+            create(null, body)
         }
         toggle();
     }
 
     const fallbackImage = () => {
-        setImageLink(baseImage)
+        setImage(placeHolder)
     }
 
     return <>
@@ -55,63 +55,72 @@ export default function ProjectAction({createProject}) {
             <Dialog open={open}>
                 <DialogTitle>New Project</DialogTitle>
                 <Box component="form">
-                    <DialogContent>
+                    <DialogContent style={{paddingTop: 0}}>
 
-                        <TextField
-                            autoFocus
-                            value={title}
-                            onChange={(e) => {
-                                setTitle(e.target.value)
-                            }}
-                            margin="dense"
-                            id="title"
-                            label="Project name"
-                            type="text"
-                            fullWidth
-                            multiline
-                            variant="standard"
-                        />
+                        <Box style={{marginBottom: "20px"}}>
+                            <TextField
+                                autoFocus
+                                value={projectData.name}
+                                onChange={(e) => {
+                                    setProjectData({name: e.target.value, description: projectData.description || ""})
+                                }}
+                                margin="dense"
+                                id="name"
+                                name="name"
+                                label="Project name"
+                                type="text"
+                                fullWidth
+                                multiline
+                                variant="standard"
+                            />
+                            <TextField
+                                autoFocus
+                                value={projectData.description}
+                                onChange={(e) => {
+                                    setProjectData({name: projectData.name || "", description: e.target.value})
+                                }}
+                                margin="dense"
+                                id="description"
+                                name="description"
+                                label="Description"
+                                type="text"
+                                fullWidth
+                                multiline
+                                variant="standard"
+                            />
+                        </Box>
+                        <Box style={{display: "flex", justifyContent: "center"}}>
+                            <input
+                                accept="image/*"
+                                type="file"
+                                id="select-image"
+                                style={{display: "none"}}
+                                onChange={(e) => {
+                                    setImage(e.target.files[0])
+                                }}
+                            />
 
-                        <TextField
-                            autoFocus
-                            value={description}
-                            onChange={(e) => {
-                                setDescription(e.target.value)
-                            }}
-                            margin="dense"
-                            id="title"
-                            label="Description"
-                            type="text"
-                            fullWidth
-                            multiline
-                            variant="standard"
-                        />
-
-                        <input
-                            accept="image/*"
-                            type="file"
-                            id="select-image"
-                            style={{display: "none"}}
-                            onChange={(e) => {
-                                setSelectedImage(e.target.files[0])
-                            }}
-                        />
-
-                        <Button>
-                            <label htmlFor="select-image" style={{cursor: "pointer"}}>
-                                <Box component={"img"}
-                                     border="1px solid #1976d2"
-                                     borderRadius="2%"
-                                     margin="auto"
-                                     width={300}
-                                     height={200}
-                                     src={tempImageUrl}
-                                     onError={fallbackImage}
-                                     alt={"Profile picture preview"}/>
-                            </label>
-                        </Button>
-                        <br/>
-                        <br/>
+                            <Button>
+                                <label htmlFor="select-image"
+                                       style={{
+                                           cursor: "pointer",
+                                           borderRadius: "10px",
+                                           height: "200px",
+                                           width: "300px",
+                                           overflow: "hidden"
+                                       }}>
+                                    <Box component={"img"}
+                                         style={{
+                                             margin: "auto",
+                                             minWidth: "100%",
+                                             height: "100%"
+                                         }}
+                                         src={image}
+                                         onError={fallbackImage}
+                                         alt={"Profile picture preview"}/>
+                                </label>
+                            </Button>
+                        </Box>
                     </DialogContent>
 
                     <DialogActions>
@@ -121,16 +130,22 @@ export default function ProjectAction({createProject}) {
                 </Box>
             </Dialog>
         </Paper>
-        <Button
-            variant="outlined"
-            color="primary"
-            onClick={toggle}
-        >
-            Create
-        </Button>
+        {!isEditing ? <Button
+                variant="outlined"
+                color="primary"
+                onClick={toggle}>
+                Create
+            </Button> :
+            <Button size="small"
+                    onClick={toggle}>
+                Edit
+            </Button>}
     </>
 }
 
 ProjectAction.propTypes = {
-    createProject : () => {}
+    project: PropTypes.object,
+    create: PropTypes.func,
+    update: PropTypes.func,
+    isEditing: PropTypes.bool
 }

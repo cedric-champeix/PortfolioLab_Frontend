@@ -6,7 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import {Link} from "react-router-dom";
-
+import Person2Icon from '@mui/icons-material/Person2';
 export const mainListItems = (
     <React.Fragment>
         <Link to="/">
@@ -33,6 +33,15 @@ export const mainListItems = (
                     <LibraryBooksRoundedIcon/>
                 </ListItemIcon>
                 <ListItemText primary="Portfolio"/>
+            </ListItemButton>
+        </Link>
+
+        <Link to="/profile">
+            <ListItemButton>
+                <ListItemIcon>
+                    <LibraryBooksRoundedIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Profile"/>
             </ListItemButton>
         </Link>
 

@@ -13,6 +13,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Authenticate from "./pages/Authenticate.jsx";
 import {NotificationServiceProvider} from "./context/NotificationService.jsx";
 import Project from "./pages/Project.jsx";
+import Profile from "./pages/Profile.jsx";
 
 
 export default function App() {
@@ -45,12 +46,12 @@ export default function App() {
                                 <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                     <Route path={'/portfolio/:projectId'} element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
                                 </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/profile'} element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
+                                </Route>
 
                                 <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
                                     <Route path={'/register'} element={<Authenticate/>}></Route>
-                                </Route>
-                                <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                    <Route path={'/registerold'} element={<Register/>}></Route>
                                 </Route>
                             </Routes>
                         </main>

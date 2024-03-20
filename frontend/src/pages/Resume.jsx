@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Title from "../components/Title.jsx";
 import Typography from "@mui/material/Typography";
@@ -17,11 +16,12 @@ import FormationSection from "../features/resume/components/FormationSection.jsx
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
+import {useNotification} from "../hooks/useNotification.js";
 
 export default function Resume() {
+
     //Using skills data
     const {resumeData, setResumeData, updateResume, resetResume} = useResume()
-
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
@@ -161,6 +161,12 @@ export default function Resume() {
                   xs={12}
                   textAlign="right"
                   marginY="10px">
+                <Button onClick={() => {window.location="/previewResume"}}
+                        size="large"
+                        color="primary"
+                        variant="contained">
+                    Preview resume
+                </Button>
                 <Button onClick={() => resetResumeSafeguard()}
                         size="large"
                         color="error"

@@ -1,19 +1,20 @@
-import EmailIcon from '@mui/icons-material/Email';
 import HomeIcon from '@mui/icons-material/Home';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import {Padding} from "@mui/icons-material";
 import LinkIcon from '@mui/icons-material/Link';
 import Typography from "@mui/material/Typography";
-import {Stack} from "@mui/material";
+import {IconButton, Stack} from "@mui/material";
 import Divider from "@mui/material/Divider";
+import MailIcon from '@mui/icons-material/Mail';
 import {useEffect} from "react";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import Button from "@mui/material/Button";
-import {useCRUD} from "../hooks/useCRUD.js";
-import {endpoints} from "../../../data/endpoints.js";
-export default function Contact({id, type, text, remove}) {
+import ContactAction from "./forms/ContactAction.jsx";
+import {string} from "prop-types";
+import DeleteIcon from '@mui/icons-material/Delete';
+
+export default function Contact({id, type, text, remove, contactActionElement}) {
 
     //Calls the confirmation service
     //This hook will handle a promise and trigger a dialog to perform confirmation
@@ -48,7 +49,7 @@ export default function Contact({id, type, text, remove}) {
     const ContactIcon = () => {
         switch (type) {
             case "Email":
-                return (<EmailIcon></EmailIcon>)
+                return (<MailIcon></MailIcon>)
             case "Phone":
                 return (<LocalPhoneIcon></LocalPhoneIcon>)
             case "Address":
@@ -56,8 +57,7 @@ export default function Contact({id, type, text, remove}) {
             case "Website":
                 return (<LinkIcon></LinkIcon>)
             case "GitHub":
-                return (<div className="github-profile-badge" data-user={text}></div>
-                )
+                return (<GitHubIcon></GitHubIcon>)
             case "LinkedIn":
                 return (<LinkedInIcon></LinkedInIcon>)
         }
@@ -66,13 +66,24 @@ export default function Contact({id, type, text, remove}) {
     return <Stack spacing={1} direction={"row"}>
 
         <ContactIcon></ContactIcon>
-        <Typography>{text}</Typography>
-        <Button
+        <Typography >{text}</Typography>
+        <IconButton
+            style={{position: 'relative', bottom: '8px'}}
                 onClick={() => confirmRemove()}
                 size="small"
                 color="error">
-            <img src={"/src/assets/icons/rubbish_bin.svg"}
-                 alt={"Delete contact"}/>
-        </Button>
+            <DeleteIcon style={{fill:'#941616'}}></DeleteIcon>
+        </IconButton>
+        {contactActionElement}
+
     </Stack>
+}
+
+
+Contact.propTypes= {
+    id: string,
+    type: string,
+    text: string,
+    remove: () => {},
+    contactActionElement: () => {}
 }

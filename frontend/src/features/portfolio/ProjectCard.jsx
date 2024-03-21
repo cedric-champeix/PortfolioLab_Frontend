@@ -1,22 +1,21 @@
 import {Box, Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {CardActions} from "@mui/joy";
-import Button from "@mui/material/Button";
-import ProjectAction from "./ProjectAction.jsx";
 import placeHolder from "../../assets/icons/placeholder.png"
-import {useState} from "react";
+import React, {useState} from "react";
 import {constants} from "../../constants.js";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
+import DeleteIcon from "@mui/icons-material/Delete.js";
+import IconButton from "@mui/material/IconButton";
 
-export default function ProjectCard({project, update, remove}) {
+export default function ProjectCard({project, remove}) {
 
     const [image, setImage] = useState(project.MainImage?.path ? constants.BACKEND_URL + "" + project.MainImage.path : placeHolder);
 
     const fallbackImage = (e) => {
         setImage(placeHolder)
     }
-
     const deleteProject = (e) => {
         remove(project.id)
     }
@@ -42,18 +41,25 @@ export default function ProjectCard({project, update, remove}) {
                 </Typography>
             </CardContent>
         </Link>
-        <CardActions>
-            <ProjectAction project={project} update={update} isEditing={true}/>
-            <Button size="small"
-                    onClick={deleteProject}>
-                Delete
-            </Button>
+        <CardActions style={{
+            width: "100%",
+            padding: "0 10px 0 0",
+            display: 'flex',
+            justifyContent: "flex-end"
+        }}>
+            <IconButton aria-label="delete"
+                        onClick={deleteProject}
+                        style={{
+                            bottom: 0,
+                            right: 0
+                        }}>
+                <DeleteIcon/>
+            </IconButton>
         </CardActions>
     </Card>
 }
 
 ProjectCard.propTypes = {
     project: PropTypes.object,
-    update: PropTypes.func,
     remove: PropTypes.func,
 }

@@ -21,8 +21,8 @@
     "@uiw/react-md-editor": "^4.0.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.4.1",
-    "fs-extra": "^11.2.0",
     "formik": "^2.4.5",
+    "fs-extra": "^11.2.0",
     "js-cookie": "^3.0.5",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
@@ -52,6 +52,7 @@
     "process": "^0.11.10",
     "prop-types": "^15.8.1",
     "react-axios": "^2.0.6",
+    "react-json-view": "^1.21.3",
     "vite": "^4.4.5",
     "vite-plugin-svgr": "^4.2.0"
   }

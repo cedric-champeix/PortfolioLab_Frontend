@@ -13,6 +13,7 @@ import Authenticate from "./pages/Authenticate.jsx";
 import {NotificationServiceProvider} from "./context/NotificationService.jsx";
 import Project from "./pages/Project.jsx";
 import Profile from "./pages/Profile.jsx";
+import ViewResume from "./features/viewer/ViewResume.jsx";
 
 
 export default function App() {
@@ -54,7 +55,7 @@ export default function App() {
                                 </Route>
 
                                 <Route path={"/"} element={<ProtectedRoute routeType={"admin"}/>}>
-                                    <Route path={'/previewResume'} element={<Resume></Resume>}></Route>
+                                    <Route path={'/previewResume'} element={<ViewResume></ViewResume>}></Route>
                                 </Route>
                             </Routes>
                         </main>

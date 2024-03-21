@@ -6,13 +6,16 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {
 
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(null);
+    const [userId, setUserId] = useState(null);
 
     const logOut = () => {
         Cookies.remove("jwt_token")
+        setUserId(null)
+        setUsername(null)
     }
 
-    return <AuthContext.Provider value={{username, setUsername, logOut}}>
+    return <AuthContext.Provider value={{username, setUsername,userId, setUserId, logOut}}>
         {children}
     </AuthContext.Provider>
 }

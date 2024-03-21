@@ -56,7 +56,6 @@ const Login = ({handleChange}) => {
 
 
         try {
-            axios.defaults.withCredentials = true
             const fetch = await axios({
                 url: "http://localhost:8080/login/",
                 method: 'POST',
@@ -71,7 +70,8 @@ const Login = ({handleChange}) => {
                 const token = Cookies.get("jwt_token");
                 if (token !== "" || token !== undefined) {
                     localStorage.setItem("justAuthenticated", "true");
-                    setUsername(fetch.data.result.user.username);
+                    setUsername(fetch.data.result.user.username)
+                    console.log(fetch.data.result.user.id)
                     navigate("/");
                 }
             }
@@ -164,4 +164,7 @@ const Login = ({handleChange}) => {
     )
 }
 
+Login.propTypes = {
+    handleChange: () => {}
+}
 export default Login

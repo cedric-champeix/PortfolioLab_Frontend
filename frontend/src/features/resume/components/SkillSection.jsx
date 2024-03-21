@@ -1,29 +1,14 @@
 import {useCRUD} from "../hooks/useCRUD.js";
 import {endpoints} from "../../../data/endpoints.js";
-import Grid from "@mui/material/Grid";
-import Title from "../../../components/Title.jsx";
 import {Chip, Tooltip, Stack} from "@mui/material";
 import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import SkillAction from "./forms/SkillAction.jsx";
-import { makeStyles } from "@material-ui/styles";
 import Box from "@mui/material/Box";
 
-const useStyles = makeStyles({
-    chipRoot: {
-        "& .action": {
-            order: 1, // the label has a default order of 0, so this icon goes after the label
-            cursor: "pointer"
-        },
-        "& .MuiChip-deleteIcon": {
-            order: 2 // since this is greater than an order of 1, it goes after the icon
-        }
-    }
-});
 
 export default function SkillSection({resumeId}) {
 
-    const classes = useStyles();
     //CRUD on experiences endpoint
     const {update, create, remove, data} = useCRUD(endpoints.skillsEndpoints)
     //Calls the confirmation service
@@ -51,9 +36,6 @@ export default function SkillSection({resumeId}) {
                 {data.filter(item => item.isSoft === false).map((skill, i) => (
                     <Tooltip title={skill.description}>
                         <Chip label={skill.name} style={{marginTop: "10px"}}
-                              classes={{
-                                  root: classes.chipRoot
-                              }}
                               onClick={() => {
                               }}
                               onDelete={() => removeSafeguard(skill.id, skill.name)}
@@ -81,9 +63,6 @@ export default function SkillSection({resumeId}) {
                 <Tooltip title={skill.description}>
                     <Chip label={skill.name}
                           style={{marginTop: "10px"}}
-                          classes={{
-                              root: classes.chipRoot
-                          }}
                           onClick={() => {
                           }}
                           onDelete={() => removeSafeguard(skill.id, skill.name)}

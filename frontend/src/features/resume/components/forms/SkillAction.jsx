@@ -6,15 +6,12 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    MenuItem,
-    Select,
     Checkbox,
     FormControlLabel, Chip
 } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import {level} from "../../../../types/level.js"
 import {bool, string} from "prop-types";
 import EditIcon from '@mui/icons-material/Edit';
 
@@ -62,38 +59,38 @@ export default function SkillAction({
         <Paper>
             <Dialog open={open}>
                 <DialogTitle>{type === "edit" ? `Edit skill ${skillName}` : "Create a skill"}</DialogTitle>
-                    <Box component="form">
-                        <DialogContent style={{width: '400px'}}>
-                            <TextField
-                                autoFocus
-                                value={data.name}
-                                onChange={(e) => {
-                                    setData({
-                                        ...data,
-                                        name: e.target.value
-                                    })
-                                }}
-                                margin="dense"
-                                required
-                                id="name"
-                                label="Skill name"
-                                type="name"
-                                fullWidth
-                                variant="standard"
-                            />
+                <Box component="form">
+                    <DialogContent style={{width: '400px'}}>
+                        <TextField
+                            autoFocus
+                            value={data.name}
+                            onChange={(e) => {
+                                setData({
+                                    ...data,
+                                    name: e.target.value
+                                })
+                            }}
+                            margin="dense"
+                            required
+                            id="name"
+                            label="Skill name"
+                            type="name"
+                            fullWidth
+                            variant="standard"
+                        />
 
-                            <br/>
-                            <br/>
-                            <FormControlLabel control={<Checkbox onChange={() => setData({...data, isSoft: !data.isSoft})} checked={data.isSoft} defaultChecked />} label="Soft Skill" />
+                        <br/>
+                        <br/>
+                        <FormControlLabel control={<Checkbox onChange={() => setData({...data, isSoft: !data.isSoft})} checked={data.isSoft} defaultChecked />} label="Soft Skill" />
 
-                            <br/><br/>
-                        </DialogContent>
+                        <br/><br/>
+                    </DialogContent>
 
-                        <DialogActions>
-                            <Button onClick={toggle} color="error">Close</Button>
-                            <Button onClick={handleSubmit}>Submit</Button>
-                        </DialogActions>
-                    </Box>
+                    <DialogActions>
+                        <Button onClick={toggle} color="error">Close</Button>
+                        <Button onClick={handleSubmit}>Submit</Button>
+                    </DialogActions>
+                </Box>
             </Dialog>
         </Paper>
         {type === "edit" ?

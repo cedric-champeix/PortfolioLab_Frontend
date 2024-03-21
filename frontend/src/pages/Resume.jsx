@@ -16,7 +16,6 @@ import FormationSection from "../features/resume/components/FormationSection.jsx
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
-import {useNotification} from "../hooks/useNotification.js";
 
 export default function Resume() {
 

@@ -22,51 +22,19 @@ export const useProjects = () => {
         })
     }, []);
 
-    const create = async (file, body) => {
-        const formData = new FormData()
-        formData.append("data", JSON.stringify(body))
-        if (file)
-            formData.append("projectMainImage", file)
-        console.log("BODY: ", body)
-        console.log("FORM_DATA: ", formData)
+    const create = async (body) => {
 
         await axios({
             url: url,
             method: 'POST',
             withCredentials: true,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            data: formData
+            data: body
         }).then((res) => {
             setProjects([...projects, res.data])
         }).catch((error) => {
             console.error("Error when creating project: ", error)
         })
 
-    }
-
-    const update = async (id, file, body) => {
-        const formData = new FormData()
-        formData.append("data", JSON.stringify(body))
-        if (file)
-            formData.append("projectMainImage", file)
-
-        axios({
-            url: `${url}/${id}`,
-            method: "PUT",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            withCredentials: true,
-            data: formData
-        }).then((res) => {
-            setProjects(projects.map(project =>
-                project.id === id ? res.data : project
-            ))
-        }).catch((error) => {
-            console.error("Error when updating project: ", error)
-        })
     }
 
     const remove = async (id) => {
@@ -84,5 +52,5 @@ export const useProjects = () => {
     }
 
 
-    return {projects, setProjects, create, update, remove};
+    return {projects, setProjects, create, remove};
 }

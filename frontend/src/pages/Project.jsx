@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
@@ -10,18 +10,38 @@ import AddComponent from "../features/project/components/AddComponent.jsx";
 import {useParams} from "react-router-dom";
 import {useComponent} from "../features/project/hooks/useComponent.js";
 import MoveComponent from "../features/project/components/MoveComponent.jsx";
+import ImageHandler from "../features/images/components/ImageHandler.jsx";
+import Button from "@mui/material/Button";
+import {constants} from "../constants.js";
+import placeHolder from "../assets/icons/placeholder.png";
 
 export default function Project() {
 
     const {projectId} = useParams()
 
-    const {projectData} = useProject(projectId)
+    const {projectData, connectMainImage} = useProject(projectId)
 
     const {components, setComponents, create, update, move, remove} = useComponent(projectId, projectData.components)
 
+    const [mainImage, setMainImage] = useState(projectData.MainImage ? constants.BACKEND_URL + projectData.MainImage.path : placeHolder)
+    const [open, setOpen] = useState(false)
+
     useEffect(() => {
         setComponents(projectData.components)
-    }, [projectData]);
+        setMainImage(projectData.MainImage ? constants.BACKEND_URL + projectData.MainImage.path : placeHolder)
+    }, [projectData])
+
+    const fallbackImage = () => {
+        setMainImage(placeHolder)
+    }
+
+    const toggle = () => {
+        setOpen(!open)
+    }
+
+    const updateImage = (newImage) => {
+        connectMainImage(newImage)
+    }
 
     return <Box gridAutoFlow='row' className={"Element-"}
                 component="div"
@@ -35,9 +55,29 @@ export default function Project() {
         <Toolbar/>
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "80%", margin: "auto", padding: "30px 5%"}}>
 
-            <Typography width="fit-content" variant="h2" color="primary" gutterBottom>
-                {projectData.name}
-            </Typography>
+            <Grid item xs={12}>
+                <Typography width="fit-content" variant="h2" color="primary" gutterBottom>
+                    {projectData.name}
+                </Typography>
+            </Grid>
+
+            <Grid item xs={12} style={{
+                margin: "0 auto 30px auto",
+                display: 'flex',
+                justifyContent: "center"
+            }}>
+                <ImageHandler open={open} toggle={toggle} callback={updateImage}/>
+                <Button width="80%" onClick={toggle}>
+                    <Box component={"img"}
+                         margin="auto"
+                         width="90%"
+                         maxWidth="900px"
+                         maxHeight="500px"
+                         src={mainImage}
+                         onError={fallbackImage}
+                         alt={"Project Image"}/>
+                </Button>
+            </Grid>
 
             <Grid container padding="0 0 30px 0" spacing={2}>
                 <Grid item xs={6}>

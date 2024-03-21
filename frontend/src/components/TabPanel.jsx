@@ -27,5 +27,5 @@ TabPanel.propTypes = {
     props: PropTypes.object,
     value: PropTypes.number,
     index: PropTypes.number,
-    children: PropTypes.func
+    children: PropTypes.object
 }

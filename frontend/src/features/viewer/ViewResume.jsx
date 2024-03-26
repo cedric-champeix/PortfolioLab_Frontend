@@ -20,7 +20,7 @@ export default function ViewResume() {
 
     getResume()
 
-    return <>coucou
+    return <>
         <ReactJson src={JSON.parse(json)}></ReactJson>
     </>
 }

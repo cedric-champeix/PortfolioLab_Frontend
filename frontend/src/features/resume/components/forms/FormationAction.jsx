@@ -50,12 +50,12 @@ export default function FormationAction({
     const handleSubmit = () => {
         const body = {
             formationName: data.formationName,
-            universityName: data.formationName,
+            universityName: data.universityName,
             startDate: data.startDate,
             endDate: data.endDate,
             resumeId: resumeId
         }
-        console.log(type)
+
         switch (type) {
             case "edit":
                 updateFormation(fId, body)
@@ -177,12 +177,8 @@ export default function FormationAction({
                                     showIcon
                                     showMonthYearPicker
                                     isClearable
-                                    maxDate={maxDate(null)}
                                     minDate={minDate(data.startDate)}
                                 />
-                                <Typography color="text.secondary" fontSize="small">
-                                    Leave empty if ongoing
-                                </Typography>
                             </div>
                         </div>
                         <br/><br/>

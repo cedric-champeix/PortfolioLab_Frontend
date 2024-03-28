@@ -49,8 +49,8 @@ export default function FormationSection({resumeId}) {
             </Grid>
         </Grid>
         {
-            data.map((formation, i) => (
-                <Grid item xs={4} key={formation.id + i}>
+            data.map((formation) => (
+                <Grid item xs={4} key={formation.id}>
                     <Card style={{
                         height: "200px",
                         margin: "8px",

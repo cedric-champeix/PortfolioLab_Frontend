@@ -32,7 +32,7 @@ export default function Resume() {
         }).then(() => {
             resetResume().then(() => {
                 setDescriptionValue("")
-               // setContactsData([])
+                //setContactsData([])
                 //setSkillsData([])
                 //setExperiencesData([])
                 //setFormationsData([])
@@ -51,8 +51,6 @@ export default function Resume() {
         setDescriptionValue(resumeData.description)
     }, [resumeData]);
 
-
-
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -63,9 +61,9 @@ export default function Resume() {
             setResumeData({
                 resumeId: data.id,
                 description: data.description,
-                image: data.image
+                Image: data.Image
             })
-            console.log(data)
+            console.log("UPDATED RESUME", data)
         })
     };
 
@@ -97,7 +95,7 @@ export default function Resume() {
                             <>
                                 <TextField
                                     autoFocus
-                                    value={descriptionValue ? descriptionValue : ""}
+                                    value={descriptionValue || ""}
                                     onChange={(e) => setDescriptionValue(e.target.value)}
                                     margin="dense"
                                     label="Description"

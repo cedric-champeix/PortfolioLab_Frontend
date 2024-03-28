@@ -39,7 +39,6 @@ export default function SkillAction({
         const body = {
             name: data.name,
             description: data.description,
-            mastery: data.mastery,
             isSoft: data.isSoft,
             resumeId: resumeId
         }

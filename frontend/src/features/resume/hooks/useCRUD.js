@@ -13,22 +13,15 @@ export const useCRUD = url => {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        //Fetches the data
-        //Async callback
-        const fetchData = async () => {
-            return await axios({
-                url: url,
-                method: 'GET',
-                withCredentials: true
-            }).then(response => {
-                setData(response.data)
-            }).catch(error => {
-                console.error(error)
-            })
-        }
-        //Execute
-        fetchData().then()
-        console.log(data)
+        axios({
+            url: url,
+            method: 'GET',
+            withCredentials: true
+        }).then(response => {
+            setData(response.data)
+        }).catch(error => {
+            console.error(error)
+        })
 
     }, [url]);
 
@@ -91,6 +84,5 @@ export const useCRUD = url => {
     }
 
 
-
-    return {update,create,remove, data}
+    return {update, create, remove, data}
 }

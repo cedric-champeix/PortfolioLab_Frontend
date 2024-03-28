@@ -55,6 +55,7 @@ export default function ViewResume() {
         }))
     }, [json]);
 
+    getResume()
 
     useEffect(() => {
         setSkills(json.skills.map(item => {

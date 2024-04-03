@@ -51,7 +51,7 @@ export default function App() {
                                 </Route>
 
                                 <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                    <Route path={'/register'} element={<Authenticate/>}></Route>
+                                    <Route path={'/connection'} element={<Authenticate/>}></Route>
                                 </Route>
 
                                 <Route path={"/"} element={<ProtectedRoute routeType={"admin"}/>}>

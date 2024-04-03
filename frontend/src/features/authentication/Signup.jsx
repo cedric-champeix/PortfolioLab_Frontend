@@ -1,4 +1,4 @@
-import {Avatar, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {Avatar} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import React from "react";
@@ -13,11 +13,13 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {useNotification} from "../../hooks/useNotification.js";
+
 const Signup = () => {
-    const paperStyle = { padding: 20, width: 400, margin: "0 auto" }
-    const headerStyle = { margin: 0 }
+    const paperStyle = {padding: 20, width: 400, margin: "0 auto"}
+    const headerStyle = {margin: 0}
     const fieldStyle = {marginBottom: '8px'}
-    const avatarStyle = { backgroundColor: '#1bbd7e' }
+    const avatarStyle = {backgroundColor: '#1bbd7e'}
+    const btnStyle = {margin: '8px 0'}
 
     const {setUsername} = useAuth()
     const navigate = useNavigate();
@@ -26,12 +28,11 @@ const Signup = () => {
     //FORMIK INITIAL VALUES
     const initialValues = {
         firstName: "",
-        lastName:"",
-        email:"",
-        username:"",
+        lastName: "",
+        email: "",
+        username: "",
         password: "",
-        confirmPassword:"",
-        remember: false
+        confirmPassword: ""
     }
 
     //YUP
@@ -54,65 +55,30 @@ const Signup = () => {
             username: values.username
         }
 
-        try {
-            const signup = await axios({
-                url: "http://localhost:8080/signup/",
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: data
-            });
+        axios({
+            url: "http://localhost:8080/signup/",
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+            data: data
+        }).then((res) => {
+            const token = Cookies.get("jwt_token");
 
-            if(signup.status === 200) {
-                const token = Cookies.get("jwt_token");
-
-                if (token !== "" || token !== undefined) {
-                    localStorage.setItem("justAuthenticated", "true");
-                    setUsername(signup.data.result.user.username);
-                    console.log(signup.data.result.user.username);
-                    navigate("/");
-                }
-
+            if (token !== "" || token !== undefined) {
+                localStorage.setItem("justAuthenticated", "true");
+                setUsername(res.data.result.user.username);
+                navigate("/");
+            }
+        }).catch((err) => {
+            if (err.response.status === 500) {
+                notify("User already exists", "error")
             } else {
                 notify("Unknown error", "error")
-
             }
-        } catch (e) {
-            notify("Username already taken", "error")
+        })
 
-        }
-
-
-
-        /*
-        let formData = new FormData(values);
-        //Data comes here
-        const data = {
-            email: formData.get("email"),
-            pwd: formData.get("password"),
-            firstName: formData.get("firstName"),
-            lastName: formData.get("lastName"),
-            username: formData.get("username")
-        }
-
-
-        const res = fetch.data;
-        console.log(res);
-
-        const token = Cookies.get("jwt_token");
-        switch (fetch.status) {
-            case 200:
-                if (token !== "" || token !== undefined) {
-                    setCurrentJwt(token);
-                    navigate("/");
-                }
-                break;
-            case 409:
-                //error catch
-                break;
-        }
-        //Debug*/
     }
 
     return (
@@ -125,7 +91,8 @@ const Signup = () => {
                     <h2 style={headerStyle}>Sign Up</h2>
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values, props) => submitForm(values, props)}>
+                <Formik initialValues={initialValues} validationSchema={validationSchema}
+                        onSubmit={(values, props) => submitForm(values, props)}>
                     {(props) => (
 
                         <Form>
@@ -217,13 +184,9 @@ const Signup = () => {
                                     />
                                 </Grid>
                             </Grid>
-                            <Field
-                                as={FormControlLabel}
-                                name="remember"
-                                control={<Checkbox />}
-                                label="I accept the terms and conditions."
-                            />
-                            <Button type='submit' variant='contained' color='primary'>Sign up</Button>
+                            <Button type='submit' variant='contained' color='primary' style={btnStyle} fullWidth>
+                                Sign up
+                            </Button>
                         </Form>
                     )}
                 </Formik>

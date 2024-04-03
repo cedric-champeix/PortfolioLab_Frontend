@@ -25,7 +25,6 @@ export const useProject = (projectId) => {
             method: 'GET',
             withCredentials: true
         }).then(response => {
-            // console.log("This is the project data: ", response.data)
             setProjectData(response.data)
         }).catch(error => {
             console.error(error)
@@ -33,19 +32,17 @@ export const useProject = (projectId) => {
 
     }, []);
 
-    const updateProject = async (id, body) => {
+    const updateProject = async (body) => {
         axios({
-            url: `${url}/${id}`,
+            url: `${url}/${projectId}`,
             method: "PUT",
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
             withCredentials: true,
-            data: formData
+            data: body
         }).then((res) => {
-            setProjects(projects.map(project =>
-                project.id === id ? res.data : project
-            ))
+            setProjectData(res.data)
         }).catch((error) => {
             console.error("Error when updating project: ", error)
         })

@@ -37,7 +37,7 @@ export default function ImageCard({image, update, remove, selected}) {
             </Typography>
         </CardContent>
         <CardActions>
-            <ImageAction image={image} update={update} isEditing={true}/>
+            <ImageAction image={image} update={update}/>
             <Button size="small"
                     onClick={deleteImage}>
                 Delete

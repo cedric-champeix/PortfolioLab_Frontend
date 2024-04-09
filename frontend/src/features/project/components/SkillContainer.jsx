@@ -9,7 +9,9 @@ export default function SkillContainer({projectId}) {
 
     const [open, setOpen] = useState(false)
 
-    const {fetchSkills, skills, connectToProject, disconnectFromProject} = useSkills(null, projectId)
+    console.log("PROJECT", projectId)
+
+    const {fetchSkills, skills, connectToProject, disconnectFromProject} = useSkills(null, projectId || "AWAITING")
 
     const toggle = () => {
         setOpen(!open)

@@ -48,15 +48,15 @@ export default function ViewResume() {
     //Setting resume up
     useEffect(() => {
         getResume().then()
+
     }, []);
 
     //Adapting all needed information
     useEffect(() => {
 
-
+        console.log(json)
 
         setContacts(json.contacts.map(item => {
-
             return {
                 type: item.title.toLowerCase().replace("address", "location"),
                 value: item.text

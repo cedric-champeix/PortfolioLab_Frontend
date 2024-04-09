@@ -14,7 +14,7 @@ export default function ProtectedRoute({routeType}) {
         }
     }
     const path = () => {
-        return routeType === "admin" ? "/register" : "/";
+        return routeType === "admin" ? "/connection" : "/";
     }
 
     return (

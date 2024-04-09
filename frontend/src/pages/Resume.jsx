@@ -33,12 +33,6 @@ export default function Resume() {
         }).then(() => {
             resetResume().then(() => {
                 setDescriptionValue("")
-                //setContactsData([])
-                //setSkillsData([])
-                //setExperiencesData([])
-                //setFormationsData([])
-                //setLanguageData([])
-                //setHobbiesData([])
             })
             console.log("Reset resume")
         })
@@ -140,7 +134,7 @@ export default function Resume() {
 
             <ContactSection resumeId={resumeData.id}></ContactSection>
             <Divider style={{width:'100%'}}>Skills</Divider>
-            <SkillSection resumeId={resumeData.id}></SkillSection>
+            <SkillSection resumeId={resumeData.id || "AWAITING"}></SkillSection>
             <Divider style={{width:'100%'}}>Experiences</Divider>
 
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>

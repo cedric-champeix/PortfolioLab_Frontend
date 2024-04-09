@@ -90,7 +90,7 @@ export default function Project() {
                 <Grid item xs={6}>
                     <Typography width="fit-content" variant={"h4"} color="primary"
                                 margin="0 0 10px 0">Skills</Typography>
-                    <SkillContainer projectId={projectData.id} skills={projectData.skills}></SkillContainer>
+                    <SkillContainer projectId={projectData.id}/>
                 </Grid>
             </Grid>
 

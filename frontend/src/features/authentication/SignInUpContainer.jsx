@@ -30,7 +30,7 @@ const SignInUpContainer = () => {
                 <Tab style={{width: "200px"}} label="Sign Up"/>
             </Tabs>
             <TabPanel value={value} index={0}>
-                <Login handleChange={handleChange}/>
+                <Login/>
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Signup/>

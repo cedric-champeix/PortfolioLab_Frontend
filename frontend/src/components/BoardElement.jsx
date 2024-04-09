@@ -106,7 +106,7 @@ export default function BoardElement({element, elementName}) {
     const handleLogOut = (event) => {
         event.preventDefault();
         logOut()
-        navigate("/register");
+        navigate("/connection");
     }
 
     return (

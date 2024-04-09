@@ -9,6 +9,7 @@ export const useSkills = (resumeId, projectId) => {
     const url = endpoints.skillsEndpoints
 
     useEffect(() => {
+        console.log("SKILLS", skills)
         if (resumeId !== "AWAITING" && projectId !== "AWAITING")
             fetchSkills()
     }, [resumeId, projectId]);
@@ -140,7 +141,7 @@ export const useSkills = (resumeId, projectId) => {
 
         if (index === -1) {
             axios({
-                url: `${endpoints.projectsEndpoint}/skills/${skill.id}`,
+                url: `${endpoints.projectsEndpoint}/${projectId}/skills/${skill.id}`,
                 method: "PUT",
                 withCredentials: true
             }).then(() => {
@@ -156,11 +157,11 @@ export const useSkills = (resumeId, projectId) => {
 
     const disconnectFromProject = (skillId) => {
         axios({
-            url: `${endpoints.projectsEndpoint}/skills/${skillId}`,
+            url: `${endpoints.projectsEndpoint}/${projectId}/skills/${skillId}`,
             method: "DELETE",
             withCredentials: true
         }).then(() => {
-            setProjectData(
+            setSkills(
                 skills.filter(skill => {
                     return skill.id !== skillId
                 })

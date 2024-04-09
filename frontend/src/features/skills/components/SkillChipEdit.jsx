@@ -67,10 +67,6 @@ export default function SkillChipEdit({skill, update, remove, selected}) {
             anchorEl={anchorEl}
             open={menuOpen}
             onClose={handleMenuClose}
-            style: {{
-            maxHeight: "100px",
-            width: '20ch'
-        }}
         >
             <MenuItem onClick={() => {
                 handleMenuClose()

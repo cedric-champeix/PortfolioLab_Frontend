@@ -19,7 +19,7 @@ export default function ContactSection({resumeId}) {
     const confirm = useConfirmation()
 
 
-    console.log(data)
+    console.log("contacts ",data)
 
     return <Grid container marginY="10px">
 

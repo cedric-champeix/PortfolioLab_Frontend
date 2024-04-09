@@ -37,7 +37,7 @@ const Login = ({handleChange}) => {
         password: Yup.string().required()
     })
 
-    const {setUsername} = useAuth()
+    const {setUsername, setUserId} = useAuth()
     const navigate = useNavigate();
 
     const submitForm = async (values, props) => {
@@ -71,8 +71,8 @@ const Login = ({handleChange}) => {
                 if (token !== "" || token !== undefined) {
                     localStorage.setItem("justAuthenticated", "true");
                     setUsername(fetch.data.result.user.username)
-                    console.log(fetch.data.result.user.id)
-                    navigate("/");
+                    setUserId(fetch.data.result.user.id)
+                    //navigate("/");
                 }
             }
         } catch (e) {

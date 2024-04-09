@@ -49,6 +49,9 @@ export default function App() {
                                 <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                     <Route path={'/profile'} element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
                                 </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/preview'} element={<BoardElement elementName={"PreviewResume"} element={<ViewResume/>}/>}/>
+                                </Route>
 
                                 <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
                                     <Route path={'/register'} element={<Authenticate/>}></Route>
@@ -61,7 +64,6 @@ export default function App() {
                         </main>
                     </CssBaseline>
                 </NotificationServiceProvider>
-
             </ThemeProvider>
     )
 }

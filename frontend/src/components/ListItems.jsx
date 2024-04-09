@@ -36,6 +36,15 @@ export const mainListItems = (
             </ListItemButton>
         </Link>
 
+        <Link to="/preview">
+            <ListItemButton>
+                <ListItemIcon>
+                    <LibraryBooksRoundedIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Preview"/>
+            </ListItemButton>
+        </Link>
+
         <Link to="/profile">
             <ListItemButton>
                 <ListItemIcon>

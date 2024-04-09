@@ -45,7 +45,6 @@ export default function Contact({id, type, text, remove, contactActionElement}) 
         }
     }, []);
 
-    console.log(type)
     const ContactIcon = () => {
         switch (type) {
             case "Email":

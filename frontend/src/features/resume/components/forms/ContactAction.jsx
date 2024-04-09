@@ -73,10 +73,6 @@ export default function ContactAction({
         text: data.text
     }
 
-
-    useEffect(() => {
-        console.log(data)
-    }, [data]);
     const toggle = () => {
         setData({title: contactTitle, text: contactText})
         setOpen(!open);

@@ -1,7 +1,7 @@
 import axios from "axios";
-import {useAuth} from "../../hooks/useAuth.js";
-import React, {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import CV from 'react-cv'
+import "./viewResume.css"
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -14,38 +14,47 @@ const initialValues = {
     formations: [],
     languages: [],
     hobbies: [],
-    contacts: []
+    contacts: [],
+    Image:{
+        path: ""
+    }
 }
 
 
 export default function ViewResume() {
 
-    const {userId} = useAuth()
 
     const [json, setJson] = useState(initialValues)
     const [contacts, setContacts] = useState([])
     const [skills, setSkills] = useState([])
+    const [experiences, setExperiences] = useState([])
+    const [education, setEducation] = useState([])
+    const [image, setImage] = useState("https://placehold.co/400x400")
+    const [hobbies, setHobbies] = useState([])
+    const [languages, setLanguages] = useState([])
+
     const cv = useRef()
     const getResume = async () => {
         const fetch = await axios({
-            url: "http://localhost:8080/viewer/resume/" + userId,
+            url: "http://localhost:8080/viewer/resume/" + "65e0c68568dfe45fc40f0963",
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
             },
         })
         setJson(fetch.data)
-        console.log(fetch.data.skills)
     }
 
+    //Setting resume up
     useEffect(() => {
         getResume().then()
-        const element = cv.current
-        console.log(element)
     }, []);
 
+    //Adapting all needed information
     useEffect(() => {
-        console.log("Adapting contacts")
+
+
+
         setContacts(json.contacts.map(item => {
 
             return {
@@ -53,15 +62,46 @@ export default function ViewResume() {
                 value: item.text
             }
         }))
-    }, [json]);
 
-    getResume()
+        setExperiences(json.experiences.map(item => {
+            return {
+                title: item.title,
+                description: item.description,
+                authority: item.company,
+                rightSide: item.startDate + '-' + (item.endDate || "ongoing")
+            }
+        }))
 
-    useEffect(() => {
+        setEducation(json.formations.map(item => {
+            return {
+                title: item.formationName,
+                authority: item.universityName,
+                rightSide: item.startDate + '-' + (item.endDate || "ongoing")
+            }
+        }))
+
         setSkills(json.skills.map(item => {
             return item.name
         }))
+
+        setHobbies(json.hobbies.map(item => {
+            return item.name
+        }))
+
+        setLanguages(json.languages.map(item => {
+            return item.name + ' - ' + item.level
+        }))
+
+        console.log(json.Image)
+        setImage("http://localhost:8080/" + json.Image.path)
+
     }, [json]);
+
+
+    useEffect(() => {
+
+    }, [json]);
+
 
     const handleDownloadPDF = () => {
         const input = document.getElementById("cvWrapper");
@@ -78,11 +118,11 @@ export default function ViewResume() {
 
 
     return <>
-        <div id={"cvWrapper"}>
+        <div id={"cvWrapper"} style={{display: "flex", justifyContent:'center', width:'100%', marginTop: '8vh'} }>
             <CV ref={cv} personalData={{
                 name: "Arnaud Endignous",
                 title: 'Graduate software developper',
-                image: 'https://media.licdn.com/dms/image/D4E03AQEhMxhrFIjr0w/profile-displayphoto-shrink_400_400/0/1710582570880?e=1717027200&v=beta&t=TAgvG9uMFTo9kdhFwL1HbHAtyJ4lQJ-e3tTCfHtkqZo',
+                image: image,
                 contacts: contacts
             }}
 
@@ -94,10 +134,36 @@ export default function ViewResume() {
                         icon: 'usertie'
                     },
                     {
+                        type: 'common-list',
+                        title: 'Experiences',
+                        icon: 'cubes',
+                        items: experiences
+
+                    },
+                    {
+                        type: 'common-list',
+                        title: 'Education',
+                        icon: 'book',
+                        items: education
+
+                    },
+                    {
                         type: 'tag-list',
                         title: 'Skills',
                         icon: 'rocket',
                         items: skills
+                    },
+                    {
+                        type: 'tag-list',
+                        title: 'Hobbies',
+                        icon: 'rocket',
+                        items: hobbies
+                    },
+                    {
+                        type: 'tag-list',
+                        title: 'Languages',
+                        icon: 'language',
+                        items: languages
                     }
                 ]}
                 branding={false}
@@ -105,8 +171,5 @@ export default function ViewResume() {
             </CV>
 
         </div>
-
-
-        <button onClick={handleDownloadPDF}>Save</button>
     </>
 }

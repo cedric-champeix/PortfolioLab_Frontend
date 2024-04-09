@@ -16,6 +16,7 @@ import FormationSection from "../features/resume/components/FormationSection.jsx
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
+import {Link} from "react-router-dom";
 
 export default function Resume() {
 
@@ -158,7 +159,7 @@ export default function Resume() {
                   xs={12}
                   textAlign="right"
                   marginY="10px">
-                <Button onClick={() => {window.location="/previewResume"}}
+                <Button component={Link} to={"/previewResume"}
                         size="large"
                         color="primary"
                         variant="contained">

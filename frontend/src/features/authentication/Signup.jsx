@@ -1,7 +1,6 @@
 import {Avatar} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import React from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -68,6 +67,8 @@ const Signup = () => {
 
             if (token !== "" || token !== undefined) {
                 localStorage.setItem("justAuthenticated", "true");
+                localStorage.setItem("userId", res.data.result.user.id)
+                localStorage.setItem("username", res.data.result.user.username)
                 setUsername(res.data.result.user.username);
                 navigate("/");
             }

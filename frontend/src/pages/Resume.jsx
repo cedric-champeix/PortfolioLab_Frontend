@@ -17,7 +17,6 @@ import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
 import {Link} from "react-router-dom";
-import {useQuickActions} from "../hooks/useQuickActions.js";
 
 export default function Resume() {
 

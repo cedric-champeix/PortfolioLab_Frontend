@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, {useState} from "react";
+import {useState} from "react";
 import {Box, Checkbox, DialogActions, DialogContent, FormControlLabel} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

@@ -1,7 +1,7 @@
 import {Chip, Tooltip, Stack} from "@mui/material";
 import {string} from "prop-types";
 import Box from "@mui/material/Box";
-import React, {useState} from "react";
+import {useState} from "react";
 import SkillHandler from "../../skills/components/SkillHandler.jsx";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {useSkills} from "../../skills/hooks/useSkills.js";

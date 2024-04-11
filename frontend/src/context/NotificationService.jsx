@@ -37,3 +37,7 @@ export const NotificationServiceProvider = ({children}) => {
         <Notification open={alertOpen} message={message} severity={severity} ></Notification>
     </>
 }
+
+NotificationServiceProvider.propTypes = {
+    children: () => {}
+}

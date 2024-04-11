@@ -5,11 +5,14 @@ import React, {useState} from "react";
 import SkillHandler from "../../skills/components/SkillHandler.jsx";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {useSkills} from "../../skills/hooks/useSkills.js";
+import {useConfirmation} from "../../../hooks/useConfirmation.js";
+import {useNotification} from "../../../hooks/useNotification.js";
 
 export default function SkillSection({resumeId}) {
 
     const [open, setOpen] = useState(false)
-
+    const confirm = useConfirmation()
+    const notify = useNotification()
     const {fetchSkills, skills, connectToResume, disconnectFromResume} = useSkills(resumeId, null)
 
     const toggle = () => {
@@ -20,6 +23,17 @@ export default function SkillSection({resumeId}) {
         }
     }
 
+    const handleDelete = (skillId) => {
+
+        confirm({
+            catchOnCancel: true,
+            name: "Resume"
+        }).then(() => {
+            disconnectFromResume(skillId)
+            notify('Skill removed successfully', "success")
+        })
+    }
+
     return <Box container marginY="10px">
         <SkillHandler open={open} toggle={toggle} callback={connectToResume}/>
         <Stack direction={"row"} spacing={2} style={{flexWrap: "wrap"}}>
@@ -27,7 +41,9 @@ export default function SkillSection({resumeId}) {
                 <Tooltip title={skill.description} key={skill.id} arrow>
                     <Chip label={skill.name} style={{marginTop: "10px"}}
                           onClick={toggle}
-                          onDelete={() => disconnectFromResume(skill.id)}
+                          onDelete={() => {
+                              handleDelete(skill.id)
+                          }}
                     />
                 </Tooltip>
             ))}

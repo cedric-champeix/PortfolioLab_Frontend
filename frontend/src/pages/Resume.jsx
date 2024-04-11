@@ -159,7 +159,6 @@ export default function Resume() {
                   textAlign="right"
                   marginY="10px">
                 <Button component={Link} to={"/previewResume"}
-                        style={{position:"fixed", bottom:"32px", right:"15vw"}}
                         size="large"
                         color="primary"
                         variant="contained">

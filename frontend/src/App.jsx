@@ -1,6 +1,5 @@
 import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
-import Dashboard from "./pages/Dashboard.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Resume from "./pages/Resume.jsx";
 import {useAuth} from "./hooks/useAuth.js";
@@ -37,14 +36,12 @@ export default function App() {
                             <main>
                                 <Routes>
                                     <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/'} element={<BoardElement elementName={"Dashboard"} element={<Dashboard/>}/>}></Route>
+                                        <Route path={'/'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
                                     </Route>
                                     <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                         <Route path={'/resume'} element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}></Route>
                                     </Route>
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/portfolio'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
-                                    </Route>
+
                                     <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                         <Route path={'/portfolio/:projectId'} element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
                                     </Route>

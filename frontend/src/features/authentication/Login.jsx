@@ -65,6 +65,8 @@ const Login = () => {
 
             if (token !== "" || token !== undefined) {
                 localStorage.setItem("justAuthenticated", "true");
+                localStorage.setItem("userId", res.data.result.user.id)
+                localStorage.setItem("username", res.data.result.user.username)
                 setUsername(res.data.result.user.username);
                 navigate("/");
             }
@@ -137,4 +139,7 @@ const Login = () => {
     )
 }
 
+Login.propTypes = {
+    handleChange: () => {}
+}
 export default Login

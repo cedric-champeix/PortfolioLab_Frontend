@@ -16,11 +16,13 @@ import FormationSection from "../features/resume/components/FormationSection.jsx
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
+import {Link} from "react-router-dom";
 
 export default function Resume() {
 
     //Using skills data
     const {resumeData, setResumeData, updateResume, resetResume} = useResume()
+
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
 
@@ -43,6 +45,10 @@ export default function Resume() {
     //Description updates when resume data updates
     useEffect(() => {
         setDescriptionValue(resumeData.description)
+
+        //dispatch("MOUNT_ACTION", "preview resume")
+        //dispatch("MOUNT_ACTION", "clear resume")
+
     }, [resumeData]);
 
     const handleEditClick = () => {
@@ -152,13 +158,14 @@ export default function Resume() {
                   xs={12}
                   textAlign="right"
                   marginY="10px">
-                <Button onClick={() => {window.location="/previewResume"}}
+                <Button component={Link} to={"/previewResume"}
+                        style={{position:"fixed", bottom:"32px", right:"15vw"}}
                         size="large"
                         color="primary"
                         variant="contained">
                     Preview resume
                 </Button>
-                <Button onClick={() => resetResumeSafeguard()}
+                <Button  onClick={() => resetResumeSafeguard()}
                         size="large"
                         color="error"
                         variant="contained">

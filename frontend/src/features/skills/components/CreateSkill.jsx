@@ -1,17 +1,21 @@
 import PropTypes from "prop-types";
-import React, {useState} from "react";
+import {useState} from "react";
 import {Box, Checkbox, DialogActions, DialogContent, FormControlLabel} from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import {useNotification} from "../../../hooks/useNotification.js";
 
 
 export default function CreateSkill({create, toggle, callback}) {
 
     const [data, setData] = useState({name: "", description: "", isSoft: false})
 
+    const notify = useNotification()
+
     const handleSubmit = () => {
         create(data.name, data.description, data.isSoft, callback)
         toggle()
+        notify('Skill created successfully ! ', "info")
     }
 
     return <Box component="form">

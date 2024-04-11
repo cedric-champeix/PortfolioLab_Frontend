@@ -4,8 +4,13 @@ import Toolbar from "@mui/material/Toolbar";
 import {Paper} from "@mui/material";
 import Box from "@mui/material/Box";
 import Title from "../components/Title.jsx";
+import {useAuth} from "../hooks/useAuth.js";
 
 export default function Dashboard() {
+
+    const {userId, username} = useAuth()
+    console.log(userId)
+    console.log(username)
 
 
     return <Box gridAutoFlow='row'

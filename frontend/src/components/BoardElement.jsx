@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems } from './ListItems.jsx';
+import {mainListItems} from './ListItems.jsx';
 import "../config/theme.js"
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -24,6 +24,8 @@ import {skillData} from "../data/skillData.js";
 import {string} from "prop-types";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 import {useNotification} from "../hooks/useNotification.js";
+import Button from "@mui/material/Button";
+import LaunchIcon from '@mui/icons-material/Launch';
 
 // function Copyright(props) {
 //     return (
@@ -42,7 +44,7 @@ const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+})(({theme, open}) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -58,8 +60,8 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
+    ({theme, open}) => ({
         '& .MuiDrawer-paper': {
             position: 'relative',
             whiteSpace: 'nowrap',
@@ -86,6 +88,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function BoardElement({element, elementName}) {
     const [open, setOpen] = React.useState(true);
+    //const {quickActions} = useQuickActions();
 
     const notify = useNotification();
     const toggleDrawer = () => {
@@ -100,9 +103,10 @@ export default function BoardElement({element, elementName}) {
             notify("Just authenticated as " + username, "success")
             localStorage.setItem("justAuthenticated", 'false')
         }
+
     }, []);
 
-    const navigate =useNavigate()
+    const navigate = useNavigate()
     const handleLogOut = (event) => {
         event.preventDefault();
         logOut()
@@ -110,76 +114,91 @@ export default function BoardElement({element, elementName}) {
     }
 
     return (
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar position="absolute" open={open}>
-                    <Toolbar
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
+            <AppBar position="absolute" open={open}>
+                <Toolbar
+                    sx={{
+                        pr: '24px', // keep right padding when drawer closed
+                    }}
+                >
+                    <IconButton
+                        edge="start"
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer}
                         sx={{
-                            pr: '24px', // keep right padding when drawer closed
+                            marginRight: '36px',
+                            ...(open && {display: 'none'}),
                         }}
                     >
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={toggleDrawer}
-                            sx={{
-                                marginRight: '36px',
-                                ...(open && { display: 'none' }),
-                            }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{ flexGrow: 1 }}
-                        >
-                            {elementName}
-                        </Typography>
-                        <Typography>{username}</Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer variant="permanent" open={open}>
-                    <Toolbar
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                            px: [1],
-                        }}
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography
+                        component="h1"
+                        variant="h6"
+                        color="inherit"
+                        noWrap
+                        sx={{flexGrow: 1}}
                     >
-                        <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Toolbar>
-                    <Divider />
-                    <List component="nav">
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        <ListItemButton onClick={(ev) => handleLogOut(ev)}>
-                            <ListItemIcon>
-                                <LogoutRoundedIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Log out" />
-                        </ListItemButton>
-                    </List>
-                </Drawer>
-                <ConfirmationServiceContextProvider>
-                    <SkillsProvider data={skillData}>
-                        {element}
-                    </SkillsProvider>
-                </ConfirmationServiceContextProvider>
-            </Box>
-    );
+                        {elementName}
+                    </Typography>
+                    {
+                        ["Preview resume"].map((item) =>
+                            <Button variant="text" style={{color:"#FFF", marginRight:"30px"}} endIcon={<LaunchIcon/>} key={item}>
+                                {item}
+                            </Button>
+                        )
+                    }
+
+                <Typography>{username}</Typography>
+            </Toolbar>
+        </AppBar>
+    <Drawer variant="permanent" open={open}>
+        <Toolbar
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                px: [1],
+            }}
+        >
+            <IconButton onClick={toggleDrawer}>
+                <ChevronLeftIcon/>
+            </IconButton>
+        </Toolbar>
+        <Divider/>
+        <List component="nav">
+            {mainListItems}
+            <Divider sx={{my: 1}}/>
+            <ListItemButton onClick={(ev) => handleLogOut(ev)}>
+                <ListItemIcon>
+                    <LogoutRoundedIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Log out"/>
+            </ListItemButton>
+        </List>
+    </Drawer>
+    <ConfirmationServiceContextProvider>
+        <SkillsProvider data={skillData}>
+            {element}
+        </SkillsProvider>
+    </ConfirmationServiceContextProvider>
+</Box>
+)
+    ;
 }
 
 BoardElement.propTypes = {
-    element : () => {},
+    element: () => {
+    },
     elementName: string
 }
 BoardElement.defaultProps = {
-    element: () => {},
+    element: () => {
+    },
 };
+
+/*
+
+* */

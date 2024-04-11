@@ -10,13 +10,15 @@ import {
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import React, {useState} from "react";
+import {useState} from "react";
 import PropTypes, {bool} from "prop-types";
+import {useNotification} from "../../../hooks/useNotification.js";
 
 
 export default function SkillAction({skill, update, open, setOpen}) {
 
     const [data, setData] = useState({name: skill.name, description: skill.description ? skill.description : "", isSoft: skill.isSoft});
+    const notify = useNotification()
 
     const toggle = () => {
         setData({name: skill.name, description: skill.description ? skill.description : "", isSoft: skill.isSoft})
@@ -26,6 +28,7 @@ export default function SkillAction({skill, update, open, setOpen}) {
     const handleSubmit = () => {
         update(skill.id, data.name, data.description, data.isSoft)
         toggle();
+        notify("Skill updated successfully", "success")
     }
 
     return <div>

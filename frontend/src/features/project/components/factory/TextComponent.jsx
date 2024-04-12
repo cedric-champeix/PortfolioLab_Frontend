@@ -6,13 +6,13 @@ export default function TextComponent({component, update}) {
 
     const [data, setData] = useState(component);
 
-    const save = (event, editor) => {
+    const saveText = (event, editor) => {
         let temp = data
         temp.data.text = editor.getContent({format: 'html'})
         update(data.id, temp)
     }
 
-    return <TextEditor text={data.data.text} save={save} height="300px" width="100%"/>
+    return <TextEditor text={data.data.text} save={saveText} height="300px" width="100%"/>
 
 }
 

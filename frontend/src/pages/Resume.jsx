@@ -39,24 +39,30 @@ export default function Resume() {
         })
     }
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [descriptionValue, setDescriptionValue] = useState("");
+    //Is the description in edit mode ?
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+    //Is the title in edit mode ?
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+    const [descriptionValue, setDescriptionValue] = useState("")
+    const [titleValue, setTitleValue] = useState("")
+
 
     //Description updates when resume data updates
     useEffect(() => {
         setDescriptionValue(resumeData.description)
-
+        setTitleValue(resumeData.title)
         //dispatch("MOUNT_ACTION", "preview resume")
         //dispatch("MOUNT_ACTION", "clear resume")
 
     }, [resumeData]);
 
     const handleEditClick = () => {
-        setIsEditing(true);
+        setIsEditingDescription(true);
     };
 
     const handleSaveClick = () => {
-        setIsEditing(false);
+        setIsEditingDescription(false);
         updateResume(descriptionValue).then((data) => {
             setResumeData({
                 resumeId: data.id,
@@ -67,8 +73,13 @@ export default function Resume() {
         })
     };
 
-    const handleCancelClick = (e) => {
-        setIsEditing(false);
+    const handleCancelClickDescription = (e) => {
+        setIsEditingDescription(false);
+        setDescriptionValue(e.target.value)
+    };
+
+    const handleCancelClickTitle = (e) => {
+        setIsEditingDescription(false);
         setDescriptionValue(e.target.value)
     };
 
@@ -91,7 +102,7 @@ export default function Resume() {
                 <Grid item xs={9} padding="5px">
                     <Title>Description</Title>
                     {
-                        isEditing ?
+                        isEditingDescription ?
                             <>
                                 <TextField
                                     autoFocus
@@ -113,7 +124,7 @@ export default function Resume() {
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClick(e)}>
+                                            onClick={(e) => handleCancelClickDescription(e)}>
                                         Cancel
                                     </Button>
                                 </Grid>

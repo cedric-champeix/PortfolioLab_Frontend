@@ -1,15 +1,15 @@
+import CssBaseline from "@mui/material/CssBaseline";
 import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
-import Portfolio from "./pages/Portfolio.jsx";
-import Resume from "./pages/Resume.jsx";
 import {useAuth} from "./hooks/useAuth.js";
 import {theme} from "./config/theme.js";
 import {ThemeProvider} from "@mui/material/styles";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import BoardElement from "./components/BoardElement.jsx";
-import CssBaseline from "@mui/material/CssBaseline";
 import Authenticate from "./pages/Authenticate.jsx";
 import {NotificationServiceProvider} from "./context/NotificationService.jsx";
+import Portfolio from "./pages/Portfolio.jsx";
+import Resume from "./pages/Resume.jsx";
 import Project from "./pages/Project.jsx";
 import Profile from "./pages/Profile.jsx";
 import ViewResume from "./features/viewer/ViewResume.jsx";

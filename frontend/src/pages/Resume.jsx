@@ -21,7 +21,7 @@ import {Link} from "react-router-dom";
 export default function Resume() {
 
     //Using skills data
-    const {resumeData, setResumeData, updateResume, resetResume} = useResume()
+    const {resumeData, setResumeData, updateResumeTitle, updateResumeDescription, resetResume} = useResume()
 
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
@@ -57,19 +57,36 @@ export default function Resume() {
 
     }, [resumeData]);
 
-    const handleEditClick = () => {
+    const handleEditClickDescription = () => {
         setIsEditingDescription(true);
     };
+    const handleEditClickTitle = () => {
+        setIsEditingTitle(true);
+    };
 
-    const handleSaveClick = () => {
+    const handleSaveClickDescription = () => {
         setIsEditingDescription(false);
-        updateResume(descriptionValue).then((data) => {
+        updateResumeDescription(descriptionValue).then((data) => {
             setResumeData({
                 resumeId: data.id,
                 description: data.description,
+                title: data.title,
                 Image: data.Image
             })
-            console.log("UPDATED RESUME", data)
+            console.log("UPDATED RESUME DESCRIPTION", data)
+        })
+    };
+
+    const handleSaveClickTitle = () => {
+        setIsEditingTitle(false);
+        updateResumeTitle(titleValue).then((data) => {
+            setResumeData({
+                resumeId: data.id,
+                description: data.description,
+                title: data.title,
+                Image: data.Image
+            })
+            console.log("UPDATED RESUME TITLE", data)
         })
     };
 
@@ -79,8 +96,8 @@ export default function Resume() {
     };
 
     const handleCancelClickTitle = (e) => {
-        setIsEditingDescription(false);
-        setDescriptionValue(e.target.value)
+        setIsEditingTitle(false);
+        setTitleValue(e.target.value)
     };
 
 
@@ -118,7 +135,7 @@ export default function Resume() {
                                 <Grid item xs={12} textAlign={"right"}>
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
-                                            onClick={handleSaveClick}>
+                                            onClick={handleSaveClickDescription}>
                                         Save
                                     </Button>
                                     <Button variant="outlined"
@@ -137,7 +154,51 @@ export default function Resume() {
                                 <Grid item xs={12} textAlign={"right"}>
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
-                                            onClick={handleEditClick}>
+                                            onClick={handleEditClickDescription}>
+                                        Edit
+                                    </Button>
+                                </Grid>
+                            </>
+                    }
+                    <Title>Resume title</Title>
+
+                    {
+                        isEditingTitle ?
+                            <>
+                                <TextField
+                                    autoFocus
+                                    value={titleValue || ""}
+                                    onChange={(e) => setTitleValue(e.target.value)}
+                                    margin="dense"
+                                    label="Title"
+                                    type="name"
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                />
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleSaveClickTitle}>
+                                        Save
+                                    </Button>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            color="error"
+                                            onClick={(e) => handleCancelClickTitle(e)}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            </>
+                            :
+                            <>
+                                <Typography>
+                                    {titleValue}
+                                </Typography>
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleEditClickTitle}>
                                         Edit
                                     </Button>
                                 </Grid>

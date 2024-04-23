@@ -18,16 +18,6 @@ import QuickActionProvider from "./context/QuickActionService.jsx";
 
 export default function App() {
 
-    const {currentJwt} = useAuth();
-    const [isLoggedIn, setIsLoggedIn] = useState(currentJwt !== "");
-
-    useEffect(() => {
-        return () => {
-            setIsLoggedIn(currentJwt !== "");
-        };
-    }, [currentJwt, isLoggedIn]);
-
-
     return (
             <ThemeProvider theme={theme}>
                 <NotificationServiceProvider>

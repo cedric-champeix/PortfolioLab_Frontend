@@ -29,7 +29,8 @@ export const useResume = () => {
         //console.log(resumeData)
     }, [url]);
 
-    const updateResume = async (description) => {
+    const updateResumeDescription = async (description) => {
+
         const data = {
             description: description,
         }
@@ -49,6 +50,25 @@ export const useResume = () => {
 
     }
 
+    const updateResumeTitle = async (title) => {
+        const data = {
+            title: title,
+        }
+
+        const fetch = await axios({
+            url: `http://localhost:8080/editor/resume`,
+            method: 'PUT',
+            withCredentials: true,
+            data: data
+        });
+
+        if (fetch.status === 200) {
+            console.log("Update resume")
+            return fetch.data
+        }
+        console.error(fetch.status, fetch.data.message)
+    }
+
     const resetResume = async () => {
         const fetch = await axios({
             url: `http://localhost:8080/editor/resume`,
@@ -65,5 +85,5 @@ export const useResume = () => {
     }
 
 
-    return {resumeData, setResumeData, updateResume, resetResume}
+    return {resumeData, setResumeData, updateResumeTitle, updateResumeDescription, resetResume}
 }

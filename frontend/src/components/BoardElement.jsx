@@ -143,14 +143,6 @@ export default function BoardElement({element, elementName}) {
                     >
                         {elementName}
                     </Typography>
-                    {
-                        ["Preview resume"].map((item) =>
-                            <Button variant="text" style={{color:"#FFF", marginRight:"30px"}} endIcon={<LaunchIcon/>} key={item}>
-                                {item}
-                            </Button>
-                        )
-                    }
-
                 <Typography>{username}</Typography>
             </Toolbar>
         </AppBar>

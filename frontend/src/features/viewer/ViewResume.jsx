@@ -4,26 +4,31 @@ import CV from 'react-cv'
 import "./viewResume.css"
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import {useAuth} from "../../hooks/useAuth.js";
+import Button from "@mui/material/Button";
 
 const initialValues = {
-    id: "",
-    description: "",
-    userId: "",
-    skills: [],
-    experiences: [],
-    formations: [],
-    languages: [],
-    hobbies: [],
-    contacts: [],
-    Image:{
-        path: ""
+    firstName: "",
+    lastName: "",
+    resume : {
+        id: "",
+        description: "",
+        userId: "",
+        skills: [],
+        experiences: [],
+        formations: [],
+        languages: [],
+        hobbies: [],
+        contacts: [],
+        Image:{
+            path: ""
+        }
     }
 }
 
 
 export default function ViewResume() {
-
-
+    const {username} = useAuth()
     const [json, setJson] = useState(initialValues)
     const [contacts, setContacts] = useState([])
     const [skills, setSkills] = useState([])
@@ -35,14 +40,16 @@ export default function ViewResume() {
 
     const cv = useRef()
     const getResume = async () => {
+
         const fetch = await axios({
-            url: "http://localhost:8080/viewer/resume/" + "65e0c68568dfe45fc40f0963",
+            url: "http://localhost:8080/viewer/resume/" + localStorage.getItem("username") || "",
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
             },
         })
         setJson(fetch.data)
+        console.log(fetch.data)
     }
 
     //Setting resume up
@@ -56,14 +63,14 @@ export default function ViewResume() {
 
         console.log(json)
 
-        setContacts(json.contacts.map(item => {
+        setContacts(json.resume.contacts.map(item => {
             return {
                 type: item.title.toLowerCase().replace("address", "location"),
                 value: item.text
             }
         }))
 
-        setExperiences(json.experiences.map(item => {
+        setExperiences(json.resume.experiences.map(item => {
             return {
                 title: item.title,
                 description: item.description,
@@ -72,7 +79,7 @@ export default function ViewResume() {
             }
         }))
 
-        setEducation(json.formations.map(item => {
+        setEducation(json.resume.formations.map(item => {
             return {
                 title: item.formationName,
                 authority: item.universityName,
@@ -80,37 +87,34 @@ export default function ViewResume() {
             }
         }))
 
-        setSkills(json.skills.map(item => {
+        setSkills(json.resume.skills.map(item => {
             return item.name
         }))
 
-        setHobbies(json.hobbies.map(item => {
+        setHobbies(json.resume.hobbies.map(item => {
             return item.name
         }))
 
-        setLanguages(json.languages.map(item => {
+        setLanguages(json.resume.languages.map(item => {
             return item.name + ' - ' + item.level
         }))
 
-        console.log(json.Image)
-        setImage("http://localhost:8080/" + json.Image.path)
+        setImage("http://localhost:8080/" + json.resume.Image.path)
 
     }, [json]);
 
 
-    useEffect(() => {
-
-    }, [json]);
 
 
     const handleDownloadPDF = () => {
         const input = document.getElementById("cvWrapper");
         console.log("component to save",input)
         // Specify the id of the element you want to convert to PDF
+
         html2canvas(input).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
-            pdf.addImage(imgData, 'PNG', 0, 0, 200, 500);
+            pdf.addImage(imgData, 'PNG',0,0,1,1);
             pdf.save('downloaded-file.pdf');
             // Specify the name of the downloaded PDF file
         });
@@ -120,8 +124,8 @@ export default function ViewResume() {
     return <>
         <div id={"cvWrapper"} style={{display: "flex", justifyContent:'center', width:'100%', marginTop: '8vh'} }>
             <CV ref={cv} personalData={{
-                name: "Arnaud Endignous",
-                title: 'Graduate software developper',
+                name: json.firstName + " " + json.lastName,
+                title: json.resume.title,
                 image: image,
                 contacts: contacts
             }}
@@ -130,7 +134,7 @@ export default function ViewResume() {
                     {
                         type: 'text',
                         title: 'Description',
-                        content: json.description,
+                        content: json.resume.description,
                         icon: 'usertie'
                     },
                     {
@@ -171,5 +175,6 @@ export default function ViewResume() {
             </CV>
 
         </div>
+        <Button onClick={handleDownloadPDF}>EXPORT</Button>
     </>
 }

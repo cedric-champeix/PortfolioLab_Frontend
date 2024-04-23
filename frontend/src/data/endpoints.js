@@ -9,8 +9,10 @@ export const endpoints = {
     languageEndpoint: baseUrl + "/editor/languages",
     skillsEndpoints: baseUrl + "/editor/skills",
     projectsEndpoint: baseUrl + "/editor/projects",
-    componentsEndpoints: (projectId) => {
-        return baseUrl + `/editor/projects/${projectId}/components`
-    },
-    imagesEndpoint: baseUrl + "/editor/images"
+    componentsEndpoints: (projectId) => baseUrl + `/editor/projects/${projectId}/components`,
+    imagesEndpoint: baseUrl + "/editor/images",
+    viewer: {
+        portfolioEndpoint: (username) => baseUrl + `/viewer/${username}/projects`,
+        projectEndpoint: (username, projectId) => baseUrl + `/viewer/${username}/projects/${projectId}`
+    }
 }

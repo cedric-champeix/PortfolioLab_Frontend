@@ -1,7 +1,5 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import {Route, Routes} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useAuth} from "./hooks/useAuth.js";
 import {theme} from "./config/theme.js";
 import {ThemeProvider} from "@mui/material/styles";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -13,6 +11,7 @@ import Resume from "./pages/Resume.jsx";
 import Project from "./pages/Project.jsx";
 import Profile from "./pages/Profile.jsx";
 import ViewResume from "./features/viewer/ViewResume.jsx";
+import ViewerPortfolio from "./pages/viewer/ViewerPortfolio.jsx";
 import QuickActionProvider from "./context/QuickActionService.jsx";
 
 
@@ -48,6 +47,11 @@ export default function App() {
 
                                     <Route path={"/"} element={<ProtectedRoute routeType={"admin"}/>}>
                                         <Route path={'/previewResume'} element={<ViewResume></ViewResume>}></Route>
+                                    </Route>
+
+                                    <Route path={"/viewer"}>
+                                        <Route path={"/viewer/:username"} element={<ViewerPortfolio/>}/>
+                                        <Route path={"/viewer/:username/portfolio"} element={<ViewerPortfolio/>}/>
                                     </Route>
                                 </Routes>
                             </main>

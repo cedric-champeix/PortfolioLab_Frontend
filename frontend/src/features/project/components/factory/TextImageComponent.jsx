@@ -16,10 +16,28 @@ export default function TextImageComponent({component, update, leftText}) {
 
     const [open, setOpen] = useState(false)
 
-    const save = (event, editor) => {
-        let temp = data
-        temp.data.text = editor.getContent({format: 'html'})
-        update(data.id, temp)
+    const saveText = (event, editor) => {
+        const body = {
+            type: component.type,
+            data: {
+                image: data.data.image,
+                text: editor.getContent({format: 'html'})
+            }
+        }
+        update(data.id, body)
+    }
+
+    const updateImage = (newImage) => {
+        const body = {
+            type: component.type,
+            data: {
+                image: newImage.path,
+                text: data.data.text
+            }
+        }
+
+        update(component.id, body)
+        setImage(constants.BACKEND_URL + "" + newImage.path)
     }
 
     const fallbackImage = (e) => {
@@ -30,23 +48,11 @@ export default function TextImageComponent({component, update, leftText}) {
         setOpen(!open)
     }
 
-    const updateImage = (newImage) => {
-        const body = {
-            type: component.type,
-            data: {
-                image: newImage.path
-            }
-        }
-
-        update(component.id, body)
-        setImage(constants.BACKEND_URL + "" + newImage.path)
-    }
-
     return <>
         {leftText ?
             <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
-                    <TextEditor text={data.data.text} save={save} height="300px" width="100%"/>
+                    <TextEditor text={data.data.text} save={saveText} height="300px" width="100%"/>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <ImageHandler open={open} toggle={toggle} callback={updateImage}/>
@@ -77,7 +83,7 @@ export default function TextImageComponent({component, update, leftText}) {
                     </Button>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <TextEditor text={data.data.text} save={save} height="300px" width="100%"/>
+                    <TextEditor text={data.data.text} save={saveText} height="300px" width="100%"/>
                 </Grid>
             </Grid>
         }

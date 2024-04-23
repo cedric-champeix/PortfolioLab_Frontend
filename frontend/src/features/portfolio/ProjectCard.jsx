@@ -6,13 +6,16 @@ import React, {useState} from "react";
 import {constants} from "../../constants.js";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import DeleteIcon from "@mui/icons-material/Delete.js";
+import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import SkillChipViewer from "../skills/components/SkillChipViewer.jsx";
 
 export default function ProjectCard({project, remove}) {
 
     const [image, setImage] = useState(project.MainImage?.path ? constants.BACKEND_URL + "" + project.MainImage.path : placeHolder);
+
+    if (!project.skills)
+        project.skills = []
 
     const fallbackImage = (e) => {
         setImage(placeHolder)

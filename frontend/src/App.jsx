@@ -12,6 +12,7 @@ import Project from "./pages/Project.jsx";
 import Profile from "./pages/Profile.jsx";
 import ViewResume from "./features/viewer/ViewResume.jsx";
 import ViewerPortfolio from "./pages/viewer/ViewerPortfolio.jsx";
+import ViewerProject from "./pages/viewer/ViewerProject.jsx";
 import QuickActionProvider from "./context/QuickActionService.jsx";
 
 
@@ -52,6 +53,7 @@ export default function App() {
                                     <Route path={"/viewer"}>
                                         <Route path={"/viewer/:username"} element={<ViewerPortfolio/>}/>
                                         <Route path={"/viewer/:username/portfolio"} element={<ViewerPortfolio/>}/>
+                                        <Route path={"/viewer/:username/portfolio/:projectId"} element={<ViewerProject/>}/>
                                     </Route>
                                 </Routes>
                             </main>

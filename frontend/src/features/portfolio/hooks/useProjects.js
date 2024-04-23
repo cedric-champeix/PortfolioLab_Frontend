@@ -15,8 +15,8 @@ export const useProjects = () => {
             method: 'GET',
             withCredentials: true
         }).then(response => {
-            console.log("This is the project data: ", response.data.projects)
-            setProjects(response.data.projects)
+            console.log("This is the project data: ", response.data)
+            setProjects(response.data)
         }).catch(error => {
             console.error("Couldn't get projects: ", error)
         })

@@ -1,7 +1,11 @@
 body {
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
+.SPgITW_cvContainer {
+    min-width: 1000px;
+}
 .EIrz6a_hero.EIrz6a_is-primary, .EIrz6a_tag:not(body).EIrz6a_is-primary, .SPgITW_sectionIcon  {
     background-color: #5e81ac
 }

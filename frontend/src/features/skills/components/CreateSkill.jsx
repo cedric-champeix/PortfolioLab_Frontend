@@ -15,7 +15,7 @@ export default function CreateSkill({create, toggle, callback}) {
     const handleSubmit = () => {
         create(data.name, data.description, data.isSoft, callback)
         toggle()
-        notify('Skill created successfully ! ', "info")
+        notify('Skill created successfully ! ', "success")
     }
 
     return <Box component="form">

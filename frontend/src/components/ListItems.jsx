@@ -2,7 +2,6 @@ import * as React from 'react';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import {Link} from "react-router-dom";
@@ -13,9 +12,9 @@ export const mainListItems = (
         <Link to="/">
             <ListItemButton>
                 <ListItemIcon>
-                    <DashboardIcon/>
+                    <LibraryBooksRoundedIcon/>
                 </ListItemIcon>
-                <ListItemText primary="Dashboard"/>
+                <ListItemText primary="Portfolio"/>
             </ListItemButton>
         </Link>
 
@@ -28,14 +27,6 @@ export const mainListItems = (
             </ListItemButton>
         </Link>
 
-        <Link to="/portfolio">
-            <ListItemButton>
-                <ListItemIcon>
-                    <LibraryBooksRoundedIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Portfolio"/>
-            </ListItemButton>
-        </Link>
 
         <Link to="/preview">
             <ListItemButton>

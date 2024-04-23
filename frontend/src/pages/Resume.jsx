@@ -21,7 +21,7 @@ import {Link} from "react-router-dom";
 export default function Resume() {
 
     //Using skills data
-    const {resumeData, setResumeData, updateResume, resetResume} = useResume()
+    const {resumeData, setResumeData, updateResumeTitle, updateResumeDescription, resetResume} = useResume()
 
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
@@ -39,37 +39,65 @@ export default function Resume() {
         })
     }
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [descriptionValue, setDescriptionValue] = useState("");
+    //Is the description in edit mode ?
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+    //Is the title in edit mode ?
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+
+    const [descriptionValue, setDescriptionValue] = useState("")
+    const [titleValue, setTitleValue] = useState("")
+
 
     //Description updates when resume data updates
     useEffect(() => {
         setDescriptionValue(resumeData.description)
-
+        setTitleValue(resumeData.title)
         //dispatch("MOUNT_ACTION", "preview resume")
         //dispatch("MOUNT_ACTION", "clear resume")
 
     }, [resumeData]);
 
-    const handleEditClick = () => {
-        setIsEditing(true);
+    const handleEditClickDescription = () => {
+        setIsEditingDescription(true);
+    };
+    const handleEditClickTitle = () => {
+        setIsEditingTitle(true);
     };
 
-    const handleSaveClick = () => {
-        setIsEditing(false);
-        updateResume(descriptionValue).then((data) => {
+    const handleSaveClickDescription = () => {
+        setIsEditingDescription(false);
+        updateResumeDescription(descriptionValue).then((data) => {
             setResumeData({
                 resumeId: data.id,
                 description: data.description,
+                title: data.title,
                 Image: data.Image
             })
-            console.log("UPDATED RESUME", data)
+            console.log("UPDATED RESUME DESCRIPTION", data)
         })
     };
 
-    const handleCancelClick = (e) => {
-        setIsEditing(false);
+    const handleSaveClickTitle = () => {
+        setIsEditingTitle(false);
+        updateResumeTitle(titleValue).then((data) => {
+            setResumeData({
+                resumeId: data.id,
+                description: data.description,
+                title: data.title,
+                Image: data.Image
+            })
+            console.log("UPDATED RESUME TITLE", data)
+        })
+    };
+
+    const handleCancelClickDescription = (e) => {
+        setIsEditingDescription(false);
         setDescriptionValue(e.target.value)
+    };
+
+    const handleCancelClickTitle = (e) => {
+        setIsEditingTitle(false);
+        setTitleValue(e.target.value)
     };
 
 
@@ -91,7 +119,7 @@ export default function Resume() {
                 <Grid item xs={9} padding="5px">
                     <Title>Description</Title>
                     {
-                        isEditing ?
+                        isEditingDescription ?
                             <>
                                 <TextField
                                     autoFocus
@@ -107,13 +135,13 @@ export default function Resume() {
                                 <Grid item xs={12} textAlign={"right"}>
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
-                                            onClick={handleSaveClick}>
+                                            onClick={handleSaveClickDescription}>
                                         Save
                                     </Button>
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClick(e)}>
+                                            onClick={(e) => handleCancelClickDescription(e)}>
                                         Cancel
                                     </Button>
                                 </Grid>
@@ -126,7 +154,51 @@ export default function Resume() {
                                 <Grid item xs={12} textAlign={"right"}>
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
-                                            onClick={handleEditClick}>
+                                            onClick={handleEditClickDescription}>
+                                        Edit
+                                    </Button>
+                                </Grid>
+                            </>
+                    }
+                    <Title>Resume title</Title>
+
+                    {
+                        isEditingTitle ?
+                            <>
+                                <TextField
+                                    autoFocus
+                                    value={titleValue || ""}
+                                    onChange={(e) => setTitleValue(e.target.value)}
+                                    margin="dense"
+                                    label="Title"
+                                    type="name"
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                />
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleSaveClickTitle}>
+                                        Save
+                                    </Button>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            color="error"
+                                            onClick={(e) => handleCancelClickTitle(e)}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            </>
+                            :
+                            <>
+                                <Typography>
+                                    {titleValue}
+                                </Typography>
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleEditClickTitle}>
                                         Edit
                                     </Button>
                                 </Grid>
@@ -159,7 +231,6 @@ export default function Resume() {
                   textAlign="right"
                   marginY="10px">
                 <Button component={Link} to={"/previewResume"}
-                        style={{position:"fixed", bottom:"32px", right:"15vw"}}
                         size="large"
                         color="primary"
                         variant="contained">

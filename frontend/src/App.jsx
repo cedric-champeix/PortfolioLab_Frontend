@@ -10,7 +10,6 @@ import Portfolio from "./pages/Portfolio.jsx";
 import Resume from "./pages/Resume.jsx";
 import Project from "./pages/Project.jsx";
 import Profile from "./pages/Profile.jsx";
-import ViewResume from "./features/viewer/ViewResume.jsx";
 import ViewerPortfolio from "./pages/viewer/ViewerPortfolio.jsx";
 import ViewerProject from "./pages/viewer/ViewerProject.jsx";
 import QuickActionProvider from "./context/QuickActionService.jsx";
@@ -41,15 +40,11 @@ export default function App() {
                                         <Route path={'/profile'} element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
                                     </Route>
                                     <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/preview'} element={<BoardElement elementName={"PreviewResume"} element={<ViewResume/>}/>}/>
+                                        <Route path={'/preview'} element={<BoardElement elementName={"PreviewResume"} element={<ViewerResume/>}/>}/>
                                     </Route>
 
                                     <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
                                         <Route path={'/connection'} element={<Authenticate/>}></Route>
-                                    </Route>
-
-                                    <Route path={"/"} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/previewResume'} element={<ViewResume></ViewResume>}></Route>
                                     </Route>
 
                                     <Route path={"/viewer/:username"}>

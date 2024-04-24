@@ -11,7 +11,7 @@ import {Stack} from "@mui/material";
 import {useViewerProject} from "../../features/viewer/portfolio/hooks/useViewerProject.js";
 import ViewerComponentFactory from "../../features/viewer/portfolio/ViewerComponentFactory.jsx";
 
-export default function Project() {
+export default function ViewerProject() {
 
     const {username, projectId} = useParams()
 
@@ -34,7 +34,6 @@ export default function Project() {
                 component="div"
                 sx={{
                     backgroundColor: "#FFF",
-                    height: '100vh',
                     width: "100%",
                     overflow: 'auto',
                 }}>
@@ -97,4 +96,4 @@ export default function Project() {
         </Grid>
     </Box>;
 }
-Project.componentName = "Project"
+ViewerProject.componentName = "Project"

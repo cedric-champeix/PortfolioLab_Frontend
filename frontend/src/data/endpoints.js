@@ -12,6 +12,7 @@ export const endpoints = {
     componentsEndpoints: (projectId) => baseUrl + `/editor/projects/${projectId}/components`,
     imagesEndpoint: baseUrl + "/editor/images",
     viewer: {
+        resumeEndpoint: (username) => baseUrl + `/viewer/${username}/resume`,
         portfolioEndpoint: (username) => baseUrl + `/viewer/${username}/projects`,
         projectEndpoint: (username, projectId) => baseUrl + `/viewer/${username}/projects/${projectId}`
     }

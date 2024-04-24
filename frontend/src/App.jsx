@@ -14,6 +14,8 @@ import ViewResume from "./features/viewer/ViewResume.jsx";
 import ViewerPortfolio from "./pages/viewer/ViewerPortfolio.jsx";
 import ViewerProject from "./pages/viewer/ViewerProject.jsx";
 import QuickActionProvider from "./context/QuickActionService.jsx";
+import ViewerNavBar from "./features/viewer/ViewerNavBar.jsx";
+import ViewerResume from "./pages/viewer/ViewerResume.jsx";
 
 
 export default function App() {
@@ -50,10 +52,11 @@ export default function App() {
                                         <Route path={'/previewResume'} element={<ViewResume></ViewResume>}></Route>
                                     </Route>
 
-                                    <Route path={"/viewer"}>
-                                        <Route path={"/viewer/:username"} element={<ViewerPortfolio/>}/>
-                                        <Route path={"/viewer/:username/portfolio"} element={<ViewerPortfolio/>}/>
-                                        <Route path={"/viewer/:username/portfolio/:projectId"} element={<ViewerProject/>}/>
+                                    <Route path={"/viewer/:username"}>
+                                        <Route path={"/viewer/:username"} element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
+                                        <Route path={"/viewer/:username/portfolio"} element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
+                                        <Route path={"/viewer/:username/portfolio/:projectId"} element={<ViewerNavBar element={<ViewerProject/>}/>}/>
+                                        <Route path={"/viewer/:username/resume"} element={<ViewerNavBar element={<ViewerResume/>}/>}/>
                                     </Route>
                                 </Routes>
                             </main>

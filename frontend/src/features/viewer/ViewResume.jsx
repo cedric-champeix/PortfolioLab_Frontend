@@ -1,35 +1,15 @@
-import axios from "axios";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import CV from 'react-cv'
 import "./viewResume.css"
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {useAuth} from "../../hooks/useAuth.js";
-import Button from "@mui/material/Button";
 import ExportAction from "./ExportAction.jsx";
-
-const initialValues = {
-    firstName: "",
-    lastName: "",
-    resume : {
-        id: "",
-        description: "",
-        userId: "",
-        skills: [],
-        experiences: [],
-        formations: [],
-        languages: [],
-        hobbies: [],
-        contacts: [],
-        Image:{
-            path: ""
-        }
-    }
-}
+import PropTypes from "prop-types";
 
 
-export default function ViewResume() {
-    const [json, setJson] = useState(initialValues)
+export default function ViewResume({userResume}) {
+
+    const [description, setDescription] = React.useState("");
     const [contacts, setContacts] = useState([])
     const [skills, setSkills] = useState([])
     const [experiences, setExperiences] = useState([])
@@ -39,42 +19,19 @@ export default function ViewResume() {
     const [languages, setLanguages] = useState([])
 
     const cv = useRef()
-    const getResume = async () => {
-
-        const user = await axios({
-         url:"http://localhost:8080/getUser",
-            method: "GET",
-            withCredentials: true,
-            headers: {
-             "Content-Type": "application/json",
-            }
-        })
-        const username = user.data.username
-        const fetch = await axios({
-            url: "http://localhost:8080/viewer/resume/" + username || "",
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        setJson(fetch.data)
-    }
-    //Setting resume up
-    useEffect(() => {
-        getResume().then()
-    }, []);
 
     //Adapting all needed information
     useEffect(() => {
+        setDescription(userResume.resume.description)
 
-        setContacts(json.resume.contacts.map(item => {
+        setContacts(userResume.resume.contacts.map(item => {
             return {
                 type: item.title.toLowerCase().replace("address", "location"),
                 value: item.text
             }
         }))
 
-        setExperiences(json.resume.experiences.map(item => {
+        setExperiences(userResume.resume.experiences.map(item => {
             return {
                 title: item.title,
                 description: item.description,
@@ -83,7 +40,7 @@ export default function ViewResume() {
             }
         }))
 
-        setEducation(json.resume.formations.map(item => {
+        setEducation(userResume.resume.formations.map(item => {
             return {
                 title: item.formationName,
                 authority: item.universityName,
@@ -91,45 +48,43 @@ export default function ViewResume() {
             }
         }))
 
-        setSkills(json.resume.skills.map(item => {
+        setSkills(userResume.resume.skills.map(item => {
             return item.name
         }))
 
-        setHobbies(json.resume.hobbies.map(item => {
+        setHobbies(userResume.resume.hobbies.map(item => {
             return item.name
         }))
 
-        setLanguages(json.resume.languages.map(item => {
+        setLanguages(userResume.resume.languages.map(item => {
             return item.name + ' - ' + item.level
         }))
 
-        setImage("http://localhost:8080/" + json.resume.Image.path)
+        setImage("http://localhost:8080/" + userResume.resume.Image.path)
 
-    }, [json]);
-
-
+    }, [userResume]);
 
 
     const handleDownloadPDF = () => {
         const input = document.getElementById("cvWrapper");
-        console.log("component to save",input)
+        console.log("component to save", input)
         // Specify the id of the element you want to convert to PDF
 
         html2canvas(input).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
-            pdf.addImage(imgData, 'PNG',0,0,0,0);
+            pdf.addImage(imgData, 'PNG', 0, 0, 0, 0);
             pdf.save('downloaded-resume.pdf');
             // Specify the name of the downloaded PDF file
         });
     }
 
 
-    return <>
-        <div id={"cvWrapper"} style={{display: "flex", justifyContent:'center', width:'100%', marginTop: '8vh'} }>
+    return <React.Fragment>
+        <div id={"cvWrapper"} style={{display: "flex", justifyContent: 'center', width: '100%', marginTop: '8vh'}}>
             <CV ref={cv} personalData={{
-                name: json.firstName + " " + json.lastName,
-                title: json.resume.title,
+                name: userResume.firstName + " " + userResume.lastName,
+                title: userResume.resume.title,
                 image: image,
                 contacts: contacts
             }}
@@ -138,7 +93,7 @@ export default function ViewResume() {
                     {
                         type: 'text',
                         title: 'Description',
-                        content: json.resume.description,
+                        content: description,
                         icon: 'usertie'
                     },
                     {
@@ -179,6 +134,9 @@ export default function ViewResume() {
             </CV>
 
         </div>
-        <ExportAction></ExportAction>
-    </>
+        <ExportAction/>
+    </React.Fragment>
+}
+ViewResume.propTypes = {
+    userResume: PropTypes.object,
 }

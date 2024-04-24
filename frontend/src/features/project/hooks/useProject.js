@@ -34,11 +34,8 @@ export const useProject = (projectId) => {
 
     const updateProject = async (body) => {
         axios({
-            url: `${url}/${projectId}`,
+            url: `${url}`,
             method: "PUT",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
             withCredentials: true,
             data: body
         }).then((res) => {

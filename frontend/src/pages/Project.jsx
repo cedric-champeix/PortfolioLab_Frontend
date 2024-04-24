@@ -14,15 +14,49 @@ import ImageHandler from "../features/images/components/ImageHandler.jsx";
 import Button from "@mui/material/Button";
 import {constants} from "../constants.js";
 import placeHolder from "../assets/icons/placeholder.png";
+import TextField from "@mui/material/TextField";
 
 export default function Project() {
 
     const {projectId} = useParams()
 
-    const {projectData, connectMainImage} = useProject(projectId)
+    const {projectData, updateProject, connectMainImage} = useProject(projectId)
 
     const {components, setComponents, create, update, move, remove} = useComponent(projectId, projectData.components)
 
+    /**************** Project's informations ****************/
+
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [projectName, setProjectName] = useState(projectData.name || "Project name");
+
+    const updateTitle = async () => {
+        setIsEditingTitle(false)
+        if (projectName) {
+            await updateProject({
+                name: projectName
+            })
+        }
+    }
+
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [projectDescription, setProjectDescription] = useState(projectData.description || "Add the description of your project here.");
+
+    const updateDescription = async () => {
+        setIsEditingDescription(false)
+        if (projectDescription) {
+            const body = {
+                description: projectDescription
+            }
+            await updateProject(body)
+        }
+    }
+
+    useEffect(() => {
+        setProjectName(projectData.name || "Project name")
+        setProjectDescription(projectData.description || "Add the description of your project here.")
+    }, [projectData]);
+
+    /**************** IMAGE PROPERTIES ****************/
     const [mainImage, setMainImage] = useState(projectData.MainImage ? constants.BACKEND_URL + projectData.MainImage.path : placeHolder)
     const [open, setOpen] = useState(false)
 
@@ -50,15 +84,28 @@ export default function Project() {
                     height: '100vh',
                     width: "100%",
                     overflow: 'auto',
-                }}
-    >
+                }}>
         <Toolbar/>
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "80%", margin: "auto", padding: "30px 5%"}}>
 
             <Grid item xs={12}>
-                <Typography width="fit-content" variant="h2" color="primary" gutterBottom>
-                    {projectData.name}
-                </Typography>
+                {!isEditingTitle ?
+                    <Button onClick={() => setIsEditingTitle(true)}
+                            style={{textTransform: "none"}}>
+                        <Typography width="fit-content"
+                                    variant="h2"
+                                    color="primary"
+                                    gutterBottom>
+                            {projectName}
+                        </Typography>
+                    </Button> :
+                    <TextField label="Project name"
+                               variant="standard"
+                               onChange={(e) => setProjectName(e.target.value)}
+                               onBlur={updateTitle}
+                               value={projectName}
+                               autoFocus={true}/>
+                }
             </Grid>
 
             <Grid item xs={12} style={{
@@ -81,11 +128,30 @@ export default function Project() {
 
             <Grid container padding="0 0 30px 0" spacing={2}>
                 <Grid item xs={6}>
-                    <Typography width="fit-content" variant={"h4"} color="primary"
-                                margin="0 0 10px 0">Description</Typography>
-                    <Typography width="fit-content" padding="0 24px">
-                        {projectData.description}
+                    <Typography width="fit-content"
+                                variant={"h4"}
+                                color="primary"
+                                margin="0 0 10px 0">
+                        Description
                     </Typography>
+                    {!isEditingDescription ?
+                        <Button onClick={() => setIsEditingDescription(true)}
+                                style={{textTransform: "none", textAlign: "left"}}>
+                            <Typography width="fit-content" padding="0 24px" color="black">
+                                {projectData.description}
+                            </Typography>
+                        </Button> :
+                        <TextField
+                            onChange={(e) => setProjectDescription(e.target.value)}
+                            onBlur={updateDescription}
+                            value={projectDescription}
+                            margin="dense"
+                            variant="outlined"
+                            fullWidth
+                            multiline
+                            autoFocus
+                        />
+                    }
                 </Grid>
                 <Grid item xs={6}>
                     <Typography width="fit-content" variant={"h4"} color="primary"

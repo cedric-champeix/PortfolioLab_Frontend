@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import {useAuth} from "../../hooks/useAuth.js";
 import Button from "@mui/material/Button";
+import ExportAction from "./ExportAction.jsx";
 
 const initialValues = {
     firstName: "",
@@ -28,7 +29,6 @@ const initialValues = {
 
 
 export default function ViewResume() {
-    const {username} = useAuth()
     const [json, setJson] = useState(initialValues)
     const [contacts, setContacts] = useState([])
     const [skills, setSkills] = useState([])
@@ -41,27 +41,31 @@ export default function ViewResume() {
     const cv = useRef()
     const getResume = async () => {
 
+        const user = await axios({
+         url:"http://localhost:8080/getUser",
+            method: "GET",
+            withCredentials: true,
+            headers: {
+             "Content-Type": "application/json",
+            }
+        })
+        const username = user.data.username
         const fetch = await axios({
-            url: "http://localhost:8080/viewer/resume/" + localStorage.getItem("username") || "",
+            url: "http://localhost:8080/viewer/resume/" + username || "",
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
             },
         })
         setJson(fetch.data)
-        console.log(fetch.data)
     }
-
     //Setting resume up
     useEffect(() => {
         getResume().then()
-
     }, []);
 
     //Adapting all needed information
     useEffect(() => {
-
-        console.log(json)
 
         setContacts(json.resume.contacts.map(item => {
             return {
@@ -114,8 +118,8 @@ export default function ViewResume() {
         html2canvas(input).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
-            pdf.addImage(imgData, 'PNG',0,0,1,1);
-            pdf.save('downloaded-file.pdf');
+            pdf.addImage(imgData, 'PNG',0,0,0,0);
+            pdf.save('downloaded-resume.pdf');
             // Specify the name of the downloaded PDF file
         });
     }
@@ -175,6 +179,6 @@ export default function ViewResume() {
             </CV>
 
         </div>
-        <Button onClick={handleDownloadPDF}>EXPORT</Button>
+        <ExportAction></ExportAction>
     </>
 }

@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import Cookies from "js-cookie";
 import {string} from "prop-types";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -15,9 +16,21 @@ export const AuthProvider = ({children}) => {
         if(cookie) {
             //Get information
             console.log(localStorage.getItem("userId"))
-            setUsername(localStorage.getItem("username") || "")
+            //setUsername(localStorage.getItem("username") || "")
             setUserId(localStorage.getItem("userId") || "")
         }
+        axios({
+            url: "http://localhost:8080/getUser",
+            method: "GET",
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(data => {
+            console.log(data.data.username)
+            setUsername(data.data.username)
+        })
+
     }, []);
 
 

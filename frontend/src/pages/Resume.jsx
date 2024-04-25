@@ -230,7 +230,7 @@ export default function Resume() {
                   xs={12}
                   textAlign="right"
                   marginY="10px">
-                <Button component={Link} to={"/previewResume"}
+                <Button component={Link} to={"/resume/preview"}
                         size="large"
                         color="primary"
                         variant="contained">

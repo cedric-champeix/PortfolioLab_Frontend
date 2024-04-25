@@ -20,44 +20,47 @@ import ViewerResume from "./pages/viewer/ViewerResume.jsx";
 export default function App() {
 
     return (
-            <ThemeProvider theme={theme}>
-                <NotificationServiceProvider>
-                    <QuickActionProvider>
-                        <CssBaseline>
-                            <main>
-                                <Routes>
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/'} element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}></Route>
-                                    </Route>
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/resume'} element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}></Route>
-                                    </Route>
+        <ThemeProvider theme={theme}>
+            <NotificationServiceProvider>
+                <QuickActionProvider>
+                    <CssBaseline>
+                        <main>
+                            <Routes>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
+                                    <Route path={'/'}
+                                           element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}/>
+                                    <Route path={'/resume'}
+                                           element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}/>
+                                    <Route path={'/resume/preview'} element={
+                                        <BoardElement elementName={"PreviewResume"}
+                                                      element={<ViewerResume/>}/>
+                                    }/>
 
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/portfolio/:projectId'} element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
-                                    </Route>
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/profile'} element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
-                                    </Route>
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
-                                        <Route path={'/preview'} element={<BoardElement elementName={"PreviewResume"} element={<ViewerResume/>}/>}/>
-                                    </Route>
+                                    <Route path={'/portfolio/:projectId'}
+                                           element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
+                                    <Route path={'/profile'}
+                                           element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
+                                </Route>
 
-                                    <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
-                                        <Route path={'/connection'} element={<Authenticate/>}></Route>
-                                    </Route>
+                                <Route path={'/'} element={<ProtectedRoute routeType={"auth"}/>}>
+                                    <Route path={'/connection'} element={<Authenticate/>}/>
+                                </Route>
 
-                                    <Route path={"/viewer/:username"}>
-                                        <Route path={"/viewer/:username"} element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
-                                        <Route path={"/viewer/:username/portfolio"} element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
-                                        <Route path={"/viewer/:username/portfolio/:projectId"} element={<ViewerNavBar element={<ViewerProject/>}/>}/>
-                                        <Route path={"/viewer/:username/resume"} element={<ViewerNavBar element={<ViewerResume/>}/>}/>
-                                    </Route>
-                                </Routes>
-                            </main>
-                        </CssBaseline>
-                    </QuickActionProvider>
-                </NotificationServiceProvider>
-            </ThemeProvider>
+                                <Route path={"/viewer/:username"}>
+                                    <Route path={"/viewer/:username"}
+                                           element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
+                                    <Route path={"/viewer/:username/portfolio"}
+                                           element={<ViewerNavBar element={<ViewerPortfolio/>}/>}/>
+                                    <Route path={"/viewer/:username/portfolio/:projectId"}
+                                           element={<ViewerNavBar element={<ViewerProject/>}/>}/>
+                                    <Route path={"/viewer/:username/resume"}
+                                           element={<ViewerNavBar element={<ViewerResume/>}/>}/>
+                                </Route>
+                            </Routes>
+                        </main>
+                    </CssBaseline>
+                </QuickActionProvider>
+            </NotificationServiceProvider>
+        </ThemeProvider>
     )
 }

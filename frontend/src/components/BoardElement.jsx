@@ -12,20 +12,20 @@ import IconButton from '@mui/material/IconButton';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import {mainListItems} from './ListItems.jsx';
 import "../config/theme.js"
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth.js";
-import {SkillsProvider} from "../context/SkillsContext.jsx";
-import {skillData} from "../data/skillData.js";
 import {string} from "prop-types";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 import {useNotification} from "../hooks/useNotification.js";
-import Button from "@mui/material/Button";
-import LaunchIcon from '@mui/icons-material/Launch';
+import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded.js";
+import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded.js";
+import Person2Icon from "@mui/icons-material/Person2.js";
+import VisibilityIcon from "@mui/icons-material/Visibility.js";
+import {Avatar} from "@mui/material";
 
 // function Copyright(props) {
 //     return (
@@ -113,72 +113,107 @@ export default function BoardElement({element, elementName}) {
         navigate("/connection");
     }
 
-    return (
-        <Box sx={{display: 'flex'}}>
-            <CssBaseline/>
-            <AppBar position="absolute" open={open}>
-                <Toolbar
+    return <Box sx={{display: 'flex'}}>
+        <CssBaseline/>
+        <AppBar position="absolute" open={open}>
+            <Toolbar
+                sx={{
+                    pr: '24px', // keep right padding when drawer closed
+                }}
+            >
+                <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={toggleDrawer}
                     sx={{
-                        pr: '24px', // keep right padding when drawer closed
+                        marginRight: '36px',
+                        ...(open && {display: 'none'}),
                     }}
                 >
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawer}
-                        sx={{
-                            marginRight: '36px',
-                            ...(open && {display: 'none'}),
-                        }}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography
-                        component="h1"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        sx={{flexGrow: 1}}
-                    >
-                        {elementName}
-                    </Typography>
-                <Typography>{username}</Typography>
+                    <MenuIcon/>
+                </IconButton>
+                <Typography
+                    component="h1"
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    sx={{flexGrow: 1}}
+                >
+                    {elementName}
+                </Typography>
+                <Box sx={{flexGrow: 0, display: "flex", alignItems: "center", gap: "10px"}}>
+                    <Avatar alt={username.charAt(0).toUpperCase()} src=""/>
+                    <Typography>{username}</Typography>
+                </Box>
             </Toolbar>
         </AppBar>
-    <Drawer variant="permanent" open={open}>
-        <Toolbar
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                px: [1],
-            }}
-        >
-            <IconButton onClick={toggleDrawer}>
-                <ChevronLeftIcon/>
-            </IconButton>
-        </Toolbar>
-        <Divider/>
-        <List component="nav">
-            {mainListItems}
-            <Divider sx={{my: 1}}/>
-            <ListItemButton onClick={(ev) => handleLogOut(ev)}>
-                <ListItemIcon>
-                    <LogoutRoundedIcon/>
-                </ListItemIcon>
-                <ListItemText primary="Log out"/>
-            </ListItemButton>
-        </List>
-    </Drawer>
-    <ConfirmationServiceContextProvider>
-        <SkillsProvider data={skillData}>
+        <Drawer variant="permanent" open={open}>
+            <Toolbar
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                    px: [1],
+                }}
+            >
+                <IconButton onClick={toggleDrawer}>
+                    <ChevronLeftIcon/>
+                </IconButton>
+            </Toolbar>
+            <Divider/>
+            <List component="nav">
+                <Link to="/">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <LibraryBooksRoundedIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Portfolio"/>
+                    </ListItemButton>
+                </Link>
+
+                <Link to="/resume">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <BookmarkRoundedIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Resume"/>
+                    </ListItemButton>
+                </Link>
+
+                <Link to="/profile">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <Person2Icon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Profile"/>
+                    </ListItemButton>
+                </Link>
+
+
+                <Link to={`/viewer/${username}/`}>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <VisibilityIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Preview"/>
+                    </ListItemButton>
+                </Link>
+
+                <Divider sx={{my: 1}}/>
+
+                <ListItemButton onClick={(ev) => handleLogOut(ev)}>
+                    <ListItemIcon>
+                        <LogoutRoundedIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Log out"/>
+                </ListItemButton>
+            </List>
+        </Drawer>
+        <ConfirmationServiceContextProvider>
             {element}
-        </SkillsProvider>
-    </ConfirmationServiceContextProvider>
-</Box>
-)
-    ;
+        </ConfirmationServiceContextProvider>
+    </Box>
 }
 
 BoardElement.propTypes = {

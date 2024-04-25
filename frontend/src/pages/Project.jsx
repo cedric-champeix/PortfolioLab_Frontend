@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {useProject} from "../features/project/hooks/useProject.js";
@@ -81,11 +80,9 @@ export default function Project() {
                 component="div"
                 sx={{
                     backgroundColor: "#FFF",
-                    height: '100vh',
                     width: "100%",
-                    overflow: 'auto',
+                    height: "95vh"
                 }}>
-        <Toolbar/>
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "80%", margin: "auto", padding: "30px 5%"}}>
 
             <Grid item xs={12}>

@@ -11,11 +11,9 @@ export default function ViewerPortfolio() {
     const {projects} = useViewerPortfolio(username)
 
     return <Box gridAutoFlow='row' className={"Element-"}
-                component="main"
+                component="div"
                 sx={{
-                    backgroundColor: "#FFF",
-                    height: '100vh',
-                    overflow: 'auto',
+                    backgroundColor: "#FFF"
                 }}
     >
         <Grid container sx={{p: 3}} spacing={2}>

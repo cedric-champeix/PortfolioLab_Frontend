@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import ProjectAction from "../features/portfolio/ProjectAction.jsx";
 import Grid from "@mui/material/Grid";
 import {useProjects} from "../features/portfolio/hooks/useProjects.js";
@@ -10,15 +9,11 @@ export default function Portfolio() {
     const {projects, create, remove} = useProjects()
 
     return <Box gridAutoFlow='row' className={"Element-"}
-                component="main"
+                component="div"
                 sx={{
                     backgroundColor: "#FFF",
-                    height: '100vh',
-                    overflow: 'auto',
-                }}
-    >
-
-        <Toolbar/>
+                    height: "95vh"
+                }}>
 
         <Grid container sx={{p: 3}} spacing={2}>
             {projects.map((project) =>

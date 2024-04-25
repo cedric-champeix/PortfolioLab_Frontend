@@ -24,7 +24,7 @@ export default function App() {
             <NotificationServiceProvider>
                 <QuickActionProvider>
                     <CssBaseline>
-                        <main>
+                        <main style={{height: "100vh", overflowY: "auto"}}>
                             <Routes>
                                 <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                     <Route path={'/'}

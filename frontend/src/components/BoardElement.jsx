@@ -21,24 +21,11 @@ import {useAuth} from "../hooks/useAuth.js";
 import {string} from "prop-types";
 import {ConfirmationServiceContextProvider} from "../context/ConfirmationService.jsx";
 import {useNotification} from "../hooks/useNotification.js";
-import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded.js";
-import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded.js";
-import Person2Icon from "@mui/icons-material/Person2.js";
-import VisibilityIcon from "@mui/icons-material/Visibility.js";
+import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded";
+import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
+import Person2Icon from "@mui/icons-material/Person2";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {Avatar} from "@mui/material";
-
-// function Copyright(props) {
-//     return (
-//         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://mui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
 
 const drawerWidth = 240;
 
@@ -60,35 +47,58 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
+
+const openedMixin = (theme) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(8)} + 1px)`,
+    },
+});
+
+
+const DrawerHeader = styled('div')(({theme}) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+}));
+
 const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme, open}) => ({
-        '& .MuiDrawer-paper': {
-            position: 'relative',
-            whiteSpace: 'nowrap',
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-            boxSizing: 'border-box',
-            ...(!open && {
-                overflowX: 'hidden',
-                transition: theme.transitions.create('width', {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.leavingScreen,
-                }),
-                width: theme.spacing(7),
-                [theme.breakpoints.up('sm')]: {
-                    width: theme.spacing(9),
-                },
-            }),
-        },
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        ...(open && {
+            ...openedMixin(theme),
+            '& .MuiDrawer-paper': openedMixin(theme),
+        }),
+        ...(!open && {
+            ...closedMixin(theme),
+            '& .MuiDrawer-paper': closedMixin(theme),
+        }),
     }),
 );
 
 export default function BoardElement({element, elementName}) {
+
     const [open, setOpen] = React.useState(true);
-    //const {quickActions} = useQuickActions();
 
     const notify = useNotification();
     const toggleDrawer = () => {
@@ -115,7 +125,7 @@ export default function BoardElement({element, elementName}) {
 
     return <Box sx={{display: 'flex'}}>
         <CssBaseline/>
-        <AppBar position="absolute" open={open}>
+        <AppBar position="fixed" open={open}>
             <Toolbar
                 sx={{
                     pr: '24px', // keep right padding when drawer closed
@@ -148,19 +158,12 @@ export default function BoardElement({element, elementName}) {
                 </Box>
             </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
-            <Toolbar
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                    px: [1],
-                }}
-            >
+        <Drawer variant="permanent" open={open} style={{height: "100vh"}}>
+            <DrawerHeader>
                 <IconButton onClick={toggleDrawer}>
                     <ChevronLeftIcon/>
                 </IconButton>
-            </Toolbar>
+            </DrawerHeader>
             <Divider/>
             <List component="nav">
                 <Link to="/">
@@ -211,7 +214,10 @@ export default function BoardElement({element, elementName}) {
             </List>
         </Drawer>
         <ConfirmationServiceContextProvider>
-            {element}
+            <Box component="div" sx={{flexGrow: 1, p: 3, width: "100%"}}>
+                <DrawerHeader/>
+                {element}
+            </Box>
         </ConfirmationServiceContextProvider>
     </Box>
 }

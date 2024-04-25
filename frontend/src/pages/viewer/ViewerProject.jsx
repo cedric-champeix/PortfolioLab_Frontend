@@ -34,8 +34,7 @@ export default function ViewerProject() {
                 component="div"
                 sx={{
                     backgroundColor: "#FFF",
-                    width: "100%",
-                    overflow: 'auto',
+                    width: "100%"
                 }}>
 
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "60%", margin: "auto", padding: "30px 5%"}}>

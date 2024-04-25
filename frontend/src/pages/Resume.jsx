@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Title from "../components/Title.jsx";
 import Typography from "@mui/material/Typography";
@@ -102,15 +101,12 @@ export default function Resume() {
 
 
     return <Box gridAutoFlow='row' className={"Element-"}
-                component="main"
+                component="div"
                 sx={{
                     backgroundColor: "#FFF",
-                    height: '100vh',
-                    overflow: 'auto',
-
+                    height: "95vh"
                 }}
     >
-        <Toolbar/>
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", borderRadius: "8px", padding: "20px"}}>
             <Grid container marginY="10px">
                 <Grid item xs={3}>

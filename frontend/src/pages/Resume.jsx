@@ -117,6 +117,49 @@ export default function Resume() {
                     <ImageAction resumeData={resumeData}/>
                 </Grid>
                 <Grid item xs={9} padding="5px">
+                    <Title>Job title</Title>
+                    {
+                        isEditingTitle ?
+                            <>
+                                <TextField
+                                    autoFocus
+                                    value={titleValue || ""}
+                                    onChange={(e) => setTitleValue(e.target.value)}
+                                    margin="dense"
+                                    label="Title"
+                                    type="name"
+                                    fullWidth
+                                    multiline
+                                    variant="outlined"
+                                />
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleSaveClickTitle}>
+                                        Save
+                                    </Button>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            color="error"
+                                            onClick={(e) => handleCancelClickTitle(e)}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            </>
+                            :
+                            <>
+                                <Typography>
+                                    {titleValue}
+                                </Typography>
+                                <Grid item xs={12} textAlign={"right"}>
+                                    <Button variant="outlined"
+                                            style={{margin: "10px"}}
+                                            onClick={handleEditClickTitle}>
+                                        Edit
+                                    </Button>
+                                </Grid>
+                            </>
+                    }
                     <Title>Description</Title>
                     {
                         isEditingDescription ?
@@ -160,51 +203,6 @@ export default function Resume() {
                                 </Grid>
                             </>
                     }
-                    <Title>Resume title</Title>
-
-                    {
-                        isEditingTitle ?
-                            <>
-                                <TextField
-                                    autoFocus
-                                    value={titleValue || ""}
-                                    onChange={(e) => setTitleValue(e.target.value)}
-                                    margin="dense"
-                                    label="Title"
-                                    type="name"
-                                    fullWidth
-                                    multiline
-                                    variant="outlined"
-                                />
-                                <Grid item xs={12} textAlign={"right"}>
-                                    <Button variant="outlined"
-                                            style={{margin: "10px"}}
-                                            onClick={handleSaveClickTitle}>
-                                        Save
-                                    </Button>
-                                    <Button variant="outlined"
-                                            style={{margin: "10px"}}
-                                            color="error"
-                                            onClick={(e) => handleCancelClickTitle(e)}>
-                                        Cancel
-                                    </Button>
-                                </Grid>
-                            </>
-                            :
-                            <>
-                                <Typography>
-                                    {titleValue}
-                                </Typography>
-                                <Grid item xs={12} textAlign={"right"}>
-                                    <Button variant="outlined"
-                                            style={{margin: "10px"}}
-                                            onClick={handleEditClickTitle}>
-                                        Edit
-                                    </Button>
-                                </Grid>
-                            </>
-                    }
-
                 </Grid>
             </Grid>
 

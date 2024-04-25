@@ -8,8 +8,8 @@ import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
-import ContactAction from "./forms/ContactAction.jsx";
 import FormationAction from "./forms/FormationAction.jsx";
+import {truncate} from "../utils/truncate.js";
 
 export default function FormationSection({resumeId}) {
 
@@ -69,18 +69,22 @@ export default function FormationSection({resumeId}) {
                             <Typography color="text.secondary">
                                 {formation.startDate} - {formation.endDate}
                             </Typography>
+                            <Typography variant="body2">
+                                {truncate(formation.description, 60)}
+                            </Typography>
                         </CardContent>
                         <CardActions>
                             <FormationAction type={"edit"}
                                              fId={formation.id}
                                              fFormationName={formation.formationName}
                                              fUniversityName={formation.universityName}
+                                             fDescription={formation.description}
                                              fStartDate={formation.startDate}
                                              fEndDate={formation.endDate}
                                              resumeId={resumeId}
                                              updateFormation={update}></FormationAction>
                             <Button
-                                onClick={() => removeSafeguard(formation.id, formation.formationName, "formation")}
+                                onClick={() => removeSafeguard(formation.id, formation.formationName)}
                                 size="small"
                                 color="error">
                                 <img src={"/src/assets/icons/rubbish_bin.svg"}

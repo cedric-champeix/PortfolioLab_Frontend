@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
+import PropTypes from "prop-types";
 
-export default function HobbyAction({type, hobbyName, hobbyId, resumeId, createHobbie, updateHobbie}) {
+export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId, resumeId, createHobbie, updateHobbie}) {
 
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({name: hobbyName});
+    const [data, setData] = useState({name: hobbyName, description: hobbyDescription});
 
     const toggle = () => {
         setData({name: hobbyName})
@@ -23,7 +24,7 @@ export default function HobbyAction({type, hobbyName, hobbyId, resumeId, createH
     const handleSubmit = () => {
         const body = {
             name: data.name,
-            description: "lorem ipsum",
+            description: data.description,
             resumeId: resumeId
         }
         switch (type) {
@@ -60,8 +61,25 @@ export default function HobbyAction({type, hobbyName, hobbyId, resumeId, createH
                             multiline
                             variant="standard"
                         />
-                        <br/>
-                        <br/>
+
+
+                        <TextField
+                            autoFocus
+                            value={data.description || ""}
+                            onChange={(e) => {
+                                setData({
+                                    ...data,
+                                    description: e.target.value
+                                })
+                            }}
+                            margin="dense"
+                            id="description"
+                            label="Skill description"
+                            type="name"
+                            fullWidth
+                            multiline
+                            variant="standard"
+                        />
                     </DialogContent>
 
                     <DialogActions>
@@ -79,4 +97,13 @@ export default function HobbyAction({type, hobbyName, hobbyId, resumeId, createH
             {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
+}
+HobbyAction.propTypes = {
+    type: PropTypes.string,
+    hobbyId: PropTypes.string,
+    hobbyName: PropTypes.string,
+    hobbyDescription: PropTypes.string,
+    resumeId: PropTypes.string,
+    createHobbie: PropTypes.func,
+    updateHobbie: PropTypes.func
 }

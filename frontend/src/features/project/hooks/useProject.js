@@ -7,6 +7,7 @@ export const useProject = (projectId) => {
     const defaultProject = {
         resumeId: null,
         description: "",
+        visible: false,
         contributors: [],
         MainImage: {},
         ProjectImages: [],

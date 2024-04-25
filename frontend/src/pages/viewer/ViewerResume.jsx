@@ -1,8 +1,10 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import ViewResume from "../../features/viewer/resume/ViewResume.jsx";
+import BaseResume from "../../features/viewer/resume/BaseResume.jsx";
 import {useViewerResume} from "../../features/viewer/resume/hooks/useViewerResume.js";
 import {useAuth} from "../../hooks/useAuth.js";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 
 export default function ViewerResume() {
 
@@ -14,6 +16,9 @@ export default function ViewerResume() {
 
     const {userResume} = useViewerResume(username)
 
-    return <ViewResume userResume={userResume}/>
+    return <Box sx={{width: "100%"}}>
+        <Toolbar/>
+        <BaseResume userResume={userResume}/>
+    </Box>
 }
 ViewerResume.componentName = "Resume"

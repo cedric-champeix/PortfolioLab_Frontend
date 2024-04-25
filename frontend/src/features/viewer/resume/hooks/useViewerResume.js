@@ -9,12 +9,12 @@ export const useViewerResume = (username) => {
         lastName: "",
         resume: {
             description: "",
-            skills: [],
+            contacts: [],
             experiences: [],
             formations: [],
+            skills: [],
             languages: [],
             hobbies: [],
-            contacts: [],
             Image: {
                 path: ""
             }

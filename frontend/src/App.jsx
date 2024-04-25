@@ -29,15 +29,16 @@ export default function App() {
                                 <Route path={'/'} element={<ProtectedRoute routeType={"admin"}/>}>
                                     <Route path={'/'}
                                            element={<BoardElement elementName={"Portfolio"} element={<Portfolio/>}/>}/>
+                                    <Route path={'/portfolio/:projectId'}
+                                           element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
+
                                     <Route path={'/resume'}
                                            element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}/>
                                     <Route path={'/resume/preview'} element={
-                                        <BoardElement elementName={"PreviewResume"}
+                                        <BoardElement elementName={"Resume preview"}
                                                       element={<ViewerResume/>}/>
                                     }/>
 
-                                    <Route path={'/portfolio/:projectId'}
-                                           element={<BoardElement elementName={"Project"} element={<Project/>}/>}/>
                                     <Route path={'/profile'}
                                            element={<BoardElement elementName={"Profile"} element={<Profile/>}/>}/>
                                 </Route>

@@ -40,14 +40,14 @@ function ContactFactory({contact}) {
             </React.Fragment>
         case contactTypes.LINKEDIN:
             return <React.Fragment>
-                <GitHubIcon/>
+                <LinkedInIcon/>
                 <Link href={contact.text} variant="body2" color="inherit" underline="always">
                     {contact.text}
                 </Link>
             </React.Fragment>
         case contactTypes.GITHUB:
             return <React.Fragment>
-                <LinkedInIcon/>
+                <GitHubIcon/>
                 <Link href={contact.text} variant="body2" color="inherit" underline="always">
                     {contact.text}
                 </Link>

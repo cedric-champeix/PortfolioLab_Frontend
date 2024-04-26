@@ -194,7 +194,7 @@ export default function BoardElement({element, elementName}) {
                 </Link>
 
 
-                <Link to={`/viewer/${username}/`}>
+                <Link to={`/viewer/${username}/`} target="_blank">
                     <ListItemButton>
                         <ListItemIcon>
                             <VisibilityIcon/>

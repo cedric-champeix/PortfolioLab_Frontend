@@ -16,6 +16,9 @@ export default function Portfolio() {
                 }}>
 
         <Grid container sx={{p: 3}} spacing={2}>
+            <Grid item>
+                <ProjectAction create={create}></ProjectAction>
+            </Grid>
             {projects.map((project) =>
                 <Grid item key={project.id}>
                     <ProjectCard project={project}
@@ -23,17 +26,6 @@ export default function Portfolio() {
                 </Grid>
             )}
         </Grid>
-
-
-        <Box sx={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            p: 1,
-            borderRadius: "50%"
-        }}>
-            <ProjectAction create={create}></ProjectAction>
-        </Box>
     </Box>
 
 }

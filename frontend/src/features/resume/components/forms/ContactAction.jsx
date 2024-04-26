@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import Button from "@mui/material/Button";
 import {Dialog, Box, DialogActions, DialogContent, IconButton, DialogTitle, MenuItem, Select, Fab} from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {string} from "prop-types";
 import EditIcon from "@mui/icons-material/Edit";
 import * as Yup from "yup";
-import {Field, Formik} from "formik";
+import {Formik} from "formik";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -105,10 +105,6 @@ export default function ContactAction({
         toggle();
     }
 
-    const changeCallback = (e) => {
-        setData({...data, title: e.target.value})
-    }
-
     return <>
         <Paper>
             <Dialog open={open}>
@@ -167,13 +163,10 @@ export default function ContactAction({
                 <IconButton style={{position: 'relative', bottom: '8px'}} aria-label={"edit"} onClick={toggle}>
                     <EditIcon></EditIcon>
                 </IconButton>
-
                 :
-                <>
-                    <Fab size={"small"} onClick={toggle} color="primary" aria-label="add">
-                        <AddIcon/>
-                    </Fab>
-                </>
+                <Fab size={"small"} onClick={toggle} color="primary" aria-label="add">
+                    <AddIcon/>
+                </Fab>
         }
     </>
 }

@@ -42,7 +42,7 @@ export default function EducationAction({
 
     const toggle = () => {
         setData({
-            eEducationName: eEducationName,
+            educationName: eEducationName,
             universityName: eUniversityName,
             description: eDescription,
             startDate: eStartDate,

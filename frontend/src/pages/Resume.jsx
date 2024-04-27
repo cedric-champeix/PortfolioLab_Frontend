@@ -52,9 +52,6 @@ export default function Resume() {
     useEffect(() => {
         setDescriptionValue(resumeData.description)
         setTitleValue(resumeData.title)
-        //dispatch("MOUNT_ACTION", "preview resume")
-        //dispatch("MOUNT_ACTION", "clear resume")
-
     }, [resumeData]);
 
     const handleEditClickDescription = () => {
@@ -66,15 +63,7 @@ export default function Resume() {
 
     const handleSaveClickDescription = () => {
         setIsEditingDescription(false);
-        updateResumeDescription(descriptionValue).then((data) => {
-            setResumeData({
-                resumeId: data.id,
-                description: data.description,
-                title: data.title,
-                Image: data.Image
-            })
-            console.log("UPDATED RESUME DESCRIPTION", data)
-        })
+        updateResumeDescription(descriptionValue)
     };
 
     const handleSaveClickTitle = () => {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useResume = () => {
 
-    const defaultResume = {resumeId: null, description: "", image: ""}
+    const defaultResume = {id: null, description: "", image: ""}
 
     const [resumeData, setResumeData] = useState(defaultResume);
 
@@ -29,24 +29,25 @@ export const useResume = () => {
         //console.log(resumeData)
     }, [url]);
 
-    const updateResumeDescription = async (description) => {
+    const updateResumeDescription = (description) => {
 
         const data = {
             description: description,
         }
 
-        const fetch = await axios({
+        axios({
             url: `http://localhost:8080/editor/resume`,
             method: 'PUT',
             withCredentials: true,
             data: data
-        });
-
-        if (fetch.status === 200) {
-            console.log("Update resume")
-            return fetch.data
-        }
-        console.error(fetch.status, fetch.data.message)
+        }).then((fetch) => {
+            setResumeData({
+                ...resumeData,
+                description: fetch.data.description
+            })
+        }).catch((err) => {
+            console.error(err)
+        })
 
     }
 
@@ -55,18 +56,19 @@ export const useResume = () => {
             title: title,
         }
 
-        const fetch = await axios({
+        axios({
             url: `http://localhost:8080/editor/resume`,
             method: 'PUT',
             withCredentials: true,
             data: data
-        });
-
-        if (fetch.status === 200) {
-            console.log("Update resume")
-            return fetch.data
-        }
-        console.error(fetch.status, fetch.data.message)
+        }).then((fetch) => {
+            setResumeData({
+                ...resumeData,
+                title: fetch.data.title
+            })
+        }).catch((err) => {
+            console.error(err)
+        })
     }
 
     const resetResume = async () => {

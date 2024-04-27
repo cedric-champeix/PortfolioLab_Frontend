@@ -37,7 +37,7 @@ export default function ViewerProject() {
                     width: "100%"
                 }}>
 
-        <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "60%", margin: "auto", padding: "30px 5%"}}>
+        <Grid container sx={{p: 3, backgroundColor: "#FFF", width: "100%", maxWidth: "1400px", margin: "auto", padding: "30px 5%"}}>
 
             <Grid item xs={12}>
                 <Typography width="fit-content"

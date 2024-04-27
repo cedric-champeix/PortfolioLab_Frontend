@@ -126,7 +126,7 @@ export default function Project() {
             <Grid container padding="0 0 30px 0" spacing={2}>
                 <Grid item xs={6}>
                     <Typography width="fit-content"
-                                variant={"h4"}
+                                variant="h4"
                                 color="primary"
                                 margin="0 0 10px 0">
                         Description
@@ -135,7 +135,7 @@ export default function Project() {
                         <Button onClick={() => setIsEditingDescription(true)}
                                 style={{textTransform: "none", textAlign: "left"}}>
                             <Typography width="fit-content" padding="0 24px" color="black">
-                                {projectData.description}
+                                {projectData.description || "Write a short description of your project here!"}
                             </Typography>
                         </Button> :
                         <TextField

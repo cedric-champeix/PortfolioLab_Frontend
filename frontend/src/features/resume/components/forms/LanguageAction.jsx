@@ -65,6 +65,7 @@ export default function LanguageAction({
                     <DialogContent>
                         <TextField
                             autoFocus
+                            required
                             value={data.name}
                             onChange={(e) => {
                                 setData({
@@ -90,8 +91,6 @@ export default function LanguageAction({
                                 ))
                             }
                         </Select>
-                        <br/>
-                        <br/>
                     </DialogContent>
 
                     <DialogActions>

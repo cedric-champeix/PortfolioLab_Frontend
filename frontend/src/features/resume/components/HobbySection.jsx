@@ -8,9 +8,8 @@ import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
-import ContactAction from "./forms/ContactAction.jsx";
-import FormationAction from "./forms/FormationAction.jsx";
 import HobbyAction from "./forms/HobbyAction.jsx";
+import {truncate} from "../utils/truncate.js";
 
 export default function HobbySection({resumeId}) {
 
@@ -51,7 +50,7 @@ export default function HobbySection({resumeId}) {
             data.map((hobby, i) => (
                 <Grid item xs={3} key={hobby.name + i}>
                     <Card style={{
-                        height: "100px",
+                        height: "150px",
                         margin: "8px",
                         padding: "16px",
                         display: "flex",
@@ -62,10 +61,14 @@ export default function HobbySection({resumeId}) {
                             <Typography variant="h5" component="div">
                                 {hobby.name}
                             </Typography>
+                            <Typography variant="body2">
+                                {truncate(hobby.description, 60)}
+                            </Typography>
                         </CardContent>
                         <CardActions>
                             <HobbyAction type={"edit"}
                                          hobbyName={hobby.name}
+                                         hobbyDescription={hobby.description}
                                          hobbyId={hobby.id}
                                          resumeId={resumeId}
                                          updateHobbie={update}></HobbyAction>

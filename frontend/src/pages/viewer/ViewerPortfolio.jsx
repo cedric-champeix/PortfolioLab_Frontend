@@ -10,15 +10,8 @@ export default function ViewerPortfolio() {
 
     const {projects} = useViewerPortfolio(username)
 
-    return <Box gridAutoFlow='row' className={"Element-"}
-                component="main"
-                sx={{
-                    backgroundColor: "#FFF",
-                    height: '100vh',
-                    overflow: 'auto',
-                }}
-    >
-        <Grid container sx={{p: 3}} spacing={2}>
+    return <Box sx={{width: '100%'}}>
+        <Grid container sx={{p: 3, width: '100%', maxWidth: 1400, margin: 'auto'}} spacing={2}>
             {projects.map((project) =>
                 <Grid item key={project.id}>
                     <ViewerProjectCard username={username} project={project}/>

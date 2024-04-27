@@ -7,30 +7,26 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({children}) => {
 
-    const [username, setUsername] = useState(null);
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(localStorage.getItem("userId"));
+    const [username, setUsername] = useState(localStorage.getItem("username"));
 
     useEffect(() => {
         console.log("Get profile info from storage")
         const cookie = Cookies.get('jwt_token')
-        if(cookie) {
-            //Get information
-            console.log(localStorage.getItem("userId"))
-            //setUsername(localStorage.getItem("username") || "")
+        if (cookie) {
             setUserId(localStorage.getItem("userId") || "")
-        }
-        axios({
-            url: "http://localhost:8080/getUser",
-            method: "GET",
-            withCredentials: true,
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then(data => {
-            console.log(data.data.username)
-            setUsername(data.data.username)
-        })
 
+            axios({
+                url: "http://localhost:8080/getUser",
+                method: "GET",
+                withCredentials: true
+            }).then(fetch => {
+                setUsername(fetch.data.username)
+                setUserId(fetch.data.id)
+                localStorage.setItem("userId", fetch.data.id)
+                localStorage.setItem("username", fetch.data.username)
+            })
+        }
     }, []);
 
 
@@ -43,12 +39,11 @@ export const AuthProvider = ({children}) => {
 
     }
 
-    return <AuthContext.Provider value={{username, setUsername,userId, setUserId, logOut}}>
+    return <AuthContext.Provider value={{username, setUsername, userId, setUserId, logOut}}>
         {children}
     </AuthContext.Provider>
 }
 
 AuthProvider.propTypes = {
-    token: string,
-    children : () => {}
+    children: () => {}
 }

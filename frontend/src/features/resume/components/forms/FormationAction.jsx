@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import Typography from "@mui/material/Typography";
 import {parse, format} from "date-fns";
+import PropTypes from "prop-types";
 
 const onGoing = "ongoing"
 
@@ -21,6 +22,7 @@ export default function FormationAction({
                                             fId,
                                             fFormationName,
                                             fUniversityName,
+                                            fDescription,
                                             fStartDate,
                                             fEndDate,
                                             resumeId,
@@ -33,6 +35,7 @@ export default function FormationAction({
     const [data, setData] = useState({
         formationName: fFormationName,
         universityName: fUniversityName,
+        description: fDescription,
         startDate: fStartDate,
         endDate: fEndDate,
     });
@@ -41,6 +44,7 @@ export default function FormationAction({
         setData({
             formationName: fFormationName,
             universityName: fUniversityName,
+            description: fDescription,
             startDate: fStartDate,
             endDate: fEndDate,
         })
@@ -51,6 +55,7 @@ export default function FormationAction({
         const body = {
             formationName: data.formationName,
             universityName: data.universityName,
+            description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
             resumeId: resumeId
@@ -141,7 +146,25 @@ export default function FormationAction({
                             fullWidth
                             variant="standard"
                         />
-                        <br/><br/>
+
+                        <TextField
+                            autoFocus
+                            value={data.description || ""}
+                            onChange={(e) => {
+                                setData({
+                                    ...data,
+                                    description: e.target.value
+                                })
+                            }}
+                            margin="dense"
+                            id="description"
+                            label="Description"
+                            type="name"
+                            fullWidth
+                            multiline
+                            variant="standard"
+                        />
+                        <br/>
                         <div style={{display: 'flex', justifyContent: 'space-around', alignItems: "start"}}>
                             <div>
                                 <Typography color="text.secondary">
@@ -181,7 +204,6 @@ export default function FormationAction({
                                 />
                             </div>
                         </div>
-                        <br/><br/>
                     </DialogContent>
 
                     <DialogActions>
@@ -199,4 +221,16 @@ export default function FormationAction({
             {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
+}
+FormationAction.propTypes = {
+    type: PropTypes.string,
+    fId: PropTypes.string,
+    fFormationName: PropTypes.string,
+    fUniversityName: PropTypes.string,
+    fDescription: PropTypes.string,
+    fStartDate: PropTypes.string,
+    fEndDate: PropTypes.string,
+    resumeId: PropTypes.string,
+    createFormation: PropTypes.func,
+    updateFormation: PropTypes.func
 }

@@ -9,11 +9,19 @@ import PropTypes from "prop-types";
 import TextComponent from "./components/factory/TextComponent.jsx";
 import ImageComponent from "./components/factory/ImageComponent.jsx";
 import TextImageComponent from "./components/factory/TextImageComponent.jsx";
+import {useConfirmation} from "../../hooks/useConfirmation.js";
 
 export default function ComponentFactory({component, update, remove}) {
 
-    const deleteComponent = () => {
-        remove(component.id)
+    const confirm = useConfirmation()
+
+    const confirmRemove = (image) =>{
+        confirm({
+            catchOnCancel: true,
+            name: `the image ${image.name}`
+        }).then(() => {
+            remove(component.id)
+        })
     }
 
     const renderComponent = () => {
@@ -51,7 +59,7 @@ export default function ComponentFactory({component, update, remove}) {
                   justifyContent: "flex-end"
               }}>
             <IconButton aria-label="delete"
-                        onClick={deleteComponent}
+                        onClick={confirmRemove}
                         style={{
                             bottom: 0,
                             right: 0

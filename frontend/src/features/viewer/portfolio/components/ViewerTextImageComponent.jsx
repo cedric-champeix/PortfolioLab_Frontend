@@ -10,9 +10,9 @@ export default function ViewerTextImageComponent({component, leftText}) {
 
     const [image, setImage] = useState(component.data.image ? constants.BACKEND_URL + "" + component.data.image : placeHolder);
 
-    const text = parse(component.data.text) || ""
+    const text = parse(component.data.text || "")
 
-    const fallbackImage = (e) => {
+    const fallbackImage = () => {
         setImage(placeHolder)
     }
 
@@ -22,7 +22,7 @@ export default function ViewerTextImageComponent({component, leftText}) {
                 <Grid item xs={12} md={6}>
                     {text}
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} sx={{display: 'flex', alignItems: 'center'}}>
                     <Box component={"img"}
                          margin="auto"
                          width="100%"
@@ -34,7 +34,7 @@ export default function ViewerTextImageComponent({component, leftText}) {
                 </Grid>
             </Grid> :
             <Grid container spacing={4}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} sx={{display: 'flex', alignItems: 'center'}}>
                     <Box component={"img"}
                          margin="auto"
                          width="100%"

@@ -34,7 +34,7 @@ export default function SkillSection({resumeId}) {
         })
     }
 
-    return <Box container marginY="10px">
+    return <Box marginY="10px">
         <SkillHandler open={open} toggle={toggle} callback={connectToResume}/>
         <Stack direction={"row"} spacing={2} style={{flexWrap: "wrap"}}>
             {skills.map((skill) => (

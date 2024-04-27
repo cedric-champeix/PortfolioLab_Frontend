@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import * as Yup from "yup";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Field, Form, Formik} from "formik";
 import {useAuth} from "../../hooks/useAuth.js";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -34,24 +34,26 @@ const Signup = () => {
         confirmPassword: ""
     }
 
-    //YUP
+    const usernameRegex = /^\w+$/
+
+    // Form validation with Yup
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("required"),
         lastName: Yup.string().required("required"),
-        username: Yup.string().required("required"),
-        email: Yup.string().email('Please enter a valid email').required("Required"),
+        username: Yup.string().required("required").matches(usernameRegex, "Username can only contain digits, uppercase and lowercase letters"),
+        email: Yup.string().email('Please enter a valid email').required("required"),
         password: Yup.string().required("required"),
-        confirmPassword: Yup.string().required("required")
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     })
+
     const submitForm = async (values, props) => {
 
-        console.log(values)
         const data = {
-            email: values.email,
-            pwd: values.password,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            username: values.username
+            email: values.email.trim(),
+            pwd: values.password.trim(),
+            firstName: values.firstName.trim(),
+            lastName: values.lastName.trim(),
+            username: values.username.trim()
         }
 
         axios({
@@ -94,97 +96,88 @@ const Signup = () => {
                 </Grid>
                 <Formik initialValues={initialValues} validationSchema={validationSchema}
                         onSubmit={(values, props) => submitForm(values, props)}>
-                    {(props) => (
+                    {({errors, touched}) => (
 
                         <Form>
-                            <Grid style={fieldStyle} container spacing={2}>
+                            <Grid style={fieldStyle} container spacing={1}>
                                 <Grid item xs={12} sm={6}>
-                                    <Field
-                                        as={TextField}
-                                        autoComplete="given-name"
-                                        name="firstName"
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
-                                        autoFocus
-                                        helperText={<ErrorMessage name={"firstName"}/>}
-
-                                    />
+                                    <Field as={TextField}
+                                           required
+                                           autoFocus
+                                           autoComplete="given-name"
+                                           name="firstName"
+                                           fullWidth
+                                           id="firstName"
+                                           label="First Name"/>
+                                    {errors.firstName && touched.firstName &&
+                                        <Typography variant='caption' color="error">{errors.firstName}</Typography>}
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <Field
-                                        as={TextField}
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        autoComplete="family-name"
-                                        helperText={<ErrorMessage name={"lastName"}/>}
-
-                                        //{...register('lastName')}
-
-                                    />
+                                    <Field as={TextField}
+                                           required
+                                           fullWidth
+                                           id="lastName"
+                                           label="Last Name"
+                                           name="lastName"
+                                           autoComplete="family-name"/>
+                                    {errors.lastName && touched.lastName &&
+                                        <Typography variant='caption' color="error">{errors.lastName}</Typography>}
                                 </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Field
-                                    as={TextField}
-                                    style={fieldStyle}
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    helperText={<ErrorMessage name={"email"}/>}
 
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Field
-                                    as={TextField}
-                                    style={fieldStyle}
-                                    fullWidth
-                                    id="username"
-                                    label="Username"
-                                    name="username"
-                                    autoComplete="username"
-                                    helperText={<ErrorMessage name={"username"}/>}
-                                />
-                            </Grid>
-
-                            <Grid style={fieldStyle} container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Field as={TextField}
+                                           style={fieldStyle}
+                                           required
+                                           fullWidth
+                                           id="email"
+                                           label="Email Address"
+                                           name="email"
+                                           autoComplete="email"
+                                    />
+                                    {errors.email && touched.email &&
+                                        <Typography variant='caption' color="error">{errors.email}</Typography>}
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Field as={TextField}
+                                           style={fieldStyle}
+                                           required
+                                           fullWidth
+                                           id="username"
+                                           label="Username"
+                                           name="username"
+                                    />
+                                    {errors.username && touched.username &&
+                                        <Typography variant='caption' color="error">{errors.username}</Typography>}
+                                </Grid>
 
                                 <Grid item xs={12} sm={6}>
-                                    <Field
-                                        as={TextField}
-                                        fullWidth
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="new-password"
-                                        helperText={<ErrorMessage name={"password"}/>}
-
-                                        // {...register('password')}
-
+                                    <Field as={TextField}
+                                           required
+                                           fullWidth
+                                           name="password"
+                                           label="Password"
+                                           type="password"
+                                           id="password"
+                                           autoComplete="new-password"
                                     />
+                                    {errors.password && touched.password &&
+                                        <Typography variant='caption' color="error">{errors.password}</Typography>}
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <Field
-                                        as={TextField}
-                                        fullWidth
-                                        name="confirmPassword"
-                                        label="Confirm"
-                                        type="password"
-                                        id="confirmPassword"
-                                        autoComplete="new-password"
-                                        helperText={<ErrorMessage name={"password"}/>}
-
-                                        // {...register('confirmPassword')}
-
+                                    <Field as={TextField}
+                                           required
+                                           fullWidth
+                                           name="confirmPassword"
+                                           label="Confirm"
+                                           type="password"
+                                           id="confirmPassword"
+                                           autoComplete="new-password"
                                     />
+                                    {errors.confirmPassword && touched.confirmPassword &&
+                                        <Typography variant='caption' color="error">{errors.confirmPassword}</Typography>}
                                 </Grid>
                             </Grid>
+
                             <Button type='submit' variant='contained' color='primary' style={btnStyle} fullWidth>
                                 Sign up
                             </Button>

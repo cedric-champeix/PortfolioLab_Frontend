@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {useProject} from "../features/project/hooks/useProject.js";
@@ -77,16 +76,8 @@ export default function Project() {
         connectMainImage(newImage)
     }
 
-    return <Box gridAutoFlow='row' className={"Element-"}
-                component="div"
-                sx={{
-                    backgroundColor: "#FFF",
-                    height: '100vh',
-                    width: "100%",
-                    overflow: 'auto',
-                }}>
-        <Toolbar/>
-        <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", width: "80%", margin: "auto", padding: "30px 5%"}}>
+    return <Box sx={{width: "100%"}}>
+        <Grid container sx={{p: 3}} style={{width: "100%", maxWidth: 1400, margin: "auto", padding: "30px 5%"}}>
 
             <Grid item xs={12}>
                 {!isEditingTitle ?
@@ -127,9 +118,9 @@ export default function Project() {
             </Grid>
 
             <Grid container padding="0 0 30px 0" spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Typography width="fit-content"
-                                variant={"h4"}
+                                variant="h4"
                                 color="primary"
                                 margin="0 0 10px 0">
                         Description
@@ -138,7 +129,7 @@ export default function Project() {
                         <Button onClick={() => setIsEditingDescription(true)}
                                 style={{textTransform: "none", textAlign: "left"}}>
                             <Typography width="fit-content" padding="0 24px" color="black">
-                                {projectData.description}
+                                {projectData.description || "Write a short description of your project here!"}
                             </Typography>
                         </Button> :
                         <TextField
@@ -153,7 +144,7 @@ export default function Project() {
                         />
                     }
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Typography width="fit-content" variant={"h4"} color="primary"
                                 margin="0 0 10px 0">Skills</Typography>
                     <SkillContainer projectId={projectData.id}/>

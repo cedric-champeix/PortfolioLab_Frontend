@@ -5,6 +5,7 @@ import {useResumeImage} from "../../hooks/useResumeImage.js";
 import ImageHandler from "../../../images/components/ImageHandler.jsx";
 import profilePlaceHolder from "../../../../assets/icons/blank-profile-picture.png"
 import {constants} from "../../../../constants.js";
+import PropTypes from "prop-types";
 
 export default function ContactAction({resumeData}) {
 
@@ -44,5 +45,5 @@ export default function ContactAction({resumeData}) {
 }
 
 ContactAction.propTypes = {
-    resumeData: {}
+    resumeData: PropTypes.object
 }

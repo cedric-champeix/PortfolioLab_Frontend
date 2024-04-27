@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker"
 import 'react-datepicker/dist/react-datepicker.css'
 import Typography from "@mui/material/Typography";
 import {parse, format} from "date-fns";
+import PropTypes from "prop-types";
 
 const onGoing = "ongoing"
 
@@ -159,7 +160,7 @@ export default function ExperienceAction({
                             }}
                             margin="dense"
                             id="description"
-                            label="Skill description"
+                            label="Description"
                             type="name"
                             fullWidth
                             multiline
@@ -211,7 +212,6 @@ export default function ExperienceAction({
                                 </Typography>
                             </div>
                         </div>
-                        <br/><br/>
                     </DialogContent>
 
                     <DialogActions>
@@ -229,4 +229,16 @@ export default function ExperienceAction({
             {type === "edit" ? "Edit" : "Create"}
         </Button>
     </>
+}
+ExperienceAction.propTypes = {
+    type: PropTypes.string,
+    expId: PropTypes.string,
+    expTitle: PropTypes.string,
+    expCompany: PropTypes.string,
+    expDescription: PropTypes.string,
+    expStartDate: PropTypes.string,
+    expEndDate: PropTypes.string,
+    resumeId: PropTypes.string,
+    create: PropTypes.func,
+    update: PropTypes.func
 }

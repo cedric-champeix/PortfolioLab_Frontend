@@ -8,13 +8,13 @@ import {CardActions} from "@mui/joy";
 import Button from "@mui/material/Button";
 import {string} from "prop-types";
 import {useConfirmation} from "../../../hooks/useConfirmation.js";
-import FormationAction from "./forms/FormationAction.jsx";
+import EducationAction from "./forms/EducationAction.jsx";
 import {truncate} from "../utils/truncate.js";
 
-export default function FormationSection({resumeId}) {
+export default function EducationSection({resumeId}) {
 
     //CRUD on experiences endpoint
-    const {update, create, remove, data} = useCRUD(endpoints.formationEndpoint)
+    const {update, create, remove, data} = useCRUD(endpoints.educationEndpoint)
     //Calls the confirmation service
     //This hook will handle a promise and trigger a dialog to perform confirmation
     //Once confirmed by the user, the function executes the callback
@@ -34,23 +34,23 @@ export default function FormationSection({resumeId}) {
     return  <Grid container marginY="10px">
         <Grid container marginY="10px">
             <Grid item xs={6}>
-                <Title>Formations</Title>
+                <Title>Educations</Title>
             </Grid>
             <Grid item xs={6} textAlign="right">
-                <FormationAction type={"add"}
-                                 fFormationName={""}
-                                 fUniversityName={""}
-                                 fStartDate={""}
-                                 fEndDate={""}
+                <EducationAction type={"add"}
+                                 eEducationName={""}
+                                 eUniversityName={""}
+                                 eStartDate={""}
+                                 eEndDate={""}
                                  resumeId={resumeId}
-                                 createFormation={create}>
-                    Add a formation
-                </FormationAction>
+                                 createEducation={create}>
+                    New education
+                </EducationAction>
             </Grid>
         </Grid>
         {
-            data.map((formation) => (
-                <Grid item xs={4} key={formation.id}>
+            data.map((education) => (
+                <Grid item xs={4} key={education.id}>
                     <Card style={{
                         height: "200px",
                         margin: "8px",
@@ -61,34 +61,34 @@ export default function FormationSection({resumeId}) {
                     }}>
                         <CardContent style={{padding: "0 0 10px 0"}}>
                             <Typography variant="h5" component="div">
-                                {formation.formationName}
+                                {education.formationName}
                             </Typography>
                             <Typography color="text.secondary" gutterBottom>
-                                {formation.universityName}
+                                {education.universityName}
                             </Typography>
                             <Typography color="text.secondary">
-                                {formation.startDate} - {formation.endDate}
+                                {education.startDate} - {education.endDate}
                             </Typography>
                             <Typography variant="body2">
-                                {truncate(formation.description, 60)}
+                                {truncate(education.description, 60)}
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <FormationAction type={"edit"}
-                                             fId={formation.id}
-                                             fFormationName={formation.formationName}
-                                             fUniversityName={formation.universityName}
-                                             fDescription={formation.description}
-                                             fStartDate={formation.startDate}
-                                             fEndDate={formation.endDate}
+                            <EducationAction type={"edit"}
+                                             eId={education.id}
+                                             eEducationName={education.formationName}
+                                             eUniversityName={education.universityName}
+                                             eDescription={education.description}
+                                             eStartDate={education.startDate}
+                                             eEndDate={education.endDate}
                                              resumeId={resumeId}
-                                             updateFormation={update}></FormationAction>
+                                             updateEducation={update}></EducationAction>
                             <Button
-                                onClick={() => removeSafeguard(formation.id, formation.formationName)}
+                                onClick={() => removeSafeguard(education.id, education.formationName)}
                                 size="small"
                                 color="error">
                                 <img src={"/src/assets/icons/rubbish_bin.svg"}
-                                     alt={"Delete formation"}/>
+                                     alt={"Delete education"}/>
                             </Button>
                         </CardActions>
                     </Card>
@@ -98,6 +98,6 @@ export default function FormationSection({resumeId}) {
 
 }
 
-FormationSection.propTypes = {
+EducationSection.propTypes = {
     resumeId: string
 }

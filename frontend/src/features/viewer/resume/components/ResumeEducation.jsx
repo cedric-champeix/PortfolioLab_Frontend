@@ -7,34 +7,34 @@ import Grid from "@mui/material/Grid";
 import {Stack} from "@mui/material";
 
 
-export default function ResumeFormation({formations}) {
+export default function ResumeEducation({educations}) {
 
-    return <Box width="100%" display={formations.length !== 0 ? "block" : "none"}>
-        <Typography variant="h4" color="primary">Formations</Typography>
+    return <Box width="100%" display={educations.length !== 0 ? "block" : "none"}>
+        <Typography variant="h4" color="primary">Educations</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} spacing={2}>
-            {formations.map((formation) => (
-                <Box key={formation.id}>
+            {educations.map((education) => (
+                <Box key={education.id}>
 
                     <Grid container justifyContent="space-between" alignItems="center">
                         <Typography variant="h6">
-                            <Box component="span" color="primary.main">{formation.formationName}</Box> - {formation.universityName}
+                            <Box component="span" color="primary.main">{education.formationName}</Box> - {education.universityName}
                         </Typography>
 
                         <Typography variant="body1"
                                     sx={{fontWeight: "600"}}>
-                            {formation.startDate} - {formation.endDate ? formation.endDate : "ongoing"}
+                            {education.startDate} - {education.endDate ? education.endDate : "ongoing"}
                         </Typography>
                     </Grid>
 
-                    <Typography variant="body1" display={formation.description ? "block" : "none"}>
-                        {formation.description}
+                    <Typography variant="body1" display={education.description ? "block" : "none"}>
+                        {education.description}
                     </Typography>
                 </Box>
             ))}
         </Stack>
     </Box>
 }
-ResumeFormation.propTypes = {
-    formations: PropTypes.array
+ResumeEducation.propTypes = {
+    educations: PropTypes.array
 }

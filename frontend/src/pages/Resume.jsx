@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import ExperienceSection from "../features/resume/components/ExperienceSection.jsx";
 import SkillSection from "../features/resume/components/SkillSection.jsx";
 import ContactSection from "../features/resume/components/ContactSection.jsx";
-import FormationSection from "../features/resume/components/FormationSection.jsx";
+import EducationSection from "../features/resume/components/EducationSection.jsx";
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
@@ -207,8 +207,8 @@ export default function Resume() {
             <Divider style={{width: '100%'}}>Experiences</Divider>
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>
 
-            <Divider style={{width: '100%'}}>Formations</Divider>
-            <FormationSection resumeId={resumeData.id}></FormationSection>
+            <Divider style={{width: '100%'}}>Educations</Divider>
+            <EducationSection resumeId={resumeData.id}></EducationSection>
 
             <Divider style={{width: '100%'}}>Languages</Divider>
             <LanguageSection resumeId={resumeData.id}></LanguageSection>

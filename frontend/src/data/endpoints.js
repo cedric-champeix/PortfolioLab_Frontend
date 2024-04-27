@@ -4,7 +4,7 @@ export const endpoints = {
     resumeEndpoint: baseUrl + "/editor/resume",
     resumeImageEndpoint: baseUrl + "/editor/resume/image",
     experienceEndpoint: baseUrl + "/editor/experiences",
-    formationEndpoint: baseUrl + "/editor/formations",
+    educationEndpoint: baseUrl + "/editor/formations",
     hobbiesEndpoint: baseUrl + "/editor/hobbies",
     languageEndpoint: baseUrl + "/editor/languages",
     skillsEndpoints: baseUrl + "/editor/skills",

@@ -7,12 +7,12 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import ResumeContacts from "./components/ResumeContacts.jsx";
 import IconButton from "@mui/material/IconButton";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline.js";
+import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import profilePlaceHolder from "../../../assets/icons/blank-profile-picture.png";
 import {constants} from "../../../constants.js";
 import ResumeProfile from "./components/ResumeProfile.jsx";
 import ResumeExperience from "./components/ResumeExperience.jsx";
-import ResumeFormation from "./components/ResumeFormation.jsx";
+import ResumeEducation from "./components/ResumeEducation.jsx";
 import ResumeSkills from "./components/ResumeSkills.jsx";
 import ResumeLanguages from "./components/ResumeLanguages.jsx";
 import ResumeHobbies from "./components/ResumeHobbies.jsx";
@@ -91,7 +91,7 @@ export default function BaseResume({userResume}) {
                 }}>
                     <ResumeProfile profile={userResume.resume.description}/>
                     <ResumeExperience experiences={userResume.resume.experiences}/>
-                    <ResumeFormation formations={userResume.resume.formations}/>
+                    <ResumeEducation educations={userResume.resume.formations}/>
                     <ResumeSkills skills={userResume.resume.skills}/>
                     <ResumeLanguages languages={userResume.resume.languages}/>
                     <ResumeHobbies hobbies={userResume.resume.hobbies}/>

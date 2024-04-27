@@ -8,7 +8,7 @@ import {Stack} from "@mui/material";
 
 export default function ResumeHobbies({hobbies}) {
 
-    return <Box width="100%" display={hobbies ? "block" : "none"}>
+    return <Box width="100%" display={hobbies.length !== 0 ? "block" : "none"}>
         <Typography variant="h4" color="primary">Hobbies</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} spacing={0}>

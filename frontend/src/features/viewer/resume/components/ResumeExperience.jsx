@@ -9,7 +9,7 @@ import {Stack} from "@mui/material";
 
 export default function ResumeExperience({experiences}) {
 
-    return <Box width="100%" display={experiences ? "block" : "none"}>
+    return <Box width="100%" display={experiences.length !== 0 ? "block" : "none"}>
         <Typography variant="h4" color="primary">Experiences</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} spacing={2}>

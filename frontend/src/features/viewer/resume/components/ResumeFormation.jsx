@@ -9,7 +9,7 @@ import {Stack} from "@mui/material";
 
 export default function ResumeFormation({formations}) {
 
-    return <Box width="100%" display={formations ? "block" : "none"}>
+    return <Box width="100%" display={formations.length !== 0 ? "block" : "none"}>
         <Typography variant="h4" color="primary">Formations</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} spacing={2}>

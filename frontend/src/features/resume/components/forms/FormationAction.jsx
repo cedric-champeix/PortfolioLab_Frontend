@@ -146,7 +146,25 @@ export default function FormationAction({
                             fullWidth
                             variant="standard"
                         />
-                        <br/><br/>
+
+                        <TextField
+                            autoFocus
+                            value={data.description || ""}
+                            onChange={(e) => {
+                                setData({
+                                    ...data,
+                                    description: e.target.value
+                                })
+                            }}
+                            margin="dense"
+                            id="description"
+                            label="Description"
+                            type="name"
+                            fullWidth
+                            multiline
+                            variant="standard"
+                        />
+                        <br/>
                         <div style={{display: 'flex', justifyContent: 'space-around', alignItems: "start"}}>
                             <div>
                                 <Typography color="text.secondary">
@@ -186,24 +204,6 @@ export default function FormationAction({
                                 />
                             </div>
                         </div>
-                        <br/><br/>
-                        <TextField
-                            autoFocus
-                            value={data.description || ""}
-                            onChange={(e) => {
-                                setData({
-                                    ...data,
-                                    description: e.target.value
-                                })
-                            }}
-                            margin="dense"
-                            id="description"
-                            label="Skill description"
-                            type="name"
-                            fullWidth
-                            multiline
-                            variant="standard"
-                        />
                     </DialogContent>
 
                     <DialogActions>

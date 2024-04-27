@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import placeHolder from "../../../assets/icons/placeholder.png";
 import {useState} from "react";
 import {constants} from "../../../constants.js";
+import {useConfirmation} from "../../../hooks/useConfirmation.js";
 
 
 export default function ImageCard({image, update, remove, selected}) {
@@ -17,8 +18,15 @@ export default function ImageCard({image, update, remove, selected}) {
         setImagePath(placeHolder)
     }
 
-    const deleteImage = () => {
-        remove(image.id)
+    const confirm = useConfirmation()
+
+    const confirmRemove = () =>{
+        confirm({
+            catchOnCancel: true,
+            name: `the image ${image.name}`
+        }).then(() => {
+            remove(image.id)
+        })
     }
 
     return <Card sx={{width: 260}} style={selected ? {border: "5px solid #1976d2"} : {}}>
@@ -39,7 +47,8 @@ export default function ImageCard({image, update, remove, selected}) {
         <CardActions>
             <ImageAction image={image} update={update}/>
             <Button size="small"
-                    onClick={deleteImage}>
+                    color="error"
+                    onClick={confirmRemove}>
                 Delete
             </Button>
         </CardActions>

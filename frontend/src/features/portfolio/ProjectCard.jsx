@@ -2,7 +2,7 @@ import {Box, Card, CardContent, MenuItem, Select, Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {CardActions} from "@mui/joy";
 import placeHolder from "../../assets/icons/placeholder.png"
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {constants} from "../../constants.js";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import SkillChipViewer from "../skills/components/SkillChipViewer.jsx";
 import axios from "axios";
 import {endpoints} from "../../data/endpoints.js";
+import {useConfirmation} from "../../hooks/useConfirmation.js";
 
 const visibilityTypes = {
     PUBLIC: "Public",
@@ -29,10 +30,6 @@ export default function ProjectCard({project, remove}) {
         setImage(placeHolder)
     }
 
-    const deleteProject = (e) => {
-        remove(project.id)
-    }
-
     const updateVisibility = (_visible) => {
         const url = endpoints.projectsEndpoint + "/" + project.id
         axios({
@@ -49,9 +46,16 @@ export default function ProjectCard({project, remove}) {
         })
     }
 
-    useEffect(() => {
-        console.log("CHANGED VISIBILITY")
-    }, [visible]);
+    const confirm = useConfirmation()
+
+    const confirmRemove = () =>{
+        confirm({
+            catchOnCancel: true,
+            name: `the project ${project.name}`
+        }).then(() => {
+            remove(project.id)
+        })
+    }
 
     return <Card sx={{width: 350}}>
         <Link to={"/portfolio/" + project.id}>
@@ -95,7 +99,7 @@ export default function ProjectCard({project, remove}) {
                 </MenuItem>
             </Select>
             <IconButton aria-label="delete"
-                        onClick={deleteProject}
+                        onClick={confirmRemove}
                         style={{
                             bottom: 0,
                             right: 0

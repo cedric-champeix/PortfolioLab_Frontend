@@ -16,6 +16,7 @@ import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
 import {Link} from "react-router-dom";
+import Paper from "@mui/material/Paper";
 
 export default function Resume() {
 
@@ -100,19 +101,13 @@ export default function Resume() {
     };
 
 
-    return <Box gridAutoFlow='row' className={"Element-"}
-                component="div"
-                sx={{
-                    backgroundColor: "#FFF",
-                    height: "95vh"
-                }}
-    >
+    return <Paper elevation={12} sx={{width: '100%', maxWidth: 1400, margin: 'auto'}}>
         <Grid container sx={{p: 3}} style={{backgroundColor: "#FFF", borderRadius: "8px", padding: "20px"}}>
             <Grid container marginY="10px">
-                <Grid item xs={3}>
+                <Grid item xs={12} md={4} lg={3} sx={{display: 'flex', justifyContent: 'center'}}>
                     <ImageAction resumeData={resumeData}/>
                 </Grid>
-                <Grid item xs={9} padding="5px">
+                <Grid item xs={12} md={8} lg={9} padding="5px">
                     <Title>Job title</Title>
                     {
                         isEditingTitle ?
@@ -204,41 +199,43 @@ export default function Resume() {
 
 
             <ContactSection resumeId={resumeData.id}></ContactSection>
-            <Divider style={{width:'100%'}}>Skills</Divider>
+            <Divider style={{width: '100%'}}>Skills</Divider>
             <SkillSection resumeId={resumeData.id || "AWAITING"}></SkillSection>
-            <Divider style={{width:'100%'}}>Experiences</Divider>
+            <Divider style={{width: '100%'}}>Experiences</Divider>
 
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>
-            <Divider style={{width:'100%'}}>Academic</Divider>
+            <Divider style={{width: '100%'}}>Academic</Divider>
 
             <FormationSection resumeId={resumeData.id}></FormationSection>
-            <Divider style={{width:'100%'}}>Hobbies</Divider>
+            <Divider style={{width: '100%'}}>Hobbies</Divider>
 
             <HobbySection resumeId={resumeData.id}></HobbySection>
-            <Divider style={{width:'100%'}}>Languages</Divider>
+            <Divider style={{width: '100%'}}>Languages</Divider>
 
             <LanguageSection resumeId={resumeData.id}></LanguageSection>
 
 
-            <Grid item
-                  xs={12}
-                  textAlign="right"
-                  marginY="10px">
-                <Button component={Link} to={"/resume/preview"}
-                        size="large"
-                        color="primary"
-                        variant="contained">
-                    Preview resume
-                </Button>
-                <Button  onClick={() => resetResumeSafeguard()}
-                        size="large"
-                        color="error"
-                        variant="contained">
-                    Reset resume
-                </Button>
-            </Grid>
+            <Box sx={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 2}}>
+                <Grid item>
+                    <Button component={Link} to={"/resume/preview"}
+                            size="large"
+                            color="primary"
+                            variant="outlined">
+                        Preview resume
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button onClick={() => resetResumeSafeguard()}
+                            size="large"
+                            color="error"
+                            variant="outlined">
+                        Reset resume
+                    </Button>
+                </Grid>
+
+            </Box>
 
         </Grid>
-    </Box>;
+    </Paper>;
 }
 Resume.componentName = "Resume"

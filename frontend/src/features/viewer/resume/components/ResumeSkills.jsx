@@ -8,7 +8,7 @@ import {Stack} from "@mui/material";
 
 export default function ResumeSkills({skills}) {
 
-    return <Box width="100%" display={skills ? "block" : "none"}>
+    return <Box width="100%" display={skills.length !== 0 ? "block" : "none"}>
         <Typography variant="h4" color="primary">Skills</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} spacing={0}>

@@ -46,6 +46,7 @@ export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId,
                     <DialogContent>
                         <TextField
                             autoFocus
+                            required
                             value={data.name}
                             onChange={(e) => {
                                 setData({
@@ -74,7 +75,7 @@ export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId,
                             }}
                             margin="dense"
                             id="description"
-                            label="Skill description"
+                            label="Description"
                             type="name"
                             fullWidth
                             multiline

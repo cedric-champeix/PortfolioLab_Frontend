@@ -8,7 +8,7 @@ import {Chip, Stack} from "@mui/material";
 
 export default function ResumeLanguages({languages}) {
 
-    return <Box width="100%" display={languages ? "block" : "none"}>
+    return <Box width="100%" display={languages.length !== 0 ? "block" : "none"}>
         <Typography variant="h4" color="primary">Languages</Typography>
         <Divider/>
         <Stack sx={{padding: '3mm'}} direction="row" spacing={1}>

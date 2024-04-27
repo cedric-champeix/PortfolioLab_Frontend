@@ -5,9 +5,7 @@ import Grid from "@mui/material/Grid";
 import Title from "../../../components/Title.jsx";
 import Typography from "@mui/material/Typography";
 import {string} from "prop-types";
-import {useConfirmation} from "../../../hooks/useConfirmation.js";
 import ContactAction from "./forms/ContactAction.jsx";
-import Divider from "@mui/material/Divider";
 import Contact from "./Contact.jsx";
 
 export default function ContactSection({resumeId}) {
@@ -37,8 +35,6 @@ export default function ContactSection({resumeId}) {
 
             ) : (
                 <Grid container marginY="10px">
-                    <Divider style={{width: '100%'}}>Contact</Divider>
-
                     <Grid container marginY="10px">
                         <Grid item xs={11.5}>
                             <Title>Contacts</Title>

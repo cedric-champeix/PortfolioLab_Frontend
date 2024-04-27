@@ -30,14 +30,16 @@ export default function ViewerProject() {
         setMainImage(placeHolder)
     }
 
-    return <Box gridAutoFlow='row' className={"Element-"}
-                component="div"
-                sx={{
-                    backgroundColor: "#FFF",
-                    width: "100%"
-                }}>
+    return <Box sx={{width: "100%"}}>
 
-        <Grid container sx={{p: 3, backgroundColor: "#FFF", width: "100%", maxWidth: "1400px", margin: "auto", padding: "30px 5%"}}>
+        <Grid container sx={{
+            p: 3,
+            backgroundColor: "#FFF",
+            width: "100%",
+            maxWidth: "1400px",
+            margin: "auto",
+            padding: "30px 5%"
+        }}>
 
             <Grid item xs={12}>
                 <Typography width="fit-content"
@@ -64,7 +66,7 @@ export default function ViewerProject() {
             </Grid>
 
             <Grid container padding="0 0 30px 0" spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Typography width="fit-content"
                                 variant="h4"
                                 color="primary"
@@ -75,7 +77,7 @@ export default function ViewerProject() {
                         {project.description}
                     </Typography>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Typography width="fit-content" variant="h4" color="primary"
                                 margin="0 0 10px 0">Skills</Typography>
                     <Stack direction="row" spacing={2} style={{flexWrap: "wrap", padding: "0 10px"}}>

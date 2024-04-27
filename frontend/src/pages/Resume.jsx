@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Title from "../components/Title.jsx";
@@ -198,22 +198,23 @@ export default function Resume() {
             </Grid>
 
 
+            <Divider style={{width: '100%'}}>Contact</Divider>
             <ContactSection resumeId={resumeData.id}></ContactSection>
+
             <Divider style={{width: '100%'}}>Skills</Divider>
             <SkillSection resumeId={resumeData.id || "AWAITING"}></SkillSection>
+
             <Divider style={{width: '100%'}}>Experiences</Divider>
-
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>
-            <Divider style={{width: '100%'}}>Academic</Divider>
 
+            <Divider style={{width: '100%'}}>Formations</Divider>
             <FormationSection resumeId={resumeData.id}></FormationSection>
-            <Divider style={{width: '100%'}}>Hobbies</Divider>
 
-            <HobbySection resumeId={resumeData.id}></HobbySection>
             <Divider style={{width: '100%'}}>Languages</Divider>
-
             <LanguageSection resumeId={resumeData.id}></LanguageSection>
 
+            <Divider style={{width: '100%'}}>Hobbies</Divider>
+            <HobbySection resumeId={resumeData.id}></HobbySection>
 
             <Box sx={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 2}}>
                 <Grid item>

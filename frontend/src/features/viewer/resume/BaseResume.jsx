@@ -28,7 +28,7 @@ export default function BaseResume({userResume}) {
     }
 
     useEffect(() => {
-        setImage(userResume.resume.Image ? constants.BACKEND_URL + userResume.resume.Image.path : profilePlaceHolder)
+        setImage(userResume.resume.Image ? constants.BACKEND_URL + userResume.resume.Image.path : "")
     }, [userResume]);
 
     function capitalize(str) {
@@ -64,7 +64,7 @@ export default function BaseResume({userResume}) {
                      color="white"
                      sx={{width: '100%', padding: "5mm", borderRadius: "3mm"}}>
                     <Grid container justifyContent="space-between" marginBottom="4mm">
-                        <Grid item xs={9} flexDirection="column">
+                        <Grid item xs={image ? 9 : 12} flexDirection="column">
                             <Typography variant="h4" marginBottom="3mm">
                                 {capitalize(userResume.firstName) + " " + capitalize(userResume.lastName)}
                             </Typography>
@@ -73,10 +73,10 @@ export default function BaseResume({userResume}) {
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={3} alignItems="center" justifyContent="center">
+                        <Grid item xs={image ? 3 : 0} alignItems="center" justifyContent="center">
                             <Avatar src={image}
                                     alt={capitalize(userResume.firstName)}
-                                    sx={{height: '35mm', width: '35mm'}}
+                                    sx={{height: '35mm', width: '35mm', display: (image ? 'block' : 'none')}}
                                     onError={fallbackImage}/>
                         </Grid>
                     </Grid>

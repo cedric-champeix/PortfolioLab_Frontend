@@ -79,14 +79,14 @@ export default function Resume() {
         })
     };
 
-    const handleCancelClickDescription = (e) => {
+    const handleCancelClickDescription = () => {
         setIsEditingDescription(false);
-        setDescriptionValue(e.target.value)
+        setDescriptionValue(resumeData.description)
     };
 
-    const handleCancelClickTitle = (e) => {
+    const handleCancelClickTitle = () => {
         setIsEditingTitle(false);
-        setTitleValue(e.target.value)
+        setTitleValue(resumeData.title)
     };
 
 
@@ -121,7 +121,7 @@ export default function Resume() {
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClickTitle(e)}>
+                                            onClick={handleCancelClickTitle}>
                                         Cancel
                                     </Button>
                                 </Grid>
@@ -164,7 +164,7 @@ export default function Resume() {
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClickDescription(e)}>
+                                            onClick={handleCancelClickDescription}>
                                         Cancel
                                     </Button>
                                 </Grid>

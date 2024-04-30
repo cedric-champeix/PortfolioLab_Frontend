@@ -4,8 +4,6 @@ import {useViewerResume} from "../../features/viewer/resume/hooks/useViewerResum
 import {useAuth} from "../../hooks/useAuth.js";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import {useEffect} from "react";
 
 export default function ViewerResume() {
 

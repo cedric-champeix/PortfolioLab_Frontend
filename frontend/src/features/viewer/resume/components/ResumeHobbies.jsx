@@ -1,7 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
-import React from "react";
 import PropTypes from "prop-types";
 import {Stack} from "@mui/material";
 

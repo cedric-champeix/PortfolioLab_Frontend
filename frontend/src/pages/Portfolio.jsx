@@ -3,10 +3,15 @@ import ProjectAction from "../features/portfolio/ProjectAction.jsx";
 import Grid from "@mui/material/Grid";
 import {useProjects} from "../features/portfolio/hooks/useProjects.js";
 import ProjectCard from "../features/portfolio/ProjectCard.jsx";
+import {useEffect} from "react";
 
 export default function Portfolio() {
 
     const {projects, create, remove} = useProjects()
+
+    useEffect(() => {
+        console.log(projects)
+    }, []);
 
     return <Box gridAutoFlow='row' className={"Element-"}
                 component="div"

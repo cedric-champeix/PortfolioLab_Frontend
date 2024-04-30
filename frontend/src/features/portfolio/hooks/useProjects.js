@@ -7,6 +7,7 @@ export const useProjects = () => {
 
     const [projects, setProjects] = useState([])
 
+
     const url = endpoints.projectsEndpoint
 
     useEffect(() => {
@@ -16,7 +17,7 @@ export const useProjects = () => {
             withCredentials: true
         }).then(response => {
             console.log("This is the project data: ", response.data)
-            setProjects(response.data)
+            setProjects(response.data || [])
         }).catch(error => {
             console.error("Couldn't get projects: ", error)
         })

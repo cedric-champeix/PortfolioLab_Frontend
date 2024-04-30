@@ -9,6 +9,10 @@ export default function ViewerResume() {
 
     let {username} = useParams()
 
+    //const {username} = useAuth()
+
+    if(username)
+
     if (!username) {
         username = useAuth().username
     }

@@ -11,13 +11,13 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
-export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId, resumeId, createHobbie, updateHobbie}) {
+export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId, resumeId, createHobby, updateHobby}) {
 
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({name: hobbyName, description: hobbyDescription});
 
     const toggle = () => {
-        setData({name: hobbyName})
+        setData({name: hobbyName, description: hobbyDescription})
         setOpen(!open);
     }
 
@@ -29,10 +29,10 @@ export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId,
         }
         switch (type) {
             case "add":
-                createHobbie(body)
+                createHobby(body)
                 break;
             case "edit":
-                updateHobbie(hobbyId, body)
+                updateHobby(hobbyId, body)
                 break;
         }
         toggle();
@@ -84,7 +84,7 @@ export default function HobbyAction({type, hobbyName, hobbyDescription, hobbyId,
                     </DialogContent>
 
                     <DialogActions>
-                        <Button onClick={toggle} color={"error"}>Close</Button>
+                        <Button onClick={toggle} color="error">Close</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </DialogActions>
                 </Box>
@@ -105,6 +105,6 @@ HobbyAction.propTypes = {
     hobbyName: PropTypes.string,
     hobbyDescription: PropTypes.string,
     resumeId: PropTypes.string,
-    createHobbie: PropTypes.func,
-    updateHobbie: PropTypes.func
+    createHobby: PropTypes.func,
+    updateHobby: PropTypes.func
 }

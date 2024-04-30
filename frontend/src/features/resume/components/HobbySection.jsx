@@ -41,7 +41,7 @@ export default function HobbySection({resumeId}) {
                              hobbyName={""}
                              resumeId={resumeId}
                              hobbieData={data}
-                             createHobbie={create}>
+                             createHobby={create}>
                     Add a hobby
                 </HobbyAction>
             </Grid>
@@ -71,7 +71,7 @@ export default function HobbySection({resumeId}) {
                                          hobbyDescription={hobby.description}
                                          hobbyId={hobby.id}
                                          resumeId={resumeId}
-                                         updateHobbie={update}></HobbyAction>
+                                         updateHobby={update}></HobbyAction>
                             <Button onClick={() => removeSafeguard(hobby.id, hobby.name)}
                                     size="small"
                                     color="error">

@@ -7,12 +7,12 @@ import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import ResumeContacts from "./components/ResumeContacts.jsx";
 import IconButton from "@mui/material/IconButton";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline.js";
+import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import profilePlaceHolder from "../../../assets/icons/blank-profile-picture.png";
 import {constants} from "../../../constants.js";
 import ResumeProfile from "./components/ResumeProfile.jsx";
 import ResumeExperience from "./components/ResumeExperience.jsx";
-import ResumeFormation from "./components/ResumeFormation.jsx";
+import ResumeEducation from "./components/ResumeEducation.jsx";
 import ResumeSkills from "./components/ResumeSkills.jsx";
 import ResumeLanguages from "./components/ResumeLanguages.jsx";
 import ResumeHobbies from "./components/ResumeHobbies.jsx";
@@ -28,7 +28,7 @@ export default function BaseResume({userResume}) {
     })
 
     useEffect(() => {
-        setImage(userResume.resume.Image ? constants.BACKEND_URL + userResume.resume.Image.path : profilePlaceHolder)
+        setImage(userResume.resume.Image ? constants.BACKEND_URL + userResume.resume.Image.path : "")
     }, [userResume]);
 
     function capitalize(str) {
@@ -64,7 +64,7 @@ export default function BaseResume({userResume}) {
                      color="white"
                      sx={{width: '100%', padding: "5mm", borderRadius: "3mm"}}>
                     <Grid container justifyContent="space-between" marginBottom="4mm">
-                        <Grid item xs={9} flexDirection="column">
+                        <Grid item xs={image ? 9 : 12} flexDirection="column">
                             <Typography variant="h4" marginBottom="3mm">
                                 {capitalize(userResume.firstName) + " " + capitalize(userResume.lastName)}
                             </Typography>
@@ -73,10 +73,10 @@ export default function BaseResume({userResume}) {
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={3} alignItems="center" justifyContent="center">
+                        <Grid item xs={image ? 3 : 0} alignItems="center" justifyContent="center">
                             <Avatar src={image}
                                     alt={capitalize(userResume.firstName)}
-                                    sx={{height: '35mm', width: '35mm'}}
+                                    sx={{height: '35mm', width: '35mm', display: (image ? 'block' : 'none')}}
                                     onError={fallbackImage}/>
                         </Grid>
                     </Grid>
@@ -91,7 +91,7 @@ export default function BaseResume({userResume}) {
                 }}>
                     <ResumeProfile profile={userResume.resume.description}/>
                     <ResumeExperience experiences={userResume.resume.experiences}/>
-                    <ResumeFormation formations={userResume.resume.formations}/>
+                    <ResumeEducation educations={userResume.resume.formations}/>
                     <ResumeSkills skills={userResume.resume.skills}/>
                     <ResumeLanguages languages={userResume.resume.languages}/>
                     <ResumeHobbies hobbies={userResume.resume.hobbies}/>

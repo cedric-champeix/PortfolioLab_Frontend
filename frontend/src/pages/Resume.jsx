@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 import ExperienceSection from "../features/resume/components/ExperienceSection.jsx";
 import SkillSection from "../features/resume/components/SkillSection.jsx";
 import ContactSection from "../features/resume/components/ContactSection.jsx";
-import FormationSection from "../features/resume/components/FormationSection.jsx";
+import EducationSection from "../features/resume/components/EducationSection.jsx";
 import HobbySection from "../features/resume/components/HobbySection.jsx";
 import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
@@ -60,9 +60,6 @@ export default function Resume() {
     useEffect(() => {
         setDescriptionValue(resumeData.description)
         setTitleValue(resumeData.title)
-        //dispatch("MOUNT_ACTION", "preview resume")
-        //dispatch("MOUNT_ACTION", "clear resume")
-
     }, [resumeData]);
 
     const publishOrSave = async () => {
@@ -108,15 +105,7 @@ export default function Resume() {
 
     const handleSaveClickDescription = () => {
         setIsEditingDescription(false);
-        updateResumeDescription(descriptionValue).then((data) => {
-            setResumeData({
-                resumeId: data.id,
-                description: data.description,
-                title: data.title,
-                Image: data.Image
-            })
-            console.log("UPDATED RESUME DESCRIPTION", data)
-        })
+        updateResumeDescription(descriptionValue)
     };
 
     const handleSaveClickTitle = () => {
@@ -132,14 +121,14 @@ export default function Resume() {
         })
     };
 
-    const handleCancelClickDescription = (e) => {
+    const handleCancelClickDescription = () => {
         setIsEditingDescription(false);
-        setDescriptionValue(e.target.value)
+        setDescriptionValue(resumeData.description)
     };
 
-    const handleCancelClickTitle = (e) => {
+    const handleCancelClickTitle = () => {
         setIsEditingTitle(false);
-        setTitleValue(e.target.value)
+        setTitleValue(resumeData.title)
     };
 
 
@@ -174,7 +163,7 @@ export default function Resume() {
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClickTitle(e)}>
+                                            onClick={handleCancelClickTitle}>
                                         Cancel
                                     </Button>
                                 </Grid>
@@ -217,7 +206,7 @@ export default function Resume() {
                                     <Button variant="outlined"
                                             style={{margin: "10px"}}
                                             color="error"
-                                            onClick={(e) => handleCancelClickDescription(e)}>
+                                            onClick={handleCancelClickDescription}>
                                         Cancel
                                     </Button>
                                 </Grid>
@@ -249,8 +238,8 @@ export default function Resume() {
             <Divider style={{width: '100%'}}>Experiences</Divider>
             <ExperienceSection resumeId={resumeData.id}></ExperienceSection>
 
-            <Divider style={{width: '100%'}}>Formations</Divider>
-            <FormationSection resumeId={resumeData.id}></FormationSection>
+            <Divider style={{width: '100%'}}>Educations</Divider>
+            <EducationSection resumeId={resumeData.id}></EducationSection>
 
             <Divider style={{width: '100%'}}>Languages</Divider>
             <LanguageSection resumeId={resumeData.id}></LanguageSection>

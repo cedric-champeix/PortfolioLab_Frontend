@@ -17,43 +17,43 @@ import PropTypes from "prop-types";
 
 const onGoing = "ongoing"
 
-export default function FormationAction({
+export default function EducationAction({
                                             type,
-                                            fId,
-                                            fFormationName,
-                                            fUniversityName,
-                                            fDescription,
-                                            fStartDate,
-                                            fEndDate,
+                                            eId,
+                                            eEducationName,
+                                            eUniversityName,
+                                            eDescription,
+                                            eStartDate,
+                                            eEndDate,
                                             resumeId,
-                                            createFormation,
-                                            updateFormation
+                                            createEducation,
+                                            updateEducation
                                         }) {
 
     const [open, setOpen] = useState(false);
 
     const [data, setData] = useState({
-        formationName: fFormationName,
-        universityName: fUniversityName,
-        description: fDescription,
-        startDate: fStartDate,
-        endDate: fEndDate,
+        educationName: eEducationName,
+        universityName: eUniversityName,
+        description: eDescription,
+        startDate: eStartDate,
+        endDate: eEndDate,
     });
 
     const toggle = () => {
         setData({
-            formationName: fFormationName,
-            universityName: fUniversityName,
-            description: fDescription,
-            startDate: fStartDate,
-            endDate: fEndDate,
+            educationName: eEducationName,
+            universityName: eUniversityName,
+            description: eDescription,
+            startDate: eStartDate,
+            endDate: eEndDate,
         })
         setOpen(!open);
     }
 
     const handleSubmit = () => {
         const body = {
-            formationName: data.formationName,
+            formationName: data.educationName,
             universityName: data.universityName,
             description: data.description,
             startDate: data.startDate,
@@ -63,10 +63,10 @@ export default function FormationAction({
 
         switch (type) {
             case "edit":
-                updateFormation(fId, body)
+                updateEducation(eId, body)
                 break;
             case "add":
-                createFormation(body);
+                createEducation(body);
                 break;
         }
         toggle();
@@ -109,22 +109,22 @@ export default function FormationAction({
     return <>
         <Paper>
             <Dialog open={open}>
-                <DialogTitle>{type === "edit" ? `Edit formation ${fFormationName}` : "Create a formation"}</DialogTitle>
+                <DialogTitle>{type === "edit" ? `Edit education ${eEducationName}` : "New education"}</DialogTitle>
                 <Box component="form">
                     <DialogContent>
                         <TextField
                             autoFocus
-                            value={data.formationName}
+                            value={data.educationName}
                             onChange={(e) => {
                                 setData({
                                     ...data,
-                                    formationName: e.target.value
+                                    educationName: e.target.value
                                 })
                             }}
                             margin="dense"
                             required
                             id="name"
-                            label="Formation name"
+                            label="Education name"
                             type="name"
                             fullWidth
                             variant="standard"
@@ -222,15 +222,15 @@ export default function FormationAction({
         </Button>
     </>
 }
-FormationAction.propTypes = {
+EducationAction.propTypes = {
     type: PropTypes.string,
-    fId: PropTypes.string,
-    fFormationName: PropTypes.string,
-    fUniversityName: PropTypes.string,
-    fDescription: PropTypes.string,
-    fStartDate: PropTypes.string,
-    fEndDate: PropTypes.string,
+    eId: PropTypes.string,
+    eEducationName: PropTypes.string,
+    eUniversityName: PropTypes.string,
+    eDescription: PropTypes.string,
+    eStartDate: PropTypes.string,
+    eEndDate: PropTypes.string,
     resumeId: PropTypes.string,
-    createFormation: PropTypes.func,
-    updateFormation: PropTypes.func
+    createEducation: PropTypes.func,
+    updateEducation: PropTypes.func
 }

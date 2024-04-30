@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Title from "../components/Title.jsx";
@@ -17,6 +16,9 @@ import LanguageSection from "../features/resume/components/LanguageSection.jsx";
 import Divider from "@mui/material/Divider";
 import {Link} from "react-router-dom";
 import Paper from "@mui/material/Paper";
+import axios from "axios";
+import {useNotification} from "../hooks/useNotification.js";
+import {useEffect, useState} from "react";
 
 export default function Resume() {
 
@@ -25,6 +27,7 @@ export default function Resume() {
 
     //Confirmaton : safeguard hook
     const confirm = useConfirmation();
+    const notify = useNotification()
 
     //Just clear all the other hook's data
     const resetResumeSafeguard = () => {
@@ -46,6 +49,11 @@ export default function Resume() {
 
     const [descriptionValue, setDescriptionValue] = useState("")
     const [titleValue, setTitleValue] = useState("")
+    const [isPublished, setIsPublished] = useState(false)
+
+    useEffect(() => {
+        setIsPublished(resumeData.published)
+    }, [resumeData]);
 
 
     //Description updates when resume data updates
@@ -56,6 +64,40 @@ export default function Resume() {
         //dispatch("MOUNT_ACTION", "clear resume")
 
     }, [resumeData]);
+
+    const publishOrSave = async () => {
+        const publish = await axios({
+            method: "PUT",
+            url: "http://localhost:8080/editor/resume/publish",
+            contentType: "application/json",
+            withCredentials: true
+        })
+
+        if(publish.status === 200){
+            notify("Your resume is published and now accessible on your profile !","success")
+        } else {
+            notify("An unaccepted error occurred. Please retry later.", "error")
+        }
+        setIsPublished(true)
+    }
+
+    const unpublishResume = async () => {
+        const unpublish = await axios({
+            method: "PUT",
+            url: "http://localhost:8080/editor/resume/unpublish",
+            contentType: "application/json",
+            withCredentials: true
+        })
+
+        if(unpublish.status === 200){
+            notify("Your resume has been unpublished !","success")
+        } else {
+            notify("An unaccepted error occurred. Please retry later.", "error")
+        }
+        setIsPublished(false)
+
+    }
+
 
     const handleEditClickDescription = () => {
         setIsEditingDescription(true);
@@ -217,6 +259,18 @@ export default function Resume() {
             <HobbySection resumeId={resumeData.id}></HobbySection>
 
             <Box sx={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 2}}>
+
+                <Grid item>
+                    {
+                        isPublished ?
+                            <Button onClick={unpublishResume} variant="contained" color="error">
+                                Unpublish
+                            </Button> :
+                            <Button onClick={publishOrSave} variant="contained" color="success">
+                                Publish
+                            </Button>
+                    }
+                </Grid>
                 <Grid item>
                     <Button component={Link} to={"/resume/preview"}
                             size="large"

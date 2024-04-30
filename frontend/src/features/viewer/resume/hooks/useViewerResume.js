@@ -18,7 +18,8 @@ export const useViewerResume = (username) => {
             Image: {
                 path: ""
             }
-        }
+        },
+        published: false
     }
 
     const [userResume, setUserResume] = useState(defaultResume)
@@ -30,8 +31,11 @@ export const useViewerResume = (username) => {
             url: url,
             method: 'GET'
         }).then(response => {
-            console.log("This is the resume data: ", response.data)
-            setUserResume(response.data)
+            //Here, we check that the resume is
+            if(response.data.published) {
+                setUserResume(response.data)
+            }
+
         }).catch(error => {
             console.error("Could not get resume: ", error)
         })

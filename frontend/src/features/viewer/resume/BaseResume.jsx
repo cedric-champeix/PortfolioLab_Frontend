@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -23,9 +23,9 @@ export default function BaseResume({userResume}) {
 
     const [image, setImage] = useState(profilePlaceHolder);
 
-    const fallbackImage = () => {
+    const fallbackImage = useCallback(() => {
         setImage(profilePlaceHolder);
-    }
+    })
 
     useEffect(() => {
         setImage(userResume.resume.Image ? constants.BACKEND_URL + userResume.resume.Image.path : profilePlaceHolder)

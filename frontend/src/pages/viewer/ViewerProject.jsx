@@ -10,12 +10,13 @@ import SkillChipViewer from "../../features/skills/components/SkillChipViewer.js
 import {Stack} from "@mui/material";
 import {useViewerProject} from "../../features/viewer/portfolio/hooks/useViewerProject.js";
 import ViewerComponentFactory from "../../features/viewer/portfolio/ViewerComponentFactory.jsx";
+import NotFoundPage from "../error/404.jsx";
 
 export default function ViewerProject() {
 
     const {username, projectId} = useParams()
 
-    const {project} = useViewerProject(username, projectId)
+    const {project, projectError} = useViewerProject(username, projectId)
 
     const {components, setComponents} = useComponent(projectId, project.components)
 
@@ -29,6 +30,9 @@ export default function ViewerProject() {
     const fallbackImage = () => {
         setMainImage(placeHolder)
     }
+
+    if (projectError)
+        return <NotFoundPage/>
 
     return <Box sx={{width: "100%"}}>
 

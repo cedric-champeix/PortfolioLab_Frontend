@@ -249,6 +249,7 @@ export default function Resume() {
 
             <Box sx={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 2}}>
 
+
                 <Grid item>
                     {
                         isPublished ?
@@ -258,6 +259,15 @@ export default function Resume() {
                             <Button onClick={publishOrSave} variant="contained" color="success">
                                 Publish
                             </Button>
+                    }
+                </Grid>
+                <Grid item>
+                    {
+                        isPublished ?
+                            <Button onClick={publishOrSave} variant="contained">
+                                Save
+                            </Button> :
+                            <></>
                     }
                 </Grid>
                 <Grid item>

@@ -3,7 +3,7 @@ import BaseResume from "../../features/viewer/resume/BaseResume.jsx";
 import {useViewerResume} from "../../features/viewer/resume/hooks/useViewerResume.js";
 import {useAuth} from "../../hooks/useAuth.js";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import NotFoundPage from "../error/404.jsx";
 
 export default function ViewerResume() {
 
@@ -17,21 +17,13 @@ export default function ViewerResume() {
         username = useAuth().username
     }
 
-    const {userResume} = useViewerResume(username)
+    const {userResume, resumeError} = useViewerResume(username)
 
-    console.log("This is the resume data: ", userResume)
+    if (resumeError)
+        return <NotFoundPage/>
 
     return <Box container sx={{width: "100%"}}>
-        {
-            userResume.published ?
-                <BaseResume userResume={userResume}/>:
-                <Box display="flex "className="alignSteuplé" alignItems="center"
-                       justifyContent="center"
-                       sx={{ minHeight: '100vh' }}>
-                    <Typography variant="h5" component="div">User resume not published</Typography>
-                </Box>
-
-        }
+        <BaseResume userResume={userResume}/>
     </Box>
 }
 ViewerResume.componentName = "Resume"

@@ -23,6 +23,7 @@ export const useViewerResume = (username) => {
     }
 
     const [userResume, setUserResume] = useState(defaultResume)
+    const [resumeError, setResumeError] = useState(false)
 
     const url = endpoints.viewer.resumeEndpoint(username)
 
@@ -31,16 +32,14 @@ export const useViewerResume = (username) => {
             url: url,
             method: 'GET'
         }).then(response => {
-            //Here, we check that the resume is
-            if(response.data.published) {
-                setUserResume(response.data)
-            }
-
+            setUserResume(response.data)
+            setResumeError(false)
         }).catch(error => {
+            setResumeError(true)
             console.error("Could not get resume: ", error)
         })
     }, []);
 
 
-    return {userResume};
+    return {userResume, resumeError};
 }

@@ -6,4 +6,4 @@ export default function NotFoundPage() {
         <Typography variant="h1" color="primary">404 - Not Found</Typography>
         <Typography variant="body1">The page you're looking for does not exist.</Typography>
     </Box>
-};
+}

@@ -15,6 +15,7 @@ import ViewerProject from "./pages/viewer/ViewerProject.jsx";
 import QuickActionProvider from "./context/QuickActionService.jsx";
 import ViewerNavBar from "./features/viewer/ViewerNavBar.jsx";
 import ViewerResume from "./pages/viewer/ViewerResume.jsx";
+import PreviewResume from "./pages/PreviewResume.jsx";
 
 
 export default function App() {
@@ -36,7 +37,7 @@ export default function App() {
                                            element={<BoardElement elementName={"Resume"} element={<Resume/>}/>}/>
                                     <Route path={'/resume/preview'} element={
                                         <BoardElement elementName={"Resume preview"}
-                                                      element={<ViewerResume/>}/>
+                                                      element={<PreviewResume/>}/>
                                     }/>
 
                                     <Route path={'/profile'}

@@ -6,12 +6,7 @@ export default function ProtectedRoute({routeType}) {
     const jwt = Cookies.get("jwt_token")
 
     const evaluatePass = () => {
-        switch (routeType) {
-            case "admin":
-                return jwt && true
-            default:
-                return !jwt && true
-        }
+        return !!(routeType === "admin" && jwt);
     }
     const path = () => {
         return routeType === "admin" ? "/connection" : "/";

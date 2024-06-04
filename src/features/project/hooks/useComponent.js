@@ -85,7 +85,7 @@ export const useComponent = (projectId, _components) => {
             url: `${url}/${id}`,
             method: "DELETE",
             withCredentials: true
-        }).then((res) => {
+        }).then(() => {
             setComponents(components.filter(component => {
                 return component.id !== id
             }))

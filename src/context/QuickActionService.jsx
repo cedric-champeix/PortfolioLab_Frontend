@@ -1,17 +1,6 @@
 import {createContext, useEffect, useReducer} from "react";
 
 export const QuickActionContext = createContext(null);
-/*
-const defaultState =  {
-    actions: [
-
-    ]
-}
-
-const defaultAction = {
-    type:"",
-    actionName: ""
-}*/
 
 export default function QuickActionProvider({children}) {
 

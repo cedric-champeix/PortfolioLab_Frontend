@@ -1,4 +1,4 @@
-import {useContext} from "react";
-import {ConfirmationServiceContext} from "../context/ConfirmationService.jsx";
+import { useContext } from 'react'
+import { ConfirmationServiceContext } from '../context/ConfirmationService.jsx'
 
-export const useConfirmation = () => useContext(ConfirmationServiceContext);
+export const useConfirmation = () => useContext(ConfirmationServiceContext)

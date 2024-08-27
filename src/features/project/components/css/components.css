@@ -1,12 +1,14 @@
 .plus-button {
-    color: #1976d2;
-    transition: transform 0.3s, color 0.3s;
+  color: #1976d2;
+  transition:
+    transform 0.3s,
+    color 0.3s;
 }
 .plus-button:hover {
-    transform: scale(1.05);
-    color: #9c27b0;
+  transform: scale(1.05);
+  color: #9c27b0;
 }
 
 .move-arrow {
-    color: rgba(0, 0, 0, 0.54);
+  color: rgba(0, 0, 0, 0.54);
 }

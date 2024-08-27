@@ -1,6 +1,5 @@
-import {createContext, useRef, useState} from "react";
-import {RemoveSafeguard} from "../components/RemoveSafeguard.jsx";
-
+import React, { createContext, useRef, useState } from 'react'
+import { RemoveSafeguard } from '../components/RemoveSafeguard.jsx'
 
 //Implementation : https://dev.to/dmtrkovalenko/the-neatest-way-to-handle-alert-dialogs-in-react-1aoe
 /**
@@ -10,72 +9,77 @@ import {RemoveSafeguard} from "../components/RemoveSafeguard.jsx";
  * First we create a confirmation context. It will store a promise (wrong initially)
  * @type {React.Context<Promise<never>>}
  */
-export const ConfirmationServiceContext = createContext(Promise.reject());
+export const ConfirmationServiceContext = createContext(Promise.reject())
 
 /**
  * This is our provider for the context
  * @returns {JSX.Element}
  * @constructor
  */
-export const ConfirmationServiceContextProvider = ({children}) => {
+export const ConfirmationServiceContextProvider = ({ children }) => {
+  /*
+   * These are the options to pass to the dialog.
+   * As of now it is only designed as a safeguard for skills and experiences removal, but
+   * it can be easily adapted
+   * Options :
+   * - CatchOnCancel : specifies if we need to throw something in case of cancel
+   * - name : name to display
+   */
+  const [confirmationState, setConfirmationState] = useState(null)
 
-    /*
-    * These are the options to pass to the dialog.
-    * As of now it is only designed as a safeguard for skills and experiences removal, but
-    * it can be easily adapted
-    * Options :
-    * - CatchOnCancel : specifies if we need to throw something in case of cancel
-    * - name : name to display
-    */
-    const [confirmationState, setConfirmationState] = useState(null);
+  //This is a reference that store a promise's resolve and reject functions
+  const awaitPromiseRef = useRef()
 
-    //This is a reference that store a promise's resolve and reject functions
-    const awaitPromiseRef = useRef();
+  /**
+   * Responsible for opening the dialog by passing options to the state
+   *
+   * @param options
+   * @returns {Promise<unknown>}
+   */
+  const openConfirmation = (options) => {
+    //Adding the options to confirm
+    setConfirmationState(options)
+    return new Promise((resolve, reject) => {
+      awaitPromiseRef.current = { resolve, reject }
+    })
+  }
 
-    /**
-     * Responsible for opening the dialog by passing options to the state
-     *
-     * @param options
-     * @returns {Promise<unknown>}
-     */
-    const openConfirmation = (options)=> {
-        //Adding the options to confirm
-        setConfirmationState(options);
-        return new Promise((resolve, reject) => {
-            awaitPromiseRef.current = {resolve, reject};
-        })
+  /**
+   * Responsible for closing the dialog by setting the options to null
+   */
+  const handleClose = () => {
+    if (confirmationState.catchOnCancel && awaitPromiseRef.current) {
+      awaitPromiseRef.current.reject()
     }
+    setConfirmationState(null)
+  }
 
-    /**
-     * Responsible for closing the dialog by setting the options to null
-     */
-    const handleClose = () => {
-        if(confirmationState.catchOnCancel && awaitPromiseRef.current) {
-            awaitPromiseRef.current.reject();
-        }
-        setConfirmationState(null);
+  /**
+   * Responsible for submitting action.
+   * Sets the options to null
+   */
+  const handleSubmit = () => {
+    if (awaitPromiseRef.current) {
+      awaitPromiseRef.current.resolve()
     }
+    setConfirmationState(null)
+  }
 
-    /**
-     * Responsible for submitting action.
-     * Sets the options to null
-     */
-    const handleSubmit = () => {
-        if(awaitPromiseRef.current) {
-            awaitPromiseRef.current.resolve();
-        }
-        setConfirmationState(null);
-    }
-
-    return <>
-        <ConfirmationServiceContext.Provider value={openConfirmation}>
-            {children}
-        </ConfirmationServiceContext.Provider>
-        <RemoveSafeguard open={Boolean(confirmationState)} onSubmit={handleSubmit} onClose={handleClose} {...confirmationState}></RemoveSafeguard>
+  return (
+    <>
+      <ConfirmationServiceContext.Provider value={openConfirmation}>
+        {children}
+      </ConfirmationServiceContext.Provider>
+      <RemoveSafeguard
+        open={Boolean(confirmationState)}
+        onSubmit={handleSubmit}
+        onClose={handleClose}
+        {...confirmationState}
+      ></RemoveSafeguard>
     </>
+  )
 }
 
 ConfirmationServiceContextProvider.propTypes = {
-    children: () => {}
+  children: () => {},
 }
-

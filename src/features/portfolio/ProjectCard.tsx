@@ -1,22 +1,22 @@
-import { Box, Card, CardContent, MenuItem, Select, Stack } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import { CardActions } from '@mui/joy'
-import placeHolder from '../../assets/icons/placeholder.png'
-import { useState } from 'react'
-import { constants } from '../../constants.ts'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
-import DeleteIcon from '@mui/icons-material/Delete'
-import IconButton from '@mui/material/IconButton'
-import { SkillChipViewer } from '../skills/components/SkillChipViewer.tsx'
-import { endpoints } from '../../data/endpoints.ts'
-import { useConfirmation } from '../../hooks/useConfirmation.ts'
-import { Visibilities } from '../../types/entities/Visibilities.ts';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { CardActions } from '@mui/joy';
+import { Box, Card, CardContent, MenuItem, Select, Stack } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import placeHolder from '../../assets/icons/placeholder.png';
+import { constants } from '../../constants.ts';
+import { endpoints } from '../../data/endpoints.ts';
+import { useConfirmation } from '../../hooks/useConfirmation.ts';
 import { Project } from '../../types/entities/Project.ts';
+import { Visibilities } from '../../types/entities/Visibilities.ts';
+import { SkillChipViewer } from '../skills/components/SkillChipViewer.tsx';
 
 interface ProjectCardProps {
-  project: Project,
-  remove: (id: string) => void
+  project: Project;
+  remove: (id: string) => void;
 }
 
 export const ProjectCard = ({ project, remove }: ProjectCardProps) => {
@@ -24,17 +24,17 @@ export const ProjectCard = ({ project, remove }: ProjectCardProps) => {
     project.MainImage?.path
       ? constants.BACKEND_URL + '' + project.MainImage.path
       : placeHolder
-  )
-  const [visible, setVisible] = useState(project.visible || false)
+  );
+  const [visible, setVisible] = useState(project.visible || false);
 
-  if (!project.skills) project.skills = []
+  if (!project.skills) project.skills = [];
 
   const fallbackImage = () => {
-    setImage(placeHolder)
-  }
+    setImage(placeHolder);
+  };
 
   const updateVisibility = (_visible: boolean) => {
-    const url = endpoints.projectsEndpoint + '/' + project.id
+    const url = endpoints.projectsEndpoint + '/' + project.id;
     axios({
       url: `${url}/visibility`,
       method: 'PUT',
@@ -44,23 +44,23 @@ export const ProjectCard = ({ project, remove }: ProjectCardProps) => {
       },
     })
       .then(() => {
-        setVisible(_visible)
+        setVisible(_visible);
       })
       .catch((error) => {
-        console.error('Error when updating project visibility: ', error)
-      })
-  }
+        console.error('Error when updating project visibility: ', error);
+      });
+  };
 
-  const confirm = useConfirmation()
+  const confirm = useConfirmation();
 
   const confirmRemove = () => {
     confirm({
       catchOnCancel: true,
       name: `the project ${project.name}`,
     }).then(() => {
-      remove(project.id)
-    })
-  }
+      remove(project.id);
+    });
+  };
 
   return (
     <Card sx={{ width: 350 }}>
@@ -131,5 +131,5 @@ export const ProjectCard = ({ project, remove }: ProjectCardProps) => {
         </IconButton>
       </CardActions>
     </Card>
-  )
-}
+  );
+};

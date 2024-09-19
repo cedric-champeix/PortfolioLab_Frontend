@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:8080'
+const baseUrl = 'http://localhost:8080';
 
 export const endpoints = {
   contactsEndpoint: baseUrl + '/editor/contacts',
@@ -15,9 +15,11 @@ export const endpoints = {
     baseUrl + `/editor/projects/${projectId}/components`,
   imagesEndpoint: baseUrl + '/editor/images',
   viewer: {
-    resumeEndpoint: (username: string) => baseUrl + `/viewer/${username}/resume`,
-    portfolioEndpoint: (username: string) => baseUrl + `/viewer/${username}/projects`,
+    resumeEndpoint: (username: string) =>
+      baseUrl + `/viewer/${username}/resume`,
+    portfolioEndpoint: (username: string) =>
+      baseUrl + `/viewer/${username}/projects`,
     projectEndpoint: (username: string, projectId: string) =>
       baseUrl + `/viewer/${username}/projects/${projectId}`,
   },
-}
+};

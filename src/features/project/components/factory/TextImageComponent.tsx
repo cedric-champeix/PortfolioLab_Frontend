@@ -1,30 +1,33 @@
+import { Box } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import React, { useState } from 'react';
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import { Box } from '@mui/material'
 import { Editor as TinyMCEEditor } from 'tinymce';
-import placeHolder from '../../../../assets/icons/placeholder.png'
-import { TextEditor } from '../TextEditor.tsx'
-import { ImageHandler } from '../../../images/components/ImageHandler.tsx'
+import placeHolder from '../../../../assets/icons/placeholder.png';
+import { constants } from '../../../../constants.ts';
 import { Component } from '../../../../types/entities/Component.ts';
-import { constants } from '../../../../constants.ts'
 import { ImageObj } from '../../../../types/entities/Image.ts';
+import { ImageHandler } from '../../../images/components/ImageHandler.tsx';
+import { TextEditor } from '../TextEditor.tsx';
 
 interface Props {
-  component: Component,
-  update: (id: string, body: { type: string, data: object }) => void,
-  leftText: boolean
+  component: Component;
+  update: (id: string, body: { type: string; data: object }) => void;
+  leftText: boolean;
 }
 
-export const TextImageComponent: React.FunctionComponent<Props> = ({ component, update, leftText }) => {
-
+export const TextImageComponent: React.FunctionComponent<Props> = ({
+  component,
+  update,
+  leftText,
+}) => {
   const [image, setImage] = useState(
     component.data.image
       ? constants.BACKEND_URL + '' + component.data.image
       : placeHolder
-  )
+  );
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const saveText = (_: any, editor: TinyMCEEditor) => {
     const body = {
@@ -33,9 +36,9 @@ export const TextImageComponent: React.FunctionComponent<Props> = ({ component, 
         image: component.data.image,
         text: editor.getContent({ format: 'html' }),
       },
-    }
-    update(component.id, body)
-  }
+    };
+    update(component.id, body);
+  };
 
   const updateImage = (newImage: ImageObj) => {
     const body = {
@@ -44,19 +47,19 @@ export const TextImageComponent: React.FunctionComponent<Props> = ({ component, 
         image: newImage.path,
         text: component.data.text,
       },
-    }
+    };
 
-    update(component.id, body)
-    setImage(constants.BACKEND_URL + '' + newImage.path)
-  }
+    update(component.id, body);
+    setImage(constants.BACKEND_URL + '' + newImage.path);
+  };
 
   const fallbackImage = () => {
-    setImage(placeHolder)
-  }
+    setImage(placeHolder);
+  };
 
   const toggle = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
 
   return (
     <>
@@ -114,5 +117,5 @@ export const TextImageComponent: React.FunctionComponent<Props> = ({ component, 
         </Grid>
       )}
     </>
-  )
-}
+  );
+};

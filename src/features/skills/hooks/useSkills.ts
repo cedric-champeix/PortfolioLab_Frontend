@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { endpoints } from '../../../data/endpoints.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../data/endpoints.ts';
 import { Skill } from '../../../types/entities/Skill.ts';
 
 export const useSkills = (resumeId?: string, projectId?: string) => {
-  const [skills, setSkills] = useState<Skill[]>([])
+  const [skills, setSkills] = useState<Skill[]>([]);
 
-  const url = endpoints.skillsEndpoints
+  const url = endpoints.skillsEndpoints;
 
   useEffect(() => {
-    console.log('SKILLS', skills)
-    if (resumeId !== 'AWAITING' && projectId !== 'AWAITING') fetchSkills()
-  }, [resumeId, projectId])
+    console.log('SKILLS', skills);
+    if (resumeId !== 'AWAITING' && projectId !== 'AWAITING') fetchSkills();
+  }, [resumeId, projectId]);
 
   const fetchSkills = () => {
     const data = {
       ...(resumeId && { resumeId: resumeId }),
       ...(projectId && { projectId: projectId }),
-    }
+    };
 
     axios({
       url: url,
@@ -26,19 +26,24 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       params: data,
     })
       .then((response) => {
-        setSkills(response.data)
+        setSkills(response.data);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }
+        console.error(error);
+      });
+  };
 
-  const create = (name: string, description: string, isSoft: boolean, cb: (_: any) => void) => {
+  const create = (
+    name: string,
+    description: string,
+    isSoft: boolean,
+    cb: (_: any) => void
+  ) => {
     const body = {
       name: name,
       description: description,
       isSoft: isSoft,
-    }
+    };
 
     axios({
       url: `${url}`,
@@ -47,21 +52,26 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       data: body,
     })
       .then((res) => {
-        setSkills([...skills, res.data])
-        cb(res.data)
+        setSkills([...skills, res.data]);
+        cb(res.data);
       })
       .catch((err) => {
-        console.error('Error when creating skill: ', err)
-        cb(null)
-      })
-  }
+        console.error('Error when creating skill: ', err);
+        cb(null);
+      });
+  };
 
-  const update = (id: string, name: string, description: string, isSoft: boolean) => {
+  const update = (
+    id: string,
+    name: string,
+    description: string,
+    isSoft: boolean
+  ) => {
     const body = {
       name: name,
       description: description,
       isSoft: isSoft,
-    }
+    };
 
     axios({
       url: `${url}/${id}`,
@@ -72,12 +82,12 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       .then((res) => {
         setSkills(
           skills.map((item) => (item.id === id ? { ...res.data } : item))
-        )
+        );
       })
       .catch((err) => {
-        console.error('Error when updating skill: ', err)
-      })
-  }
+        console.error('Error when updating skill: ', err);
+      });
+  };
 
   const remove = (id: string) => {
     axios({
@@ -88,19 +98,19 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       .then(() => {
         setSkills(
           skills.filter((experience) => {
-            return experience.id !== id
+            return experience.id !== id;
           })
-        )
+        );
       })
       .catch((err) => {
-        console.error('Error when deleting skill: ', err)
-      })
-  }
+        console.error('Error when deleting skill: ', err);
+      });
+  };
 
   const connectToResume = (skill: Skill) => {
     const index = skills.findIndex((_skill) => {
-      return skill.id === _skill.id
-    })
+      return skill.id === _skill.id;
+    });
 
     if (index === -1) {
       axios({
@@ -109,13 +119,13 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
         withCredentials: true,
       })
         .then(() => {
-          setSkills([...skills, skill])
+          setSkills([...skills, skill]);
         })
         .catch((err) => {
-          console.error('Error when trying to disconnect skill: ', err)
-        })
+          console.error('Error when trying to disconnect skill: ', err);
+        });
     }
-  }
+  };
 
   const disconnectFromResume = (skillId: string) => {
     axios({
@@ -126,19 +136,19 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       .then(() => {
         setSkills(
           skills.filter((skill) => {
-            return skill.id !== skillId
+            return skill.id !== skillId;
           })
-        )
+        );
       })
       .catch((err) => {
-        console.error('Error when trying to disconnect skill: ', err)
-      })
-  }
+        console.error('Error when trying to disconnect skill: ', err);
+      });
+  };
 
   const connectToProject = (skill: Skill) => {
     const index = skills.findIndex((_skill) => {
-      return skill.id === _skill.id
-    })
+      return skill.id === _skill.id;
+    });
 
     if (index === -1) {
       axios({
@@ -147,13 +157,13 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
         withCredentials: true,
       })
         .then(() => {
-          setSkills([...skills, skill])
+          setSkills([...skills, skill]);
         })
         .catch((err) => {
-          console.error('Error when trying to disconnect skill: ', err)
-        })
+          console.error('Error when trying to disconnect skill: ', err);
+        });
     }
-  }
+  };
 
   const disconnectFromProject = (skillId: string) => {
     axios({
@@ -164,14 +174,14 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
       .then(() => {
         setSkills(
           skills.filter((skill) => {
-            return skill.id !== skillId
+            return skill.id !== skillId;
           })
-        )
+        );
       })
       .catch((err) => {
-        console.error('Error when trying to disconnect skill: ', err)
-      })
-  }
+        console.error('Error when trying to disconnect skill: ', err);
+      });
+  };
 
   return {
     skills,
@@ -183,5 +193,5 @@ export const useSkills = (resumeId?: string, projectId?: string) => {
     disconnectFromResume,
     connectToProject,
     disconnectFromProject,
-  }
-}
+  };
+};

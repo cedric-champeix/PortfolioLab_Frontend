@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
 import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
-import { constants } from '../../../../constants.ts';
+import React, { useState } from 'react';
 import placeHolder from '../../../../assets/icons/placeholder.png';
-import { ImageHandler } from '../../../images/components/ImageHandler.tsx';
+import { constants } from '../../../../constants.ts';
 import { Component } from '../../../../types/entities/Component.ts';
 import { ImageObj } from '../../../../types/entities/Image.ts';
+import { ImageHandler } from '../../../images/components/ImageHandler.tsx';
 
 interface Props {
-  component: Component,
-  update: (id: string, body: { type: string, data: object }) => void
+  component: Component;
+  update: (id: string, body: { type: string; data: object }) => void;
 }
 
-export const ImageComponent: React.FunctionComponent<Props> = ({ component, update }) => {
+export const ImageComponent: React.FunctionComponent<Props> = ({
+  component,
+  update,
+}) => {
   const [image, setImage] = useState(
     component.data.image
       ? constants.BACKEND_URL + '' + component.data.image
-      : placeHolder,
+      : placeHolder
   );
 
   const [open, setOpen] = useState(false);

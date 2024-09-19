@@ -1,55 +1,60 @@
-import React, { useRef } from 'react'
+import React, { useRef } from 'react';
 
-import { Editor } from '@tinymce/tinymce-react'
+import { Editor } from '@tinymce/tinymce-react';
 
 // TinyMCE so the global var exists
 // @ts-ignore
-import 'tinymce/tinymce'
+import 'tinymce/tinymce';
 // DOM model
-import 'tinymce/models/dom/model'
+import 'tinymce/models/dom/model';
 // Theme
-import 'tinymce/themes/silver'
+import 'tinymce/themes/silver';
 // Toolbar icons
-import 'tinymce/icons/default'
+import 'tinymce/icons/default';
 // Editor styles
-import 'tinymce/skins/ui/oxide/skin.min.css'
+import 'tinymce/skins/ui/oxide/skin.min.css';
 
 // importing the plugin js.
 // if you use a plugin that is not listed here the editor will fail to load
-import 'tinymce/plugins/advlist'
-import 'tinymce/plugins/autolink'
-import 'tinymce/plugins/charmap'
-import 'tinymce/plugins/code'
-import 'tinymce/plugins/codesample'
-import 'tinymce/plugins/emoticons'
-import 'tinymce/plugins/insertdatetime'
-import 'tinymce/plugins/link'
-import 'tinymce/plugins/lists'
-import 'tinymce/plugins/pagebreak'
-import 'tinymce/plugins/quickbars'
-import 'tinymce/plugins/searchreplace'
-import 'tinymce/plugins/table'
-import 'tinymce/plugins/wordcount'
+import 'tinymce/plugins/advlist';
+import 'tinymce/plugins/autolink';
+import 'tinymce/plugins/charmap';
+import 'tinymce/plugins/code';
+import 'tinymce/plugins/codesample';
+import 'tinymce/plugins/emoticons';
+import 'tinymce/plugins/insertdatetime';
+import 'tinymce/plugins/link';
+import 'tinymce/plugins/lists';
+import 'tinymce/plugins/pagebreak';
+import 'tinymce/plugins/quickbars';
+import 'tinymce/plugins/searchreplace';
+import 'tinymce/plugins/table';
+import 'tinymce/plugins/wordcount';
 
 // importing plugin resources
-import 'tinymce/plugins/emoticons/js/emojis'
+import 'tinymce/plugins/emoticons/js/emojis';
 
 // Content styles, including inline UI like fake cursors
 /* eslint import/no-webpack-loader-syntax: off */
 // @ts-ignore
-import contentCss from 'tinymce/skins/content/default/content.min.css?raw'
+import contentCss from 'tinymce/skins/content/default/content.min.css?raw';
 // @ts-ignore
-import contentUiCss from 'tinymce/skins/ui/oxide/content.min.css?raw'
+import contentUiCss from 'tinymce/skins/ui/oxide/content.min.css?raw';
 
 interface Props {
-  text: string,
-  save: (_: any, editor: any) => void,
-  height: string,
-  width: string
+  text: string;
+  save: (_: any, editor: any) => void;
+  height: string;
+  width: string;
 }
 
-export const TextEditor: React.FunctionComponent<Props> = ({ text, save, height, width }) => {
-  const editorRef = useRef<any>(null)
+export const TextEditor: React.FunctionComponent<Props> = ({
+  text,
+  save,
+  height,
+  width,
+}) => {
+  const editorRef = useRef<any>(null);
 
   return (
     <Editor
@@ -84,5 +89,5 @@ export const TextEditor: React.FunctionComponent<Props> = ({ text, save, height,
       }}
       onBlur={save}
     />
-  )
-}
+  );
+};

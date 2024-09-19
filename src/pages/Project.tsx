@@ -1,40 +1,43 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import placeHolder from '../assets/icons/placeholder.png';
-import { useProject } from '../features/project/hooks/useProject.ts';
-import { SkillContainer } from '../features/project/components/SkillContainer.tsx';
+import { constants } from '../constants.ts';
+import { ImageHandler } from '../features/images/components/ImageHandler.tsx';
 import { ComponentFactory } from '../features/project/ComponentFactory.tsx';
 import { AddComponent } from '../features/project/components/AddComponent.tsx';
-import { useComponent } from '../features/project/hooks/useComponent.ts';
 import { MoveComponent } from '../features/project/components/MoveComponent.tsx';
-import { ImageHandler } from '../features/images/components/ImageHandler.tsx';
-import { constants } from '../constants.ts';
+import { SkillContainer } from '../features/project/components/SkillContainer.tsx';
+import { useComponent } from '../features/project/hooks/useComponent.ts';
+import { useProject } from '../features/project/hooks/useProject.ts';
 import { ImageObj } from '../types/entities/Image.ts';
 
-interface Props {
-}
+interface Props {}
 
-export const Project: React.FunctionComponent<Props> & {componentName: string} = () => {
+export const Project: React.FunctionComponent<Props> & {
+  componentName: string;
+} = () => {
   let { projectId } = useParams();
 
   if (!projectId) {
     projectId = '';
   }
 
-  const { projectData, updateProject, connectMainImage } = useProject(projectId);
+  const { projectData, updateProject, connectMainImage } =
+    useProject(projectId);
 
-  const { components, setComponents, create, update, move, remove } = useComponent(projectId, projectData.components);
+  const { components, setComponents, create, update, move, remove } =
+    useComponent(projectId, projectData.components);
 
   /**************** Project's information ****************/
 
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [projectName, setProjectName] = useState(
-    projectData.name || 'Project name',
+    projectData.name || 'Project name'
   );
 
   const updateTitle = async () => {
@@ -48,7 +51,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
 
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [projectDescription, setProjectDescription] = useState(
-    projectData.description || 'Add the description of your project here.',
+    projectData.description || 'Add the description of your project here.'
   );
 
   const updateDescription = async () => {
@@ -64,7 +67,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
   useEffect(() => {
     setProjectName(projectData.name || 'Project name');
     setProjectDescription(
-      projectData.description || 'Add the description of your project here.',
+      projectData.description || 'Add the description of your project here.'
     );
   }, [projectData]);
 
@@ -72,7 +75,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
   const [mainImage, setMainImage] = useState(
     projectData.MainImage
       ? constants.BACKEND_URL + projectData.MainImage.path
-      : placeHolder,
+      : placeHolder
   );
   const [open, setOpen] = useState(false);
 
@@ -81,7 +84,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
     setMainImage(
       projectData.MainImage
         ? constants.BACKEND_URL + projectData.MainImage.path
-        : placeHolder,
+        : placeHolder
     );
   }, [projectData]);
 
@@ -209,11 +212,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
           </Grid>
         </Grid>
 
-        <AddComponent
-          create={create}
-          index={-2}
-          distance={2}
-        />
+        <AddComponent create={create} index={-2} distance={2} />
 
         {components.map((component, i, list) => (
           <div style={{ width: '100%' }} key={component.id}>
@@ -237,7 +236,7 @@ export const Project: React.FunctionComponent<Props> & {componentName: string} =
                     index={
                       list[i + 1]
                         ? list[i].index +
-                        (list[i + 1].index - list[i].index) / 2
+                          (list[i + 1].index - list[i].index) / 2
                         : component.index + 10
                     }
                     distance={

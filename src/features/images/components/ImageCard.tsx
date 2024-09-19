@@ -1,24 +1,29 @@
-import { useState } from 'react';
-import { Box, Card, CardContent } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import { CardActions } from '@mui/joy';
+import { Box, Card, CardContent } from '@mui/material';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 import placeHolder from '../../../assets/icons/placeholder.png';
-import { ImageAction } from './ImageAction.tsx';
 import { constants } from '../../../constants.ts';
 import { useConfirmation } from '../../../hooks/useConfirmation.ts';
 import { ImageObj } from '../../../types/entities/Image.ts';
+import { ImageAction } from './ImageAction.tsx';
 
 interface ImageCardProps {
-  image: ImageObj,
-  update: (id: string, name: string) => void,
-  remove: (id: string) => void,
-  selected: boolean
+  image: ImageObj;
+  update: (id: string, name: string) => void;
+  remove: (id: string) => void;
+  selected: boolean;
 }
 
-export const ImageCard = ({ image, update, remove, selected }: ImageCardProps) => {
+export const ImageCard = ({
+  image,
+  update,
+  remove,
+  selected,
+}: ImageCardProps) => {
   const [imagePath, setImagePath] = useState(
-    image.path ? constants.BACKEND_URL + '' + image.path : placeHolder,
+    image.path ? constants.BACKEND_URL + '' + image.path : placeHolder
   );
 
   const fallbackImage = () => {
@@ -67,4 +72,4 @@ export const ImageCard = ({ image, update, remove, selected }: ImageCardProps) =
       </CardActions>
     </Card>
   );
-}
+};

@@ -1,6 +1,6 @@
 export interface Skill {
-  id: string,
-  name: string,
-  description: string,
-  isSoft: boolean
+  id: string;
+  name: string;
+  description: string;
+  isSoft: boolean;
 }

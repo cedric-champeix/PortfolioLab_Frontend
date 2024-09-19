@@ -1,13 +1,20 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 
 interface AuthContextProps {
-  username: string,
-  setUsername: Dispatch<SetStateAction<string>>,
-  userId: string,
-  setUserId: Dispatch<SetStateAction<string>>,
-  logOut: () => void
+  username: string;
+  setUsername: Dispatch<SetStateAction<string>>;
+  userId: string;
+  setUserId: Dispatch<SetStateAction<string>>;
+  logOut: () => void;
 }
 
 export const AuthContext = createContext<AuthContextProps>(null!);
@@ -18,7 +25,9 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userId, setUserId] = useState(localStorage.getItem('userId') ?? '');
-  const [username, setUsername] = useState(localStorage.getItem('username') ?? '');
+  const [username, setUsername] = useState(
+    localStorage.getItem('username') ?? ''
+  );
 
   useEffect(() => {
     console.log('Get profile info from storage');
@@ -47,10 +56,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem('username');
   };
 
-
-
-  return <AuthContext.Provider
-    value={{ username, setUsername, userId, setUserId, logOut }}>
-    {children}
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ username, setUsername, userId, setUserId, logOut }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

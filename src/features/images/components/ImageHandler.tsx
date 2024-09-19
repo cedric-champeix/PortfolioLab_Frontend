@@ -1,25 +1,25 @@
-import { SyntheticEvent, useState } from 'react'
-import { Dialog, Tab, Tabs } from '@mui/material'
-import Paper from '@mui/material/Paper'
-import TabPanel from '../../../components/TabPanel.tsx'
-import { SelectImage } from './SelectImage.tsx'
-import { UploadImage } from './UploadImage.tsx'
-import { useImages } from '../hooks/useImages.ts'
+import { Dialog, Tab, Tabs } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import { SyntheticEvent, useState } from 'react';
+import TabPanel from '../../../components/TabPanel.tsx';
+import { useImages } from '../hooks/useImages.ts';
+import { SelectImage } from './SelectImage.tsx';
+import { UploadImage } from './UploadImage.tsx';
 
 interface ImageHandlerProps {
-  open: boolean,
-  toggle: () => void,
-  callback: (_: any) => void
+  open: boolean;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
 export const ImageHandler = ({ open, toggle, callback }: ImageHandlerProps) => {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
 
-  const { images, upload, update, remove } = useImages()
+  const { images, upload, update, remove } = useImages();
 
   const handleChange = (_: SyntheticEvent, newValue: any) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   return (
     <Paper elevation={20}>
@@ -49,5 +49,5 @@ export const ImageHandler = ({ open, toggle, callback }: ImageHandlerProps) => {
         </TabPanel>
       </Dialog>
     </Paper>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { endpoints } from '../../../../data/endpoints.ts'
-import { Project } from '../../../../types/entities/Project.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../../data/endpoints.ts';
+import { Project } from '../../../../types/entities/Project.ts';
 
 export const useViewerPortfolio = (username: string) => {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const url = endpoints.viewer.portfolioEndpoint(username)
+  const url = endpoints.viewer.portfolioEndpoint(username);
 
   useEffect(() => {
     axios({
@@ -15,13 +15,13 @@ export const useViewerPortfolio = (username: string) => {
       withCredentials: true,
     })
       .then((response) => {
-        console.log('This is the project data: ', response.data)
-        setProjects(response.data)
+        console.log('This is the project data: ', response.data);
+        setProjects(response.data);
       })
       .catch((error) => {
-        console.error('Couldn\'t get projects: ', error)
-      })
-  }, [])
+        console.error("Couldn't get projects: ", error);
+      });
+  }, []);
 
-  return { projects }
-}
+  return { projects };
+};

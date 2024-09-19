@@ -4,5 +4,5 @@ export enum ContactTypes {
   ADDRESS = 'Address',
   WEBSITE = 'Website',
   LINKEDIN = 'LinkedIn',
-  GITHUB = 'GitHub'
+  GITHUB = 'GitHub',
 }

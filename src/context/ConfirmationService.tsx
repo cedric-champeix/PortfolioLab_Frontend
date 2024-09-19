@@ -15,7 +15,9 @@ interface ConfirmationOptions {
  * First we create a confirmation context. It will store a promise (wrong initially)
  * @type {React.Context<Promise<never>>}
  */
-export const ConfirmationServiceContext = createContext<(options: ConfirmationOptions) => Promise<void>>(null!);
+export const ConfirmationServiceContext = createContext<
+  (options: ConfirmationOptions) => Promise<void>
+>(null!);
 
 interface ConfirmationServiceProps {
   children: ReactNode;
@@ -26,7 +28,9 @@ interface ConfirmationServiceProps {
  * @returns {JSX.Element}
  * @constructor
  */
-export const ConfirmationServiceContextProvider = ({ children }: ConfirmationServiceProps): ReactNode => {
+export const ConfirmationServiceContextProvider = ({
+  children,
+}: ConfirmationServiceProps): ReactNode => {
   /*
    * These are the options to pass to the dialog.
    * As of now it is only designed as a safeguard for skills and experiences removal, but
@@ -35,7 +39,8 @@ export const ConfirmationServiceContextProvider = ({ children }: ConfirmationSer
    * - CatchOnCancel : specifies if we need to throw something in case of cancel
    * - name : name to display
    */
-  const [confirmationState, setConfirmationState] = useState<ConfirmationOptions | null>(null);
+  const [confirmationState, setConfirmationState] =
+    useState<ConfirmationOptions | null>(null);
 
   const awaitPromiseRef = useRef<{
     resolve: () => void;
@@ -77,15 +82,17 @@ export const ConfirmationServiceContextProvider = ({ children }: ConfirmationSer
     setConfirmationState(null);
   };
 
-  return <>
-    <ConfirmationServiceContext.Provider value={openConfirmation}>
-      {children}
-    </ConfirmationServiceContext.Provider>
-    <ConfirmationDialog
-      open={Boolean(confirmationState)}
-      onSubmit={handleSubmit}
-      onClose={handleClose}
-      {...confirmationState}
-    ></ConfirmationDialog>
-  </>;
+  return (
+    <>
+      <ConfirmationServiceContext.Provider value={openConfirmation}>
+        {children}
+      </ConfirmationServiceContext.Provider>
+      <ConfirmationDialog
+        open={Boolean(confirmationState)}
+        onSubmit={handleSubmit}
+        onClose={handleClose}
+        {...confirmationState}
+      ></ConfirmationDialog>
+    </>
+  );
 };

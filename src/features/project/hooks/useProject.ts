@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { endpoints } from '../../../data/endpoints.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../data/endpoints.ts';
 import { ImageObj } from '../../../types/entities/Image.ts';
 import { Project } from '../../../types/entities/Project.ts';
 
@@ -18,12 +18,12 @@ export const useProject = (projectId: string) => {
     projectImagesIds: [],
     skills: [],
     skillIds: [],
-    userId: ''
-  }
+    userId: '',
+  };
 
-  const [projectData, setProjectData] = useState<Project>(defaultProject)
+  const [projectData, setProjectData] = useState<Project>(defaultProject);
 
-  const url = endpoints.projectsEndpoint + '/' + projectId
+  const url = endpoints.projectsEndpoint + '/' + projectId;
 
   useEffect(() => {
     axios({
@@ -32,14 +32,18 @@ export const useProject = (projectId: string) => {
       withCredentials: true,
     })
       .then((response) => {
-        setProjectData(response.data)
+        setProjectData(response.data);
       })
       .catch((error) => {
-        console.error(error)
-      })
-  }, [])
+        console.error(error);
+      });
+  }, []);
 
-  const updateProject = async (body: {name?: string, description?: string, contributors?: string[]}) => {
+  const updateProject = async (body: {
+    name?: string;
+    description?: string;
+    contributors?: string[];
+  }) => {
     axios({
       url: `${url}`,
       method: 'PUT',
@@ -47,12 +51,12 @@ export const useProject = (projectId: string) => {
       data: body,
     })
       .then((res) => {
-        setProjectData(res.data)
+        setProjectData(res.data);
       })
       .catch((error) => {
-        console.error('Error when updating project: ', error)
-      })
-  }
+        console.error('Error when updating project: ', error);
+      });
+  };
 
   const connectMainImage = (image: ImageObj) => {
     axios({
@@ -61,12 +65,12 @@ export const useProject = (projectId: string) => {
       withCredentials: true,
     })
       .then(() => {
-        setProjectData({ ...projectData, MainImage: image })
+        setProjectData({ ...projectData, MainImage: image });
       })
       .catch((error) => {
-        console.error('Error when connecting MainImage: ', error)
-      })
-  }
+        console.error('Error when connecting MainImage: ', error);
+      });
+  };
 
   const disconnectMainImage = () => {
     axios({
@@ -75,12 +79,12 @@ export const useProject = (projectId: string) => {
       withCredentials: true,
     })
       .then(() => {
-        setProjectData({ ...projectData, MainImage: <any>{} })
+        setProjectData({ ...projectData, MainImage: <any>{} });
       })
       .catch((error) => {
-        console.error('Error when disconnecting MainImage: ', error)
-      })
-  }
+        console.error('Error when disconnecting MainImage: ', error);
+      });
+  };
 
   return {
     projectData,
@@ -88,5 +92,5 @@ export const useProject = (projectId: string) => {
     updateProject,
     connectMainImage,
     disconnectMainImage,
-  }
-}
+  };
+};

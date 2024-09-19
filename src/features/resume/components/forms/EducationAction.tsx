@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import {
-  Dialog,
   Box,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { format, parse } from 'date-fns';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { parse, format } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ActionTypes } from '../../../../types/ActionTypes.ts';
 
 const onGoing = 'ongoing';
 
 interface Props {
-  type: ActionTypes,
-  eId?: string,
-  eEducationName: string,
-  eUniversityName: string,
-  eDescription: string,
-  eStartDate: string,
-  eEndDate: string,
-  resumeId: string,
-  createEducation?: (body: Record<string, any>) => void,
-  updateEducation?: (id: string, body: Record<string, any>) => void
+  type: ActionTypes;
+  eId?: string;
+  eEducationName: string;
+  eUniversityName: string;
+  eDescription: string;
+  eStartDate: string;
+  eEndDate: string;
+  resumeId: string;
+  createEducation?: (body: Record<string, any>) => void;
+  updateEducation?: (id: string, body: Record<string, any>) => void;
 }
 
 export const EducationAction: React.FunctionComponent<Props> = ({
-                                                                  type,
-                                                                  eId,
-                                                                  eEducationName,
-                                                                  eUniversityName,
-                                                                  eDescription,
-                                                                  eStartDate,
-                                                                  eEndDate,
-                                                                  resumeId,
-                                                                  createEducation,
-                                                                  updateEducation,
-                                                                }) => {
+  type,
+  eId,
+  eEducationName,
+  eUniversityName,
+  eDescription,
+  eStartDate,
+  eEndDate,
+  resumeId,
+  createEducation,
+  updateEducation,
+}) => {
   const [open, setOpen] = useState(false);
 
   const [data, setData] = useState({
@@ -115,128 +115,130 @@ export const EducationAction: React.FunctionComponent<Props> = ({
     return parseDate(date) ?? undefined;
   };
 
-  return <>
-    <Paper>
-      <Dialog open={open}>
-        <DialogTitle>
-          {type === ActionTypes.EDIT
-            ? `Edit education ${eEducationName}`
-            : 'New education'}
-        </DialogTitle>
-        <Box component="form">
-          <DialogContent>
-            <TextField
-              autoFocus
-              value={data.educationName}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  educationName: e.target.value,
-                });
-              }}
-              margin="dense"
-              required
-              id="name"
-              label="Education name"
-              type="name"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              value={data.universityName}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  universityName: e.target.value,
-                });
-              }}
-              margin="dense"
-              required
-              id="name"
-              label="University"
-              type="name"
-              fullWidth
-              variant="standard"
-            />
+  return (
+    <>
+      <Paper>
+        <Dialog open={open}>
+          <DialogTitle>
+            {type === ActionTypes.EDIT
+              ? `Edit education ${eEducationName}`
+              : 'New education'}
+          </DialogTitle>
+          <Box component="form">
+            <DialogContent>
+              <TextField
+                autoFocus
+                value={data.educationName}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    educationName: e.target.value,
+                  });
+                }}
+                margin="dense"
+                required
+                id="name"
+                label="Education name"
+                type="name"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                value={data.universityName}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    universityName: e.target.value,
+                  });
+                }}
+                margin="dense"
+                required
+                id="name"
+                label="University"
+                type="name"
+                fullWidth
+                variant="standard"
+              />
 
-            <TextField
-              autoFocus
-              value={data.description || ''}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  description: e.target.value,
-                });
-              }}
-              margin="dense"
-              id="description"
-              label="Description"
-              type="name"
-              fullWidth
-              multiline
-              variant="standard"
-            />
-            <br />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'start',
-              }}
-            >
-              <div>
-                <Typography color="text.secondary">Start date:</Typography>
-                <DatePicker
-                  selected={parseDate(data.startDate)}
-                  onChange={(date: Date | null) =>
-                    setData({
-                      ...data,
-                      startDate: dateToStr(date),
-                    })
-                  }
-                  dateFormat="MM/yyyy"
-                  showIcon
-                  showMonthYearPicker
-                  maxDate={maxDate(data.endDate)}
-                />
-              </div>
+              <TextField
+                autoFocus
+                value={data.description || ''}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    description: e.target.value,
+                  });
+                }}
+                margin="dense"
+                id="description"
+                label="Description"
+                type="name"
+                fullWidth
+                multiline
+                variant="standard"
+              />
+              <br />
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  alignItems: 'start',
                 }}
               >
-                <Typography color="text.secondary">End date:</Typography>
-                <DatePicker
-                  selected={parseDate(data.endDate)}
-                  onChange={(date) =>
-                    setData({
-                      ...data,
-                      endDate: dateToStr(date),
-                    })
-                  }
-                  dateFormat="MM/yyyy"
-                  showIcon
-                  showMonthYearPicker
-                  isClearable
-                  minDate={minDate(data.startDate)}
-                />
+                <div>
+                  <Typography color="text.secondary">Start date:</Typography>
+                  <DatePicker
+                    selected={parseDate(data.startDate)}
+                    onChange={(date: Date | null) =>
+                      setData({
+                        ...data,
+                        startDate: dateToStr(date),
+                      })
+                    }
+                    dateFormat="MM/yyyy"
+                    showIcon
+                    showMonthYearPicker
+                    maxDate={maxDate(data.endDate)}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Typography color="text.secondary">End date:</Typography>
+                  <DatePicker
+                    selected={parseDate(data.endDate)}
+                    onChange={(date) =>
+                      setData({
+                        ...data,
+                        endDate: dateToStr(date),
+                      })
+                    }
+                    dateFormat="MM/yyyy"
+                    showIcon
+                    showMonthYearPicker
+                    isClearable
+                    minDate={minDate(data.startDate)}
+                  />
+                </div>
               </div>
-            </div>
-          </DialogContent>
+            </DialogContent>
 
-          <DialogActions>
-            <Button onClick={toggle} color="error">
-              Close
-            </Button>
-            <Button onClick={handleSubmit}>Submit</Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
-    </Paper>
-    <Button variant="outlined" color="primary" onClick={toggle}>
-      {type === ActionTypes.EDIT ? 'Edit' : 'Create'}
-    </Button>
-  </>;
+            <DialogActions>
+              <Button onClick={toggle} color="error">
+                Close
+              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
+            </DialogActions>
+          </Box>
+        </Dialog>
+      </Paper>
+      <Button variant="outlined" color="primary" onClick={toggle}>
+        {type === ActionTypes.EDIT ? 'Edit' : 'Create'}
+      </Button>
+    </>
+  );
 };

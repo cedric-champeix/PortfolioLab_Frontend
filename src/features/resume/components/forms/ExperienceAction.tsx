@@ -1,47 +1,47 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import {
-  Dialog,
   Box,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
 } from '@mui/material';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { format, parse } from 'date-fns';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Typography from '@mui/material/Typography';
-import { parse, format } from 'date-fns';
 import { ActionTypes } from '../../../../types/ActionTypes.ts';
 
 const onGoing = 'ongoing';
 
 interface Props {
-  type: ActionTypes,
-  expId?: string,
-  expTitle: string,
-  expCompany: string,
-  expDescription: string,
-  expStartDate: string,
-  expEndDate: string,
-  resumeId: string,
-  create?: (body: Record<string, any>) => void,
-  update?: (id: string, body: Record<string, any>) => void,
+  type: ActionTypes;
+  expId?: string;
+  expTitle: string;
+  expCompany: string;
+  expDescription: string;
+  expStartDate: string;
+  expEndDate: string;
+  resumeId: string;
+  create?: (body: Record<string, any>) => void;
+  update?: (id: string, body: Record<string, any>) => void;
 }
 
 export const ExperienceAction: React.FunctionComponent<Props> = ({
-                                                                   type,
-                                                                   expId,
-                                                                   expTitle,
-                                                                   expCompany,
-                                                                   expDescription,
-                                                                   expStartDate,
-                                                                   expEndDate,
-                                                                   resumeId,
-                                                                   create,
-                                                                   update,
-                                                                 }) => {
+  type,
+  expId,
+  expTitle,
+  expCompany,
+  expDescription,
+  expStartDate,
+  expEndDate,
+  resumeId,
+  create,
+  update,
+}) => {
   const [open, setOpen] = useState(false);
 
   const [data, setData] = useState({
@@ -115,133 +115,135 @@ export const ExperienceAction: React.FunctionComponent<Props> = ({
     return parseDate(date) ?? undefined;
   };
 
-  return <>
-    <Paper>
-      <Dialog open={open}>
-        <DialogTitle>
-          {type === ActionTypes.EDIT
-            ? `Edit experience ${expTitle}`
-            : 'Create an experience'}
-        </DialogTitle>
-        <Box component="form">
-          <DialogContent>
-            <TextField
-              autoFocus
-              value={data.company}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  company: e.target.value,
-                });
-              }}
-              margin="dense"
-              required
-              id="name"
-              label="Company name"
-              type="name"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              value={data.title}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  title: e.target.value,
-                });
-              }}
-              margin="dense"
-              required
-              id="name"
-              label="Experience name"
-              type="name"
-              fullWidth
-              variant="standard"
-            />
-            <TextField
-              autoFocus
-              value={data.description}
-              onChange={(e) => {
-                setData({
-                  ...data,
-                  description: e.target.value,
-                });
-              }}
-              margin="dense"
-              id="description"
-              label="Description"
-              type="name"
-              fullWidth
-              multiline
-              variant="standard"
-            />
-            <br />
-            <br />
+  return (
+    <>
+      <Paper>
+        <Dialog open={open}>
+          <DialogTitle>
+            {type === ActionTypes.EDIT
+              ? `Edit experience ${expTitle}`
+              : 'Create an experience'}
+          </DialogTitle>
+          <Box component="form">
+            <DialogContent>
+              <TextField
+                autoFocus
+                value={data.company}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    company: e.target.value,
+                  });
+                }}
+                margin="dense"
+                required
+                id="name"
+                label="Company name"
+                type="name"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                value={data.title}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    title: e.target.value,
+                  });
+                }}
+                margin="dense"
+                required
+                id="name"
+                label="Experience name"
+                type="name"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                value={data.description}
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    description: e.target.value,
+                  });
+                }}
+                margin="dense"
+                id="description"
+                label="Description"
+                type="name"
+                fullWidth
+                multiline
+                variant="standard"
+              />
+              <br />
+              <br />
 
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'start',
-              }}
-            >
-              <div>
-                <Typography color="text.secondary">Start date:</Typography>
-                <DatePicker
-                  selected={parseDate(data.startDate)}
-                  onChange={(date) =>
-                    setData({
-                      ...data,
-                      startDate: dateToStr(date),
-                    })
-                  }
-                  dateFormat="MM/yyyy"
-                  showIcon
-                  showMonthYearPicker
-                  maxDate={maxDate(data.endDate)}
-                />
-              </div>
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  alignItems: 'start',
                 }}
               >
-                <Typography color="text.secondary">End date:</Typography>
-                <DatePicker
-                  selected={parseDate(data.endDate)}
-                  onChange={(date) =>
-                    setData({
-                      ...data,
-                      endDate: dateToStr(date),
-                    })
-                  }
-                  dateFormat="MM/yyyy"
-                  showIcon
-                  showMonthYearPicker
-                  isClearable
-                  maxDate={maxDate('')}
-                  minDate={minDate(data.startDate)}
-                />
-                <Typography color="text.secondary" fontSize="small">
-                  Leave empty if ongoing
-                </Typography>
+                <div>
+                  <Typography color="text.secondary">Start date:</Typography>
+                  <DatePicker
+                    selected={parseDate(data.startDate)}
+                    onChange={(date) =>
+                      setData({
+                        ...data,
+                        startDate: dateToStr(date),
+                      })
+                    }
+                    dateFormat="MM/yyyy"
+                    showIcon
+                    showMonthYearPicker
+                    maxDate={maxDate(data.endDate)}
+                  />
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Typography color="text.secondary">End date:</Typography>
+                  <DatePicker
+                    selected={parseDate(data.endDate)}
+                    onChange={(date) =>
+                      setData({
+                        ...data,
+                        endDate: dateToStr(date),
+                      })
+                    }
+                    dateFormat="MM/yyyy"
+                    showIcon
+                    showMonthYearPicker
+                    isClearable
+                    maxDate={maxDate('')}
+                    minDate={minDate(data.startDate)}
+                  />
+                  <Typography color="text.secondary" fontSize="small">
+                    Leave empty if ongoing
+                  </Typography>
+                </div>
               </div>
-            </div>
-          </DialogContent>
+            </DialogContent>
 
-          <DialogActions>
-            <Button onClick={toggle} color="error">
-              Close
-            </Button>
-            <Button onClick={handleSubmit}>Submit</Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
-    </Paper>
-    <Button variant="outlined" color="primary" onClick={toggle}>
-      {type === ActionTypes.EDIT ? 'Edit' : 'Create'}
-    </Button>
-  </>;
+            <DialogActions>
+              <Button onClick={toggle} color="error">
+                Close
+              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
+            </DialogActions>
+          </Box>
+        </Dialog>
+      </Paper>
+      <Button variant="outlined" color="primary" onClick={toggle}>
+        {type === ActionTypes.EDIT ? 'Edit' : 'Create'}
+      </Button>
+    </>
+  );
 };

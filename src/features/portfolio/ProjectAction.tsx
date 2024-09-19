@@ -1,44 +1,44 @@
-import { useState } from 'react'
-import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add';
 import {
-  Dialog,
   Box,
+  Card,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Card,
-} from '@mui/material'
-import Paper from '@mui/material/Paper'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import AddIcon from '@mui/icons-material/Add'
-import IconButton from '@mui/material/IconButton'
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 interface Props {
-  create: (body: { name: string }) => void
+  create: (body: { name: string }) => void;
 }
 
 export const ProjectAction = ({ create }: Props) => {
   const [projectData, setProjectData] = useState({
     name: '',
-  })
+  });
 
   //Triggers form toggle
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const toggle = () => {
-    setProjectData({ name: '' })
-    setOpen(!open)
-  }
+    setProjectData({ name: '' });
+    setOpen(!open);
+  };
 
   const handleSubmit = async () => {
     const body = {
-      name: projectData.name
-    }
+      name: projectData.name,
+    };
 
-    create(body)
-    toggle()
-  }
+    create(body);
+    toggle();
+  };
 
   return (
     <>
@@ -53,7 +53,7 @@ export const ProjectAction = ({ create }: Props) => {
                   required
                   value={projectData.name}
                   onChange={(e) => {
-                    setProjectData({ name: e.target.value })
+                    setProjectData({ name: e.target.value });
                   }}
                   margin="dense"
                   id="name"
@@ -100,5 +100,5 @@ export const ProjectAction = ({ create }: Props) => {
         </Button>
       </Card>
     </>
-  )
-}
+  );
+};

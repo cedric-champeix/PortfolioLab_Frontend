@@ -1,28 +1,32 @@
-import React from 'react'
-import { useCRUD } from '../hooks/useCRUD.ts'
-import { endpoints } from '../../../data/endpoints.ts'
-import Grid from '@mui/material/Grid'
-import Title from '../../../components/Title.tsx'
-import { ExperienceAction } from './forms/ExperienceAction.tsx'
-import { Card, CardContent } from '@mui/material'
-import Typography from '@mui/material/Typography'
-import { truncate } from '../utils/truncate.ts'
-import { CardActions } from '@mui/joy'
-import Button from '@mui/material/Button'
-import { useConfirmation } from '../../../hooks/useConfirmation.ts'
+import { CardActions } from '@mui/joy';
+import { Card, CardContent } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import Title from '../../../components/Title.tsx';
+import { endpoints } from '../../../data/endpoints.ts';
+import { useConfirmation } from '../../../hooks/useConfirmation.ts';
 import { ActionTypes } from '../../../types/ActionTypes.ts';
+import { useCRUD } from '../hooks/useCRUD.ts';
+import { truncate } from '../utils/truncate.ts';
+import { ExperienceAction } from './forms/ExperienceAction.tsx';
 
 interface Props {
-  resumeId: string
+  resumeId: string;
 }
 
-export const ExperienceSection: React.FunctionComponent<Props> = ({ resumeId }) => {
+export const ExperienceSection: React.FunctionComponent<Props> = ({
+  resumeId,
+}) => {
   //CRUD on experiences endpoint
-  const { update, create, remove, data } = useCRUD(endpoints.experienceEndpoint)
+  const { update, create, remove, data } = useCRUD(
+    endpoints.experienceEndpoint
+  );
   //Calls the confirmation service
   //This hook will handle a promise and trigger a dialog to perform confirmation
   //Once confirmed by the user, the function executes the callback
-  const confirm = useConfirmation()
+  const confirm = useConfirmation();
 
   const removeSafeguard = (resourceId: string, resourceName: string) => {
     confirm({
@@ -30,10 +34,10 @@ export const ExperienceSection: React.FunctionComponent<Props> = ({ resumeId }) 
       name: resourceName,
     }).then(() => {
       remove(resourceId).then(() => {
-        console.log('Item ' + resourceName + ' removed')
-      })
-    })
-  }
+        console.log('Item ' + resourceName + ' removed');
+      });
+    });
+  };
 
   return (
     <Grid container marginY="10px">
@@ -112,5 +116,5 @@ export const ExperienceSection: React.FunctionComponent<Props> = ({ resumeId }) 
         </Grid>
       ))}
     </Grid>
-  )
-}
+  );
+};

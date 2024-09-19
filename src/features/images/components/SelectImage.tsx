@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import Grid from '@mui/material/Grid'
-import { DialogActions } from '@mui/material'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { ImageCard } from './ImageCard.tsx'
+import { DialogActions } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
 import { ImageObj } from '../../../types/entities/Image.ts';
+import { ImageCard } from './ImageCard.tsx';
 
 interface SelectImageProps {
-  images: ImageObj[],
-  update: (id: string, name: string) => void,
-  remove: (id: string) => void,
-  toggle: () => void,
-  callback: (_: any) => void
+  images: ImageObj[];
+  update: (id: string, name: string) => void;
+  remove: (id: string) => void;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
-export const SelectImage =({
+export const SelectImage = ({
   images,
   update,
   remove,
   toggle,
   callback,
 }: SelectImageProps) => {
-  const [selectedImage, setSelectedImage] = useState<ImageObj | null>(null)
+  const [selectedImage, setSelectedImage] = useState<ImageObj | null>(null);
 
   const handleSubmit = () => {
-    callback(selectedImage)
-    toggle()
-  }
+    callback(selectedImage);
+    toggle();
+  };
 
   return (
     <React.Fragment>
@@ -45,9 +45,9 @@ export const SelectImage =({
             key={image.id}
             onClick={() => {
               if (selectedImage && selectedImage.id === image.id) {
-                setSelectedImage(null)
+                setSelectedImage(null);
               } else {
-                setSelectedImage(image)
+                setSelectedImage(image);
               }
             }}
           >
@@ -69,5 +69,5 @@ export const SelectImage =({
         </Button>
       </DialogActions>
     </React.Fragment>
-  )
-}
+  );
+};

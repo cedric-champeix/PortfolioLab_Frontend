@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { endpoints } from '../../../data/endpoints.ts'
-import axios from 'axios'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../data/endpoints.ts';
 import { ImageObj } from '../../../types/entities/Image.ts';
 
 export const useImages = () => {
-  const [images, setImages] = useState<ImageObj[]>([])
+  const [images, setImages] = useState<ImageObj[]>([]);
 
-  const url = endpoints.imagesEndpoint
+  const url = endpoints.imagesEndpoint;
 
   useEffect(() => {
     axios({
@@ -15,17 +15,21 @@ export const useImages = () => {
       withCredentials: true,
     })
       .then((response) => {
-        setImages(response.data)
+        setImages(response.data);
       })
       .catch((error) => {
-        console.error("Couldn't get images: ", error)
-      })
-  }, [])
+        console.error("Couldn't get images: ", error);
+      });
+  }, []);
 
-  const upload = async (file: File, body: {name: string}, cb: (_: any) => void) => {
-    const formData = new FormData()
-    formData.append('data', JSON.stringify(body))
-    formData.append('image', file)
+  const upload = async (
+    file: File,
+    body: { name: string },
+    cb: (_: any) => void
+  ) => {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(body));
+    formData.append('image', file);
 
     await axios({
       url: url,
@@ -37,19 +41,19 @@ export const useImages = () => {
       data: formData,
     })
       .then((res) => {
-        setImages([...images, res.data])
-        cb(res.data)
+        setImages([...images, res.data]);
+        cb(res.data);
       })
       .catch((error) => {
-        console.error('Error when uploading image: ', error)
-        cb(null)
-      })
-  }
+        console.error('Error when uploading image: ', error);
+        cb(null);
+      });
+  };
 
   const update = async (id: string, imageName: string) => {
     const body = {
       name: imageName,
-    }
+    };
 
     axios({
       url: `${url}/${id}`,
@@ -58,12 +62,12 @@ export const useImages = () => {
       data: body,
     })
       .then((res) => {
-        setImages(images.map((image) => (image.id === id ? res.data : image)))
+        setImages(images.map((image) => (image.id === id ? res.data : image)));
       })
       .catch((error) => {
-        console.error('Error when updating image name: ', error)
-      })
-  }
+        console.error('Error when updating image name: ', error);
+      });
+  };
 
   const remove = async (id: string) => {
     axios({
@@ -74,19 +78,19 @@ export const useImages = () => {
       .then(() => {
         setImages(
           images.filter((image) => {
-            return image.id !== id
+            return image.id !== id;
           })
-        )
+        );
       })
       .catch((error) => {
-        console.error('Error when deleting image: ', error)
-      })
-  }
+        console.error('Error when deleting image: ', error);
+      });
+  };
 
   const removeMultiple = async (idList: string[]) => {
     const body = {
       imageIds: idList,
-    }
+    };
 
     axios({
       url: `${url}`,
@@ -97,14 +101,14 @@ export const useImages = () => {
       .then(() => {
         setImages(
           images.filter((image) => {
-            return !idList.includes(image.id)
+            return !idList.includes(image.id);
           })
-        )
+        );
       })
       .catch((error) => {
-        console.error('Error when deleting images: ', error)
-      })
-  }
+        console.error('Error when deleting images: ', error);
+      });
+  };
 
-  return { images, setImages, upload, update, remove, removeMultiple }
-}
+  return { images, setImages, upload, update, remove, removeMultiple };
+};

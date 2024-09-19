@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { endpoints } from '../../../data/endpoints.ts';
 import { Component } from '../../../types/entities/Component.ts';
 
@@ -12,13 +12,19 @@ export const useComponent = (projectId: string, _components: Component[]) => {
     console.log('Reload...', components);
   }, [components]);
 
-  const create = (body: { type: string, index: number, distance: number, data: object }) => {
+  const create = (body: {
+    type: string;
+    index: number;
+    distance: number;
+    data: object;
+  }) => {
     axios({
       url: url,
       method: 'POST',
       withCredentials: true,
       data: body,
-    }).then((res) => {
+    })
+      .then((res) => {
         let newArr = [...components, res.data.component];
 
         if (res.data.indexUpdate)
@@ -32,15 +38,16 @@ export const useComponent = (projectId: string, _components: Component[]) => {
       });
   };
 
-  const update = (id: string, body: { type: string, data: object }) => {
+  const update = (id: string, body: { type: string; data: object }) => {
     axios({
       url: `${url}/${id}`,
       method: 'PUT',
       withCredentials: true,
       data: body,
-    }).then((res) => {
+    })
+      .then((res) => {
         let newArr = components.map((component) =>
-          component.id === id ? res.data : component,
+          component.id === id ? res.data : component
         );
 
         if (res.data.indexUpdate)
@@ -54,15 +61,16 @@ export const useComponent = (projectId: string, _components: Component[]) => {
       });
   };
 
-  const move = (id: string, body: { newIndex: number, distance: number }) => {
+  const move = (id: string, body: { newIndex: number; distance: number }) => {
     axios({
       url: `${url}/${id}/move`,
       method: 'PUT',
       withCredentials: true,
       data: body,
-    }).then((res) => {
+    })
+      .then((res) => {
         let newArr = components.map((component) =>
-          component.id === id ? res.data.component : component,
+          component.id === id ? res.data.component : component
         );
 
         if (res.data.indexUpdate)
@@ -81,11 +89,12 @@ export const useComponent = (projectId: string, _components: Component[]) => {
       url: `${url}/${id}`,
       method: 'DELETE',
       withCredentials: true,
-    }).then(() => {
+    })
+      .then(() => {
         setComponents(
           components.filter((component) => {
             return component.id !== id;
-          }),
+          })
         );
       })
       .catch((error) => {
@@ -94,8 +103,8 @@ export const useComponent = (projectId: string, _components: Component[]) => {
   };
 
   interface NewIndex {
-    id: string,
-    index: number
+    id: string;
+    index: number;
   }
 
   const updateIndexes = (arr: Component[], newIndexes: NewIndex[]) => {

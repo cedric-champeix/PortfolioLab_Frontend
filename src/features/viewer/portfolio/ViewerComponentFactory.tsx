@@ -1,31 +1,33 @@
-import React from 'react'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 
-import { ViewerTextComponent } from './components/ViewerTextComponent.tsx'
-import { ViewerImageComponent } from './components/ViewerImageComponent.tsx'
-import { ViewerTextImageComponent } from './components/ViewerTextImageComponent.tsx'
-import { Component } from '../../../types/entities/Component.ts'
+import { Component } from '../../../types/entities/Component.ts';
+import { ViewerImageComponent } from './components/ViewerImageComponent.tsx';
+import { ViewerTextComponent } from './components/ViewerTextComponent.tsx';
+import { ViewerTextImageComponent } from './components/ViewerTextImageComponent.tsx';
 
 interface Props {
-  component: Component
+  component: Component;
 }
 
-export const ViewerComponentFactory: React.FunctionComponent<Props> = ({ component }) => {
+export const ViewerComponentFactory: React.FunctionComponent<Props> = ({
+  component,
+}) => {
   const renderComponent = () => {
     switch (component.type) {
       case 'TEXT':
-        return <ViewerTextComponent component={component} />
+        return <ViewerTextComponent component={component} />;
       case 'IMAGE':
-        return <ViewerImageComponent component={component} />
+        return <ViewerImageComponent component={component} />;
       case 'TEXT_IMAGE':
         return (
           <ViewerTextImageComponent component={component} leftText={true} />
-        )
+        );
       case 'IMAGE_TEXT':
         return (
           <ViewerTextImageComponent component={component} leftText={false} />
-        )
+        );
       default:
         return (
           <Grid container padding="20px 20px" spacing={2}>
@@ -33,18 +35,20 @@ export const ViewerComponentFactory: React.FunctionComponent<Props> = ({ compone
               Reload...
             </Typography>
           </Grid>
-        )
+        );
     }
-  }
+  };
 
-  return <Grid
-    container
-    style={{
-      alignItems: 'center',
-      justifyContent: 'center',
-      margin: '20px 0',
-    }}
-  >
-    {renderComponent()}
-  </Grid>
-}
+  return (
+    <Grid
+      container
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '20px 0',
+      }}
+    >
+      {renderComponent()}
+    </Grid>
+  );
+};

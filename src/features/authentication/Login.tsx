@@ -1,23 +1,23 @@
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import { Avatar } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import { Avatar } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import { useAuth } from '../../hooks/useAuth.ts';
-import { useNavigate } from 'react-router-dom';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import Cookies from 'js-cookie';
-import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { useNotification } from '../../hooks/useNotification.ts';
 
 interface LoginFormValues {
-  email: string,
-  password: string,
-  remember: boolean
+  email: string;
+  password: string;
+  remember: boolean;
 }
 
 export default function Login() {
@@ -52,7 +52,10 @@ export default function Login() {
   const { setUsername } = useAuth();
   const navigate = useNavigate();
 
-  const submitForm = (values: LoginFormValues, props: FormikHelpers<LoginFormValues>) => {
+  const submitForm = (
+    values: LoginFormValues,
+    props: FormikHelpers<LoginFormValues>
+  ) => {
     setTimeout(() => {
       props.resetForm();
       props.setSubmitting(false);
@@ -101,11 +104,15 @@ export default function Login() {
   return (
     <Grid>
       <Paper style={paperStyle}>
-        <Grid container component={'div'} direction="column"
-              sx={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+        <Grid
+          container
+          component={'div'}
+          direction="column"
+          sx={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Avatar style={avatarStyle}>
             <LockOpenOutlinedIcon />
           </Avatar>

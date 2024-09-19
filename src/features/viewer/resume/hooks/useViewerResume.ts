@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { endpoints } from '../../../../data/endpoints.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../../data/endpoints.ts';
 
 export const useViewerResume = (username: string) => {
   const defaultResume = {
@@ -19,12 +19,12 @@ export const useViewerResume = (username: string) => {
       },
     },
     published: false,
-  }
+  };
 
-  const [userResume, setUserResume] = useState(defaultResume)
-  const [resumeError, setResumeError] = useState(false)
+  const [userResume, setUserResume] = useState(defaultResume);
+  const [resumeError, setResumeError] = useState(false);
 
-  const url = endpoints.viewer.resumeEndpoint(username)
+  const url = endpoints.viewer.resumeEndpoint(username);
 
   useEffect(() => {
     axios({
@@ -32,18 +32,18 @@ export const useViewerResume = (username: string) => {
       method: 'GET',
     })
       .then((response) => {
-        setUserResume(response.data)
+        setUserResume(response.data);
         if (response.data.published) {
-          setResumeError(false)
+          setResumeError(false);
         } else {
-          setResumeError(true)
+          setResumeError(true);
         }
       })
       .catch((error) => {
-        setResumeError(true)
-        console.error('Could not get resume: ', error)
-      })
-  }, [])
+        setResumeError(true);
+        console.error('Could not get resume: ', error);
+      });
+  }, []);
 
-  return { userResume, resumeError }
-}
+  return { userResume, resumeError };
+};

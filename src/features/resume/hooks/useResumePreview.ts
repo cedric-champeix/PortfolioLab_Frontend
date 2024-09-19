@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { endpoints } from '../../../data/endpoints.ts'
-import axios from 'axios'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../data/endpoints.ts';
 
 export const useResumePreview = () => {
   const defaultResume = {
@@ -19,11 +19,11 @@ export const useResumePreview = () => {
       },
     },
     published: false,
-  }
+  };
 
-  const [resumePreview, setResumePreview] = useState(defaultResume)
+  const [resumePreview, setResumePreview] = useState(defaultResume);
 
-  const url = endpoints.resumePreviewEndpoint
+  const url = endpoints.resumePreviewEndpoint;
 
   useEffect(() => {
     axios({
@@ -32,12 +32,12 @@ export const useResumePreview = () => {
       withCredentials: true,
     })
       .then((response) => {
-        setResumePreview(response.data)
+        setResumePreview(response.data);
       })
       .catch((error) => {
-        console.error('Could not get resume: ', error)
-      })
-  }, [])
+        console.error('Could not get resume: ', error);
+      });
+  }, []);
 
-  return { resumePreview }
-}
+  return { resumePreview };
+};

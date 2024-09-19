@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { endpoints } from '../../../data/endpoints.ts'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { endpoints } from '../../../data/endpoints.ts';
 import { Project } from '../../../types/entities/Project.ts';
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const url = endpoints.projectsEndpoint
+  const url = endpoints.projectsEndpoint;
 
   useEffect(() => {
     axios({
@@ -15,13 +15,13 @@ export const useProjects = () => {
       withCredentials: true,
     })
       .then((response) => {
-        console.log('This is the project data: ', response.data)
-        setProjects(response.data || [])
+        console.log('This is the project data: ', response.data);
+        setProjects(response.data || []);
       })
       .catch((error) => {
-        console.error("Couldn't get projects: ", error)
-      })
-  }, [])
+        console.error("Couldn't get projects: ", error);
+      });
+  }, []);
 
   const create = async (body: { name: string }) => {
     await axios({
@@ -31,12 +31,12 @@ export const useProjects = () => {
       data: body,
     })
       .then((res) => {
-        setProjects([...projects, res.data])
+        setProjects([...projects, res.data]);
       })
       .catch((error) => {
-        console.error('Error when creating project: ', error)
-      })
-  }
+        console.error('Error when creating project: ', error);
+      });
+  };
 
   const remove = async (id: string) => {
     axios({
@@ -47,14 +47,14 @@ export const useProjects = () => {
       .then(() => {
         setProjects(
           projects.filter((project) => {
-            return project.id !== id
+            return project.id !== id;
           })
-        )
+        );
       })
       .catch((error) => {
-        console.error('Error when deleting project: ', error)
-      })
-  }
+        console.error('Error when deleting project: ', error);
+      });
+  };
 
-  return { projects, setProjects, create, remove }
-}
+  return { projects, setProjects, create, remove };
+};

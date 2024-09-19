@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
-import Paper from '@mui/material/Paper';
 import { Dialog, Tab, Tabs } from '@mui/material';
+import Paper from '@mui/material/Paper';
+import React, { useState } from 'react';
 import TabPanel from '../../../components/TabPanel.tsx';
 import { useSkills } from '../hooks/useSkills.ts';
-import { SelectSkill } from './SelectSkill.tsx';
 import { CreateSkill } from './CreateSkill.tsx';
+import { SelectSkill } from './SelectSkill.tsx';
 
 interface Props {
-  open: boolean,
-  toggle: () => void,
-  callback: (_: any) => void
+  open: boolean;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
-export const SkillHandler: React.FunctionComponent<Props> = ({ open, toggle, callback }) => {
+export const SkillHandler: React.FunctionComponent<Props> = ({
+  open,
+  toggle,
+  callback,
+}) => {
   const [value, setValue] = useState(0);
 
   const { skills, create, update, remove } = useSkills();

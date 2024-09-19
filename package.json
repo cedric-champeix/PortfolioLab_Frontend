@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint src",
-    "prettier": "prettier src",
+    "prettier": "prettier src --check",
     "format": "prettier src --write"
   },
   "dependencies": {

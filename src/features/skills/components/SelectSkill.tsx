@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
-import { DialogActions } from '@mui/material'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { SkillChipEdit } from './SkillChipEdit.tsx'
+import { DialogActions } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
 import { Skill } from '../../../types/entities/Skill.ts';
+import { SkillChipEdit } from './SkillChipEdit.tsx';
 
 interface Props {
-  skills: Skill[],
-  update: (id: string, name: string, description: string, isSoft: boolean) => void,
-  remove: (id: string) => void,
-  toggle: () => void,
-  callback: (_: any) => void
+  skills: Skill[];
+  update: (
+    id: string,
+    name: string,
+    description: string,
+    isSoft: boolean
+  ) => void;
+  remove: (id: string) => void;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
 export const SelectSkill: React.FunctionComponent<Props> = ({
@@ -21,12 +26,12 @@ export const SelectSkill: React.FunctionComponent<Props> = ({
   toggle,
   callback,
 }) => {
-  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null)
+  const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
 
   const handleSubmit = () => {
-    callback(selectedSkill)
-    toggle()
-  }
+    callback(selectedSkill);
+    toggle();
+  };
 
   return (
     <React.Fragment>
@@ -45,9 +50,9 @@ export const SelectSkill: React.FunctionComponent<Props> = ({
             key={skill.id}
             onClick={() => {
               if (selectedSkill && selectedSkill.id === skill.id) {
-                setSelectedSkill(null)
+                setSelectedSkill(null);
               } else {
-                setSelectedSkill(skill)
+                setSelectedSkill(skill);
               }
             }}
           >
@@ -69,5 +74,5 @@ export const SelectSkill: React.FunctionComponent<Props> = ({
         </Button>
       </DialogActions>
     </React.Fragment>
-  )
-}
+  );
+};

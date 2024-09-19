@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Resume } from '../../../types/entities/Resume.ts';
 
 export const useResume = () => {
@@ -28,11 +28,13 @@ export const useResume = () => {
       url: url,
       method: 'GET',
       withCredentials: true,
-    }).then((response) => {
-      setResumeData(response.data);
-    }).catch((error) => {
-      console.error(error);
-    });
+    })
+      .then((response) => {
+        setResumeData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
     //console.log("Updated resume data : ")
     //console.log(resumeData)

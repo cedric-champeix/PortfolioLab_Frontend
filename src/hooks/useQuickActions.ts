@@ -1,4 +1,4 @@
-import { useContext } from 'react'
-import { QuickActionContext } from '../context/QuickActionService.tsx'
+import { useContext } from 'react';
+import { QuickActionContext } from '../context/QuickActionService.tsx';
 
-export const useQuickActions = () => useContext(QuickActionContext)
+export const useQuickActions = () => useContext(QuickActionContext);

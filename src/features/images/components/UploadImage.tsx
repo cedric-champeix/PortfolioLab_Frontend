@@ -1,58 +1,58 @@
+import { Box, DialogActions, DialogContent } from '@mui/material';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { ChangeEvent, useState } from 'react';
-import { Box, DialogActions, DialogContent } from '@mui/material'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import placeHolder from '../../../assets/icons/placeholder.png'
+import placeHolder from '../../../assets/icons/placeholder.png';
 
 interface UploadImageProps {
-  upload: (file: File, body: {name: string}, cb: (_: any) => void) => void,
-  toggle: () => void,
-  callback: (_: any) => void,
+  upload: (file: File, body: { name: string }, cb: (_: any) => void) => void;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
 interface Img {
-  name: string,
-  image: File | null
+  name: string;
+  image: File | null;
 }
 
 export const UploadImage = ({ upload, toggle, callback }: UploadImageProps) => {
-  const [uploadData, setUploadData] = useState<Img>({ name: '', image: null })
+  const [uploadData, setUploadData] = useState<Img>({ name: '', image: null });
 
   const [displayedImage, setDisplayedImage] = useState(
     uploadData.image ? uploadData.image : placeHolder
-  )
+  );
 
   const fallbackImage = () => {
-    setUploadData({ name: uploadData.name, image: placeHolder })
-  }
+    setUploadData({ name: uploadData.name, image: placeHolder });
+  };
 
   const setImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setUploadData({
         ...uploadData,
         image: e.target.files[0],
-      })
-      setDisplayedImage(URL.createObjectURL(e.target.files[0]))
+      });
+      setDisplayedImage(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const setName = (e: ChangeEvent<HTMLInputElement>) => {
     setUploadData({
       ...uploadData,
       name: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = () => {
     const body = {
       name: uploadData.name,
-    }
+    };
 
     if (uploadData.image) {
-      upload(uploadData.image, body, callback)
-      toggle()
+      upload(uploadData.image, body, callback);
+      toggle();
     }
-  }
+  };
 
   return (
     <Box>
@@ -103,5 +103,5 @@ export const UploadImage = ({ upload, toggle, callback }: UploadImageProps) => {
         </DialogActions>
       </Box>
     </Box>
-  )
-}
+  );
+};

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Box,
   Checkbox,
@@ -8,15 +7,25 @@ import {
 } from '@mui/material';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import React, { useState } from 'react';
 import { useNotification } from '../../../hooks/useNotification.ts';
 
 interface Props {
-  create: (name: string, description: string, isSoft: boolean, cb: (_: any) => void) => void,
-  toggle: () => void,
-  callback: (_: any) => void
+  create: (
+    name: string,
+    description: string,
+    isSoft: boolean,
+    cb: (_: any) => void
+  ) => void;
+  toggle: () => void;
+  callback: (_: any) => void;
 }
 
-export const CreateSkill: React.FunctionComponent<Props> = ({ create, toggle, callback }) => {
+export const CreateSkill: React.FunctionComponent<Props> = ({
+  create,
+  toggle,
+  callback,
+}) => {
   const [data, setData] = useState({
     name: '',
     description: '',

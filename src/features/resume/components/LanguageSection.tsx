@@ -1,21 +1,23 @@
-import React from 'react';
+import { CardActions } from '@mui/joy';
 import { Card, CardContent } from '@mui/material';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { CardActions } from '@mui/joy';
-import { LanguageAction } from './forms/LanguageAction.tsx';
+import React from 'react';
 import Title from '../../../components/Title.tsx';
-import { useCRUD } from '../hooks/useCRUD.ts';
-import { useConfirmation } from '../../../hooks/useConfirmation.ts';
 import { endpoints } from '../../../data/endpoints.ts';
+import { useConfirmation } from '../../../hooks/useConfirmation.ts';
 import { ActionTypes } from '../../../types/ActionTypes.ts';
+import { useCRUD } from '../hooks/useCRUD.ts';
+import { LanguageAction } from './forms/LanguageAction.tsx';
 
 interface Props {
   resumeId: string;
 }
 
-export const LanguageSection: React.FunctionComponent<Props> = ({ resumeId }) => {
+export const LanguageSection: React.FunctionComponent<Props> = ({
+  resumeId,
+}) => {
   //CRUD on experiences endpoint
   const { update, create, remove, data } = useCRUD(endpoints.languageEndpoint);
   //Calls the confirmation service

@@ -1,25 +1,25 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Avatar } from '@mui/material';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import * as Yup from 'yup';
-import { Field, Form, Formik, FormikHelpers } from 'formik';
-import { useAuth } from '../../hooks/useAuth.ts';
-import { useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+import { useAuth } from '../../hooks/useAuth.ts';
 import { useNotification } from '../../hooks/useNotification.ts';
 
 interface SignUpFormValues {
-  firstName: string,
-  lastName: string,
-  email: string,
-  username: string,
-  password: string,
-  confirmPassword: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
 }
 
 const Signup = () => {
@@ -53,7 +53,7 @@ const Signup = () => {
       .required('required')
       .matches(
         usernameRegex,
-        'Username can only contain digits, uppercase and lowercase letters',
+        'Username can only contain digits, uppercase and lowercase letters'
       ),
     email: Yup.string()
       .email('Please enter a valid email')
@@ -61,12 +61,15 @@ const Signup = () => {
     password: Yup.string().required('required'),
     confirmPassword: Yup.string().oneOf(
       [Yup.ref('password')],
-      'Passwords must match',
+      'Passwords must match'
     ),
   });
 
   // @ts-ignore
-  const submitForm = async (values: SignUpFormValues, props: FormikHelpers<SignUpFormValues>) => {
+  const submitForm = async (
+    values: SignUpFormValues,
+    props: FormikHelpers<SignUpFormValues>
+  ) => {
     const data = {
       email: values.email.trim(),
       pwd: values.password.trim(),
@@ -107,11 +110,15 @@ const Signup = () => {
   return (
     <Grid>
       <Paper style={paperStyle}>
-        <Grid container component={'div'} direction="column"
-              sx={{
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+        <Grid
+          container
+          component={'div'}
+          direction="column"
+          sx={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Avatar style={avatarStyle}>
             <AddCircleOutlineIcon />
           </Avatar>

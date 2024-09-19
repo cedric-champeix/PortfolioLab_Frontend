@@ -1,29 +1,31 @@
-import React, { useState } from 'react'
-import { Chip, Tooltip, Stack } from '@mui/material'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import { SkillHandler } from '../../skills/components/SkillHandler.tsx'
-import { useSkills } from '../../skills/hooks/useSkills.ts'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Chip, Stack, Tooltip } from '@mui/material';
+import React, { useState } from 'react';
 import { Skill } from '../../../types/entities/Skill.ts';
+import { SkillHandler } from '../../skills/components/SkillHandler.tsx';
+import { useSkills } from '../../skills/hooks/useSkills.ts';
 
 interface Props {
-  projectId: string
+  projectId: string;
 }
 
-export const SkillContainer: React.FunctionComponent<Props> = ({ projectId }) => {
-  const [open, setOpen] = useState(false)
+export const SkillContainer: React.FunctionComponent<Props> = ({
+  projectId,
+}) => {
+  const [open, setOpen] = useState(false);
 
-  console.log('PROJECT', projectId)
+  console.log('PROJECT', projectId);
 
   const { fetchSkills, skills, connectToProject, disconnectFromProject } =
-    useSkills(undefined, projectId || 'AWAITING')
+    useSkills(undefined, projectId || 'AWAITING');
 
   const toggle = () => {
-    setOpen(!open)
+    setOpen(!open);
 
     if (open) {
-      fetchSkills()
+      fetchSkills();
     }
-  }
+  };
 
   return (
     <div>
@@ -48,5 +50,5 @@ export const SkillContainer: React.FunctionComponent<Props> = ({ projectId }) =>
         />
       </Stack>
     </div>
-  )
-}
+  );
+};

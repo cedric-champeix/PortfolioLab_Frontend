@@ -85,7 +85,6 @@ export const HobbyAction: React.FunctionComponent<Props> = ({
             />
 
             <TextField
-              autoFocus
               value={data.description || ''}
               onChange={(e) => {
                 setData({

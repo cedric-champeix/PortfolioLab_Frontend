@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Dialog,
@@ -11,14 +11,14 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { ContactTypes } from '../../../../types/contact.ts';
+import React, { useMemo, useState } from 'react';
+import * as Yup from 'yup';
 import { ActionTypes } from '../../../../types/ActionTypes.ts';
+import { ContactTypes } from '../../../../types/contact.ts';
 
 const phoneRegExp =
   /(?:([+]\d{1,4})[-.\s]?)?(?:[(](\d{1,3})[)][-.\s]?)?(\d{1,4})[-.\s]?(\d{1,4})[-.\s]?(\d{1,9})/g;
@@ -62,27 +62,30 @@ const schemas = {
 // }
 
 interface Props {
-  type: ActionTypes,
-  contactId?: string,
-  contactTitle?: ContactTypes,
-  contactText?: string,
-  resumeId: string,
-  createContact?: (body: Record<string, any>) => void,
-  updateContact?: (id: string, body: Record<string, any>) => void,
+  type: ActionTypes;
+  contactId?: string;
+  contactTitle?: ContactTypes;
+  contactText?: string;
+  resumeId: string;
+  createContact?: (body: Record<string, any>) => void;
+  updateContact?: (id: string, body: Record<string, any>) => void;
 }
 
 export const ContactAction: React.FunctionComponent<Props> = ({
-                                                                type,
-                                                                contactId,
-                                                                contactTitle,
-                                                                contactText,
-                                                                resumeId,
-                                                                createContact,
-                                                                updateContact,
-                                                              }) => {
+  type,
+  contactId,
+  contactTitle,
+  contactText,
+  resumeId,
+  createContact,
+  updateContact,
+}) => {
   const [open, setOpen] = useState(false);
 
-  const [data, setData] = useState({ title: contactTitle ?? ContactTypes.EMAIL, text: contactText ?? '' });
+  const [data, setData] = useState({
+    title: contactTitle ?? ContactTypes.EMAIL,
+    text: contactText ?? '',
+  });
 
   // const [currentContactType, setCurrentContactType] = useState<ContactTypes>(ContactTypes.EMAIL);
 
@@ -99,7 +102,10 @@ export const ContactAction: React.FunctionComponent<Props> = ({
   };
 
   const toggle = () => {
-    setData({ title: contactTitle ?? ContactTypes.EMAIL, text: contactText ?? '' });
+    setData({
+      title: contactTitle ?? ContactTypes.EMAIL,
+      text: contactText ?? '',
+    });
     setOpen(!open);
   };
 
@@ -123,84 +129,87 @@ export const ContactAction: React.FunctionComponent<Props> = ({
     toggle();
   };
 
-  return <>
-    <Paper>
-      <Dialog open={open}>
-        <DialogTitle>
-          {type === ActionTypes.EDIT
-            ? `Edit contact ${contactTitle}`
-            : 'Create a contact'}
-        </DialogTitle>
-        <Box component="form">
-          <Formik
-            onSubmit={() => {
-            }}
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-          >
-            <DialogContent>
-              <Select
-                value={data.title}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    title: e.target.value as ContactTypes,
-                  });
-                }}
-                name={'title'}
-                id={'title'}
-              >
-                {Object.values(ContactTypes).map((value, i) => (
-                  <MenuItem key={value + i} value={value}>
-                    {value}
-                  </MenuItem>
-                ))}
-              </Select>
+  return (
+    <>
+      <Paper>
+        <Dialog open={open}>
+          <DialogTitle>
+            {type === ActionTypes.EDIT
+              ? `Edit contact ${contactTitle}`
+              : 'Create a contact'}
+          </DialogTitle>
+          <Box component="form">
+            <Formik
+              onSubmit={() => {}}
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+            >
+              <>
+                <DialogContent>
+                  <Select
+                    value={data.title}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        title: e.target.value as ContactTypes,
+                      });
+                    }}
+                    name={'title'}
+                    id={'title'}
+                  >
+                    {Object.values(ContactTypes).map((value, i) => (
+                      <MenuItem key={value + i} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
 
-              <TextField
-                autoFocus
-                required
-                value={data.text}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    text: e.target.value,
-                  });
-                }}
-                margin="dense"
-                id="text"
-                label="Contact text"
-                type="name"
-                fullWidth
-                multiline
-                variant="standard"
-              />
-              <br />
-              <br />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={toggle} color="error">
-                Close
-              </Button>
-              <Button onClick={handleSubmit}>Submit</Button>
-            </DialogActions>
-          </Formik>
-        </Box>
-      </Dialog>
-    </Paper>
+                  <TextField
+                    autoFocus
+                    required
+                    value={data.text}
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        text: e.target.value,
+                      });
+                    }}
+                    margin="dense"
+                    id="text"
+                    label="Contact text"
+                    type="name"
+                    fullWidth
+                    multiline
+                    variant="standard"
+                  />
+                  <br />
+                  <br />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={toggle} color="error">
+                    Close
+                  </Button>
+                  <Button onClick={handleSubmit}>Submit</Button>
+                </DialogActions>
+              </>
+            </Formik>
+          </Box>
+        </Dialog>
+      </Paper>
 
-    {type === ActionTypes.EDIT ? (
-      <IconButton
-        style={{ position: 'relative', bottom: '8px' }}
-        aria-label={'edit'}
-        onClick={toggle}
-      >
-        <EditIcon></EditIcon>
-      </IconButton>
-    ) : (
-      <Fab size={'small'} onClick={toggle} color="primary" aria-label="add">
-        <AddIcon />
-      </Fab>
-    )}
-  </>;
+      {type === ActionTypes.EDIT ? (
+        <IconButton
+          style={{ position: 'relative', bottom: '8px' }}
+          aria-label={'edit'}
+          onClick={toggle}
+        >
+          <EditIcon></EditIcon>
+        </IconButton>
+      ) : (
+        <Fab size={'small'} onClick={toggle} color="primary" aria-label="add">
+          <AddIcon />
+        </Fab>
+      )}
+    </>
+  );
 };

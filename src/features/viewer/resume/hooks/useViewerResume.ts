@@ -33,7 +33,11 @@ export const useViewerResume = (username: string) => {
     })
       .then((response) => {
         setUserResume(response.data)
-        setResumeError(false)
+        if (response.data.published) {
+          setResumeError(false)
+        } else {
+          setResumeError(true)
+        }
       })
       .catch((error) => {
         setResumeError(true)

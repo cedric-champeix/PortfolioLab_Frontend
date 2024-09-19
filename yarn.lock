@@ -5807,10 +5807,15 @@ tiny-warning@^1.0.2:
   resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
-"tinymce@^7.0.0 || ^6.0.0 || ^5.5.1", tinymce@^7.0.1:
+"tinymce@^7.0.0 || ^6.0.0 || ^5.5.1":
   version "7.0.1"
   resolved "https://registry.npmjs.org/tinymce/-/tinymce-7.0.1.tgz"
   integrity sha512-0a7DJnhniBx2psRuKcVQ9g4hujN6PAR4fPS0NSF1T1luH1RBDZVVEn2pGND6Ly+AW1lUm/cHOHjsasqBelMhbw==
+
+tinymce@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-7.3.0.tgz#929b5d6d151b7d5e6f2efdaa802484834c42872c"
+  integrity sha512-Ls4PgYlpk73XAxBSBqbVmSl8Mb3DuNfgF01GZ0lY6/MOEVRl3IL+VxC1Oe6165e8WqbqVsxO3Qj/PmoYNvQKGQ==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

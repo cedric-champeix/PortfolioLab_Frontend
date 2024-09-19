@@ -4,7 +4,7 @@ import { Editor } from '@tinymce/tinymce-react'
 
 // TinyMCE so the global var exists
 // @ts-ignore
-import tinymce, {Editor as TinyMCEEditor} from 'tinymce/tinymce'
+import 'tinymce/tinymce'
 // DOM model
 import 'tinymce/models/dom/model'
 // Theme
@@ -43,13 +43,13 @@ import contentUiCss from 'tinymce/skins/ui/oxide/content.min.css?raw'
 
 interface Props {
   text: string,
-  save: (_: any, editor: TinyMCEEditor) => void,
+  save: (_: any, editor: any) => void,
   height: string,
   width: string
 }
 
 export const TextEditor: React.FunctionComponent<Props> = ({ text, save, height, width }) => {
-  const editorRef = useRef<TinyMCEEditor | null>(null)
+  const editorRef = useRef<any>(null)
 
   return (
     <Editor

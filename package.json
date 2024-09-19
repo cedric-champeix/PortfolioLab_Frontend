@@ -41,7 +41,7 @@
     "react-to-print": "^2.15.1",
     "saas": "^1.0.0",
     "sass": "^1.70.0",
-    "tinymce": "^7.0.1",
+    "tinymce": "^7.3.0",
     "typescript": "^5.5.4",
     "yup": "^1.3.2"
   },
